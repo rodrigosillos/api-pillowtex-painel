@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App;
+use Carbon\Carbon;
 
 class CommissionsController extends Controller
 {
@@ -47,9 +48,220 @@ class CommissionsController extends Controller
         $table_id = $search_data['value'][0]['tabela'];
         $client_state = $client_data['value'][0]['geradores'][0]['ufie'];
 
+        $table_code = 214;
+
+        if($table_id == 4)
+            $table_code = 214;
+
+        if($table_id == 216)
+            $table_code = 187;
+
         $commission_percentage = 8;
         $commission_amount = 0;
         $search_data['value'][0]['comissao_total'] = 0;
+
+        function searchForId($division, $table, $array) {
+            foreach ($array as $key => $val) {
+                if ($val['division'] == $division && $val['table'] == $table) {
+                    return $key;
+                }
+            }
+            return null;
+        }
+
+        // database table division
+        $division_db = [
+            [
+                'division' => '001',
+                'table' => '214',
+                'percentage' => 8,
+            ],
+            [
+                'division' => '001',
+                'table' => '187',
+                'percentage' => 6,
+            ],
+            [
+                'division' => '002',
+                'table' => '214',
+                'percentage' => 8,
+            ],
+            [
+                'division' => '002',
+                'table' => '187',
+                'percentage' => 6,
+            ],
+            [
+                'division' => '003',
+                'table' => '214',
+                'percentage' => 7.04,
+            ],
+            [
+                'division' => '003',
+                'table' => '187',
+                'percentage' => 6,
+            ],
+            [
+                'division' => '004',
+                'table' => '214',
+                'percentage' => 7.04,
+            ],
+            [
+                'division' => '004',
+                'table' => '187',
+                'percentage' => 6,
+            ],
+            [
+                'division' => '005',
+                'table' => '214',
+                'percentage' => 0,
+            ],
+            [
+                'division' => '005',
+                'table' => '187',
+                'percentage' => 0,
+            ],
+            [
+                'division' => '007',
+                'table' => '214',
+                'percentage' => 7,
+            ],
+            [
+                'division' => '007',
+                'table' => '187',
+                'percentage' => 7,
+            ],
+            [
+                'division' => '008',
+                'table' => '214',
+                'percentage' => 4,
+            ],
+            [
+                'division' => '008',
+                'table' => '187',
+                'percentage' => 4,
+            ],
+            [
+                'division' => '009',
+                'table' => '214',
+                'percentage' => 6,
+            ],
+            [
+                'division' => '009',
+                'table' => '187',
+                'percentage' => 6,
+            ],
+            [
+                'division' => '010',
+                'table' => '214',
+                'percentage' => 4,
+            ],
+            [
+                'division' => '010',
+                'table' => '187',
+                'percentage' => 4,
+            ],
+            [
+                'division' => '011',
+                'table' => '214',
+                'percentage' => 4,
+            ],
+            [
+                'division' => '011',
+                'table' => '187',
+                'percentage' => 4,
+            ],
+            [
+                'division' => '012',
+                'table' => '214',
+                'percentage' => 6,
+            ],
+            [
+                'division' => '012',
+                'table' => '187',
+                'percentage' => 6,
+            ],
+            [
+                'division' => '013',
+                'table' => '214',
+                'percentage' => 4,
+            ],
+            [
+                'division' => '013',
+                'table' => '187',
+                'percentage' => 4,
+            ],
+            [
+                'division' => '014',
+                'table' => '214',
+                'percentage' => 6,
+            ],
+            [
+                'division' => '014',
+                'table' => '187',
+                'percentage' => 6,
+            ],
+            [
+                'division' => '017',
+                'table' => '214',
+                'percentage' => 4,
+            ],
+            [
+                'division' => '017',
+                'table' => '187',
+                'percentage' => 4,
+            ],
+            [
+                'division' => '020',
+                'table' => '214',
+                'percentage' => 6,
+            ],
+            [
+                'division' => '020',
+                'table' => '187',
+                'percentage' => 6,
+            ],
+            [
+                'division' => '021',
+                'table' => '214',
+                'percentage' => 8,
+            ],
+            [
+                'division' => '021',
+                'table' => '187',
+                'percentage' => 8,
+            ],
+            [
+                'division' => '022',
+                'table' => '214',
+                'percentage' => 7,
+            ],
+            [
+                'division' => '022',
+                'table' => '187',
+                'percentage' => 7,
+            ],
+            [
+                'division' => 'L01',
+                'table' => '214',
+                'percentage' => 0,
+            ],
+            [
+                'division' => 'L01',
+                'table' => '187',
+                'percentage' => 0,
+            ],
+            [
+                'division' => 'indefinido',
+                'table' => '214',
+                'percentage' => 0,
+            ],
+            [
+                'division' => 'indefinido',
+                'table' => '187',
+                'percentage' => 0,
+            ],
+        ];
 
         foreach($search_data['value'][0]['produtos'] as $key => $product)
         {
@@ -72,64 +284,41 @@ class CommissionsController extends Controller
             ]);
             $product_division_data = json_decode($product_response->getBody()->getContents(), true);
             $division_code = $product_division_data['value'][0]['cod_divisao'];
+            $division_description = $product_division_data['value'][0]['descricao'];
 
-            // database table
-            $division_db_table = [
-                '0004' => 7, 
-                '0003' => 7,
-                'P01'  => 6,
-                '007'  => 6,
-                '009'  => 6,
-                '012'  => 6,
-                '014'  => 6,
-                '008'  => 4,
-                '011'  => 4,
-                '010'  => 4,
-                '016'  => 4,
-                '017'  => 4,
-                '018'  => 4,
-                '019'  => 4,
-            ];
-
-            $division_key = array_search($division_code, $division_db_table);
+            $division_key = searchForId($division_code, $table_code, $division_db);
 
             if($division_key)
-                $commission_percentage = $division_db_table[$division_key];
+                $commission_percentage = $division_db[$division_key]['percentage'];
 
-            $table_code = 214;
-
-            // table 214 (ID 4)
-            if($table_id == 4)
-            {
-                $table_code = 214;
-
+            if($table_code == 214) {
                 if($product_discount > 5)
-                {
                     $commission_amount = ($commission_amount / 2);
-                }
-                
             }
 
-            // table 187 (ID 216)
-            if($table_id == 216)
-            {
-                $commission_percentage = 6;
-                $table_code = 187;
-
+            if($table_code == 187) {
                 if($client_state != 'SP' && $product_discount < 5)
                     $commission_percentage = 4;
             }
 
             // commission amout
-            $commission_amount = ($product_price * $product_qty) * $commission_percentage;
+            $commission_amount = floor(($product_price * $product_qty) * $commission_percentage) / 100;
 
             $search_data['value'][0]['comissao_total'] += $commission_amount;
             $search_data['value'][0]['tabela_preco'] = $table_code;
+            $search_data['value'][0]['cliente_estado'] = $client_state;
+            $search_data['value'][0]['data'] = Carbon::createFromTimestamp($search_data['value'][0]['data'])->toDateTimeString(); ;
 
             // product data add
             $search_data['value'][0]['produtos'][$key]['produto_nome'] = $product_name;
             $search_data['value'][0]['produtos'][$key]['produto_comissao'] = $commission_amount;
+            $search_data['value'][0]['produtos'][$key]['produto_comissao_percentual'] = sprintf("%.2f%%", $commission_percentage);
+            $search_data['value'][0]['produtos'][$key]['produto_divisao'] = $division_description;
         }
+
+        $commission_percentage_average = sprintf("%.2f%%", $search_data['value'][0]['comissao_total'] / $search_data['value'][0]['total']);
+
+        $search_data['value'][0]['media_base_comissao'] = $commission_percentage_average;
 
         return view('tables-datatable-commissions', ['data' => $search_data]);
     }

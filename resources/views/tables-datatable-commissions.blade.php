@@ -1,18 +1,40 @@
-@extends('layouts.master')
+@extends('layouts.master-icon-sidebar')
 @section('title')
 @lang('translation.Datatables')
 @endsection
 @section('css')
     <!-- DataTables -->
     <link href="{{ URL::asset('assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
 @component('common-components.breadcrumb')
-    @slot('pagetitle') Tables @endslot
-    @slot('title') Pillow Tex @endslot
+    @slot('pagetitle') PillowTex @endslot
+    @slot('title') PillowTex @endslot
 @endcomponent
 
+    <div class="row">
+        <div class="col-md-4">
+            <div>
+                <h1 class="mb-3">Olá, {{Auth::user()->name}}!</h1>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="float-right">
+                <div class="form-inline mb-3">
+                    <div class="input-daterange input-group" data-provide="datepicker" data-date-format="dd M, yyyy" data-date-autoclose="true">
+                        <input type="text" class="form-control text-left" placeholder="De" name="From" />
+                        <input type="text" class="form-control text-left" placeholder="Até" name="To" />
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary"><i class="mdi mdi-filter-variant"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -33,8 +55,9 @@
                             <th>Representante</th>
                             <th>Tabela Preço</th>
                             <th>Valor Total</th>
-                            <th>Base %</th>
-                            <th>Comissão Total</th>
+                            <th>%</th>
+                            <th>Tipo</th>
+                            <th>Comissão</th>
                         </tr>
                         </thead>
 
@@ -43,15 +66,16 @@
                         @foreach($data['value'] as $odata)
                         <tr role="row" class="odd parent">
                             <td class="sorting_1 dtr-control">{{ $odata['romaneio'] }}</td>
-                            <td>{{  strftime("%d %b %Y",strtotime($odata['data'])) }}</td>
+                            <td>{{ $odata['data'] }}</td>
                             <td>{{ $odata['cliente'] }}</td>
                             <td>{{ $odata['cliente_nome'] }}</td>
                             <td>{{ $odata['cliente_estado'] }}</td>
                             <td>{{ $odata['representante_nome'] }}</td>
                             <td>{{ $odata['tabela_preco'] }}</td>
-                            <td>R${{ $odata['total'] }}</td>
-                            <td>{{ $odata['media_base_comissao'] }}%</td>
-                            <td>R${{ $odata['comissao_total'] }}</td>
+                            <td>R${{ number_format($odata['total'], 2, ',', '.') }}</td>
+                            <td>{{ $odata['media_base_comissao'] }}</td>
+                            <td>Dedução</td>
+                            <td>R${{ number_format($odata['comissao_total'], 2, ',', '.') }}</td>
                         </tr>
                         
                         <thead>
@@ -61,9 +85,11 @@
                             <th>Código</th>
                             <th>Nome</th>
                             <th>Quantidade</th>
-                            <th>Tipo</th>
+                            <th>Divisão</th>
                             <th>Preço</th>
                             <th>Preço Total</th>
+                            <th>Desconto</th>
+                            <th>%</th>
                             <th>Comissão</th>
                         </tr>
                         </thead>
@@ -77,10 +103,12 @@
                             <td>{{ $odata_product['produto'] }}</td>
                             <td>{{ $odata_product['produto_nome'] }}</td>
                             <td>{{ $odata_product['quantidade'] }}</td>
-                            <td>ZONACRIATIVA</td>
-                            <td>R${{ $odata_product['preco'] }}</td>
-                            <td>R${{ $odata_product['preco'] * $odata_product['quantidade'] }}</td>
-                            <td>R${{ $odata_product['produto_comissao'] }}</td>
+                            <td>{{ $odata_product['produto_divisao'] }}</td>
+                            <td>R${{ number_format($odata_product['preco'], 2, ',', '.') }}</td>
+                            <td>R${{ number_format($odata_product['preco'] * $odata_product['quantidade'], 2, ',', '.') }}</td>
+                            <td>{{ $odata_product['desconto'] }}</td>
+                            <td>{{ $odata_product['produto_comissao_percentual'] }}</td>
+                            <td>R${{ number_format($odata_product['produto_comissao'], 2, ',', '.') }}</td>
                         </tr>
                         @endforeach
                         

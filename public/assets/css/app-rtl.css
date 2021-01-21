@@ -3360,7 +3360,7 @@ a.ck.ck-button:not(.ck-disabled):hover {
   background: #343a40;
   color: #f8f9fa;
   font-family: "IBM Plex Sans", sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   padding: 5px 8px;
 }
 
@@ -4263,7 +4263,7 @@ dd {
 }
 
 .alert-dismissible {
-  padding-left: 3.85rem;
+  padding-left: 3.7rem;
   padding-right: 1.25rem;
 }
 

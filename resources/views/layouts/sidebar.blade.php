@@ -45,21 +45,21 @@
 
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
-                        <i class="uil-invoice"></i>
+                        <i class="uil-user-square"></i>
                         <span>@lang('translation.Customers')</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
-                        <i class="uil-calender"></i>
+                        <i class="uil-invoice"></i>
                         <span>@lang('translation.Orders')</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="uil-share-alt"></i>
+                        <i class="uil-money-withdrawal"></i>
                         <span>@lang('translation.Commissions')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
@@ -77,7 +77,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class=" waves-effect">
-                        <i class="uil-comments-alt"></i>
+                        <i class="uil-bag-alt"></i>
                         <span>@lang('translation.Sales')</span>
                     </a>
                 </li>

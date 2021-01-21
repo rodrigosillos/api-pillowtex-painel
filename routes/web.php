@@ -17,7 +17,9 @@ Auth::routes();
 
 // Route::get('{any}', 'HomeController@index');
 
-Route::get('/comissoes', 'CommissionsController@index');
+Route::prefix('pillowtex-painel')->group(function () {
+    Route::get('/comissoes', 'CommissionsController@index');
+});
 
 //Language Translation
 Route::get('index/{locale}', 'HomeController@lang');

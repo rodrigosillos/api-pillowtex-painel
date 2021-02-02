@@ -64,13 +64,15 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li><a href="/comissoes">@lang('translation.Calculate_Commission')</a></li>
-                        <li><a href="javascript: void(0);" class="has-arrow">@lang('translation.Settings')</a>
+                        <li><a href="/configurar-comissoes">@lang('translation.Settings')</a>
+                            <!--
                             <ul class="sub-menu" aria-expanded="true">
                                 <li><a href="javascript: void(0);">@lang('translation.Tables')</a></li>
                                 <li><a href="javascript: void(0);">@lang('translation.Discounts')</a></li>
                                 <li><a href="javascript: void(0);">@lang('translation.Commission_Percentage')</a></li>
                                 <li><a href="javascript: void(0);">@lang('translation.States')</a></li>
                             </ul>
+                            -->
                         </li>
                     </ul>
                 </li>

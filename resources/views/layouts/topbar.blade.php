@@ -91,25 +91,26 @@
                         <img src="{{ URL::asset('assets/images/flags/us.jpg')}}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">English</span>
                     </a>
                     
-                    <!-- item-->
+                    <!-- item
                     <a href="{{ url('index/es') }}" class="dropdown-item notify-item">
                         <img src="{{ URL::asset('assets/images/flags/spain.jpg')}}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Spanish</span>
-                    </a>
+                    </a>-->
 
-                    <!-- item-->
+                    <!-- item
                     <a href="{{ url('index/de') }}" class="dropdown-item notify-item">
                         <img src="{{ URL::asset('assets/images/flags/germany.jpg')}}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">German</span>
-                    </a>
+                    </a>-->
 
-                    <!-- item-->
+                    <!-- item
                     <a href="{{ url('index/it') }}" class="dropdown-item notify-item">
                         <img src="{{ URL::asset('assets/images/flags/italy.jpg')}}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Italian</span>
-                    </a>
+                    </a>-->
 
-                    <!-- item-->
+                    <!-- item
                     <a href="{{ url('index/ru') }}" class="dropdown-item notify-item">
                         <img src="{{ URL::asset('assets/images/flags/russia.jpg')}}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Russian</span>
                     </a>
+                    -->
                 </div>
             </div>
 

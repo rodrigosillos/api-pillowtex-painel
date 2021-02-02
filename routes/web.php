@@ -17,6 +17,7 @@ Auth::routes();
 
 // Route::get('{any}', 'HomeController@index');
 
+Route::get('/index', 'DashboardController@index');
 Route::get('/comissoes', 'CommissionsController@index');
 Route::get('/configurar-comissoes', 'SettingsController@index');
 Route::post('/consulta-comissoes', 'CommissionsController@getCommission');

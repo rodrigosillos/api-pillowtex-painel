@@ -1,10 +1,10 @@
-@extends('layouts.master')
+@extends('layouts.master-icon-sidebar')
 @section('title') @lang('translation.Dashboard') @endsection
 
 @section('content')
 @component('common-components.breadcrumb')
-    @slot('pagetitle') Minible @endslot
-    @slot('title') Dashboard @endslot
+    @slot('pagetitle') PillowTex @endslot
+    @slot('title') PillowTex @endslot
 @endcomponent 
 <div class="row">
     <div class="col-md-6 col-xl-3">

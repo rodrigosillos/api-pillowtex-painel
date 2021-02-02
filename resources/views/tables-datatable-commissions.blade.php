@@ -14,34 +14,37 @@
     @slot('title') PillowTex @endslot
 @endcomponent
 
-    <div class="row">
-        <div class="col-md-4">
-            <div>
-                <h1 class="mb-3">Olá, {{Auth::user()->name}}!</h1>
+    <form action="{{url('consulta-comissoes')}}" method="post">
+        {{ csrf_field() }}
+        <div class="row">
+            <div class="col-md-4">
+                <div>
+                    <h1 class="mb-3">Olá, {{Auth::user()->name}}!</h1>
+                </div>
             </div>
-        </div>
-        <div class="col-md-8">
-            <div class="float-right">
-                <div class="form-inline mb-3">
-                    <div class="input-daterange input-group" data-provide="datepicker" data-date-format="dd M, yyyy" data-date-autoclose="true">
-                        <input type="text" class="form-control text-left" placeholder="De" name="From" />
-                        <input type="text" class="form-control text-left" placeholder="Até" name="To" />
-                        <div class="input-group-append">
-                            <button type="button" class="btn btn-primary"><i class="mdi mdi-filter-variant"></i></button>
+            <div class="col-md-8">
+                <div class="float-right">
+                    <div class="form-inline mb-3">
+                        <div class="input-daterange input-group" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
+                            <input type="text" class="form-control text-left" placeholder="De" name="dateStart" />
+                            <input type="text" class="form-control text-left" placeholder="Até" name="dateEnd" />
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary"><i class="mdi mdi-filter-variant"></i></button>
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
-                
             </div>
         </div>
-    </div>
+    </form>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
 
                     <h4 class="card-title">Comissões</h4>
-                    <p class="card-title-desc">Descrição do Módulo Comissões.
+                    <p class="card-title-desc">Módulo Comissões.
                     </p>
 
                     <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -63,7 +66,7 @@
 
                         <tbody>
 
-                        @foreach($data['value'] as $odata)
+                        @foreach($data as $odata)
                         <tr role="row" class="odd parent">
                             <td class="sorting_1 dtr-control">{{ $odata['romaneio'] }}</td>
                             <td>{{ $odata['data'] }}</td>
@@ -77,42 +80,6 @@
                             <td>Dedução</td>
                             <td>R${{ number_format($odata['comissao_total'], 2, ',', '.') }}</td>
                         </tr>
-                        
-                        <thead>
-                        <tr class="child">
-                            <th>Pedido</th>
-                            <th>Nota Fiscal</th>
-                            <th>Código</th>
-                            <th>Nome</th>
-                            <th>Quantidade</th>
-                            <th>Divisão</th>
-                            <th>Preço</th>
-                            <th>Preço Total</th>
-                            <th>Desconto</th>
-                            <th>%</th>
-                            <th>Comissão</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-
-                        @foreach($data['value'][0]['produtos'] as $odata_product)
-                        <tr role="row" class="odd parent">
-                            <td>{{ $odata_product['pedido'] }}</td>
-                            <td>{{ $odata_product['nota'] }}</td>
-                            <td>{{ $odata_product['produto'] }}</td>
-                            <td>{{ $odata_product['produto_nome'] }}</td>
-                            <td>{{ $odata_product['quantidade'] }}</td>
-                            <td>{{ $odata_product['produto_divisao'] }}</td>
-                            <td>R${{ number_format($odata_product['preco'], 2, ',', '.') }}</td>
-                            <td>R${{ number_format($odata_product['preco'] * $odata_product['quantidade'], 2, ',', '.') }}</td>
-                            <td>{{ $odata_product['desconto'] }}</td>
-                            <td>{{ $odata_product['produto_comissao_percentual'] }}</td>
-                            <td>R${{ number_format($odata_product['produto_comissao'], 2, ',', '.') }}</td>
-                        </tr>
-                        @endforeach
-                        
-                        </tbody>
 
                         @endforeach
 

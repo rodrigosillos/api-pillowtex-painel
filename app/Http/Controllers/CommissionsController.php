@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class CommissionsController extends Controller
 {
@@ -23,10 +24,10 @@ class CommissionsController extends Controller
     {
         $client = new Client();
 
-        $user = "consultoria";
-        $pass = "Consult#2020";
+        $user = "pillowtex_adm";
+        $pass = "ABusters#94";
 
-        $response = $client->request('GET', 'http://pillowtex.bugbusters.me:6017/api/millenium/'.$method.$param, [
+        $response = $client->request('GET', 'http://177.85.33.76:6017/api/millenium/'.$method.$param, [
             'auth' => [$user, $pass]
         ]);
 
@@ -41,6 +42,26 @@ class CommissionsController extends Controller
             }
         }
         return null;
+    }
+
+    public function dataLoad()
+    {
+        $data = $this->connection('representantes/busca', '?$format=json');
+        
+        foreach($data['value'] as $value) {
+
+            if (!is_null($value['e_mail']) || !empty($value['e_mail']) || $value['e_mail'] != "") {
+                DB::table('users')->insert([
+                    [
+                        'name' => $value['nome'],
+                        'email' => $value['e_mail'],
+                        'email_verified_at' => null,
+                        'password' => '$2y$10$dNPoXhOEEy1eP4.UJeP8z.jvV01Vip59pJaVMpYVuhfi3qGj2q1Fi', //pillow2021@
+                        'remember_token' => null,
+                    ]
+                ]);
+            }
+        }
     }
 
     public function getCommission(Request $request)

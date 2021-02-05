@@ -46,20 +46,28 @@ class CommissionsController extends Controller
 
     public function dataLoad()
     {
+   
         $data = $this->connection('representantes/busca', '?$format=json');
         
         foreach($data['value'] as $value) {
 
             if (!is_null($value['e_mail']) || !empty($value['e_mail']) || $value['e_mail'] != "") {
-                DB::table('users')->insert([
-                    [
-                        'name' => $value['nome'],
-                        'email' => $value['e_mail'],
-                        'email_verified_at' => null,
-                        'password' => '$2y$10$dNPoXhOEEy1eP4.UJeP8z.jvV01Vip59pJaVMpYVuhfi3qGj2q1Fi', //pillow2021@
-                        'remember_token' => null,
-                    ]
-                ]);
+                
+                $users = DB::table('users')
+                ->where('email', '=', $value['e_mail'])
+                ->get();
+
+                if (count($users) == 0) {
+                    DB::table('users')->insert([
+                        [
+                            'name' => $value['nome'],
+                            'email' => $value['e_mail'],
+                            'email_verified_at' => null,
+                            'password' => '$2y$10$dNPoXhOEEy1eP4.UJeP8z.jvV01Vip59pJaVMpYVuhfi3qGj2q1Fi', //pillow2021@
+                            'remember_token' => null,
+                        ]
+                    ]);
+                }
             }
         }
     }

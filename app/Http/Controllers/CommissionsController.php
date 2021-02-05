@@ -102,7 +102,11 @@ class CommissionsController extends Controller
             // client
             $client_id = $search_data['value'][0]['cliente'];
             $client_data = $this->connection('clientes/consulta', '?cliente='.$client_id.'&$format=json');
-            $search_data['value'][0]['cliente_nome'] = $client_data['value'][0]['geradores'][0]['nome'];
+
+            $search_data['value'][0]['cliente_nome'] = "";
+
+            if(isset($client_data['value'][0]))
+                $search_data['value'][0]['cliente_nome'] = $client_data['value'][0]['geradores'][0]['nome'];
     
             // commission
             $table_id = $search_data['value'][0]['tabela'];

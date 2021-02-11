@@ -1,4 +1,5 @@
 FROM php:7.4-fpm
+COPY ./php.ini /usr/local/etc/php/php.ini
 
 # Arguments defined in docker-compose.yml
 ARG user

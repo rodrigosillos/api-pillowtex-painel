@@ -25,10 +25,10 @@ class CommissionsController extends Controller
     {
         $client = new Client();
 
-        $user = "pillowtex_adm";
+        $user = "administrator";
         $pass = "ABusters#94";
         //$environment = 'http://pillowtex.bugbusters.me:6017/api/millenium/';
-        $environment = 'http://177.85.33.76:6017/api/millenium/';
+        $environment = 'http://189.113.4.250:6017/api/millenium/';
         $type = 'GET';
 
         $response = $client->request($type, $environment.$method.$param, [
@@ -50,8 +50,12 @@ class CommissionsController extends Controller
 
     public function dataLoad()
     {
-        $data = $this->connection('representantes/busca', '?$format=json');
+        $data = $this->connection('clientes/procura', '?dataci=2021-02-01&datacf=2021-02-01&$format=json');
+        dd($data);
         
+        /*
+        $data = $this->connection('representantes/busca', '?$format=json');
+
         foreach($data['value'] as $value) {
 
             if (!is_null($value['e_mail']) || !empty($value['e_mail']) || $value['e_mail'] != "") {
@@ -75,6 +79,7 @@ class CommissionsController extends Controller
                 }
             }
         }
+        */
     }
 
     public function getCommission(Request $request)

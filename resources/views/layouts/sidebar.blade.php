@@ -64,6 +64,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li><a href="/comissoes">@lang('translation.Calculate_Commission')</a></li>
+                        <li><a href="/representantes">@lang('translation.Agents')</a>
                         <li><a href="/configurar-comissoes">@lang('translation.Settings')</a>
                             <!--
                             <ul class="sub-menu" aria-expanded="true">

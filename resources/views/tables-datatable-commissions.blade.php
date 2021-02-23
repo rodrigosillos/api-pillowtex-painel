@@ -44,8 +44,7 @@
                 <div class="card-body">
 
                     <h4 class="card-title">Comissões</h4>
-                    <p class="card-title-desc">Módulo Comissões.
-                    </p>
+                    <p class="card-title-desc">Módulo Comissões.</p>
 
                     <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
@@ -69,7 +68,7 @@
                         @foreach($data as $odata)
                         <tr role="row" class="odd parent">
                             <td class="sorting_1 dtr-control">{{ $odata['romaneio'] }}</td>
-                            <td>{{ $odata['data'] }}</td>
+                            <td>{{ $odata['data_emissao'] }}</td>
                             <td>{{ $odata['cliente'] }}</td>
                             <td>{{ $odata['cliente_nome'] }}</td>
                             <td>{{ $odata['cliente_estado'] }}</td>

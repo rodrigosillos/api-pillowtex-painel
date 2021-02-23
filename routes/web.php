@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/index', 'DashboardController@index');
 Route::get('/comissoes', 'CommissionsController@index');
-Route::get('/carga-comissoes', 'CommissionsController@dataLoad');
+Route::get('/representantes', 'CommissionsController@getAgents');
 Route::get('/configurar-comissoes', 'SettingsController@index');
 Route::get('/consulta-config', 'SettingsController@get');
 Route::post('/consulta-comissoes', 'CommissionsController@getCommission');

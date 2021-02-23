@@ -148,6 +148,7 @@ return [
   "Discounts"=> "Descontos",
   "Commission_Percentage"=> "Percentual Comissão",
   "States"=> "Estados",
+  "Agents"=> "Representantes",
 ];
 
 ?>

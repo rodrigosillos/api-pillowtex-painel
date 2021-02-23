@@ -3,8 +3,8 @@
 include('call-api.php');
 
 $dataListaMovimentacao = [
-    'datai' => '2021-01-10',
-    'dataf' => '2021-01-10',
+    'datai' => '2021-01-01',
+    'dataf' => '2021-02-23',
     '$format' => 'json',
     'tipo_operacao' => 'S',
 ];

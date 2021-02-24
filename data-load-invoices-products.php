@@ -3,8 +3,8 @@
 include('call-api.php');
 
 $dataListaMovimentacao = [
-    'datai' => '2021-01-01',
-    'dataf' => '2021-02-23',
+    'datai' => '2021-01-20',
+    'dataf' => '2021-01-20',
     '$format' => 'json',
     'tipo_operacao' => 'S',
 ];
@@ -27,6 +27,8 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
 
     $responseConsultaMovimentacao = CallAPI('GET', 'movimentacao/consulta', $dataConsultaMovimentacao);
     $resultConsultaMovimentacao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaMovimentacao), true);
+
+    $invoiceFilial = $resultConsultaMovimentacao['value'][0]['filial'];
 
     foreach($resultConsultaMovimentacao['value'][0]['produtos'] as $valueProduct) {
 
@@ -78,32 +80,36 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
             'discount' => $valueProduct['desconto'],
         ];
     
-        $sql  = "INSERT INTO invoices_product (
-                                            document,
-                                            order_id, 
-                                            invoice, 
-                                            product_id,
-                                            product_name,
-                                            division_id,
-                                            division_code,
-                                            division_description,
-                                            quantity,
-                                            price, 
-                                            discount) VALUES (
-                                                            :document,
-                                                            :order_id,
-                                                            :invoice,
-                                                            :product_id,
-                                                            :product_name,
-                                                            :division_id,
-                                                            :division_code,
-                                                            :division_description,
-                                                            :quantity,
-                                                            :price,
-                                                            :discount)";
+        if($invoiceFilial == 12 || $invoiceFilial == 16) {
 
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute($data);
+            $sql  = "INSERT INTO invoices_product (
+                                                document,
+                                                order_id, 
+                                                invoice, 
+                                                product_id,
+                                                product_name,
+                                                division_id,
+                                                division_code,
+                                                division_description,
+                                                quantity,
+                                                price, 
+                                                discount) VALUES (
+                                                                :document,
+                                                                :order_id,
+                                                                :invoice,
+                                                                :product_id,
+                                                                :product_name,
+                                                                :division_id,
+                                                                :division_code,
+                                                                :division_description,
+                                                                :quantity,
+                                                                :price,
+                                                                :discount)";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($data);
+
+        }
 
     }
 

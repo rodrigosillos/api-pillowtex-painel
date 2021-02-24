@@ -8,6 +8,7 @@ use App;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Illuminate\Support\Str;
 
 class CommissionsController extends Controller
 {
@@ -56,13 +57,21 @@ class CommissionsController extends Controller
         ->where('id', '=', Auth::user()->id)
         ->get();
 
-        if (isset($users[0]))
+        if(isset($users[0])) {
             $agentId = $users[0]->agent_id;
+            $userProfileId = $users[0]->user_profile_id;
+        }
 
-        $invoices = DB::table('invoices')
-           ->whereBetween('issue_date', [$dateStart, $dateEnd])
-           ->where('agent_id', $agentId)
-           ->get();
+        if($userProfileId == 1) { // admin
+            $invoices = DB::table('invoices')
+            ->whereBetween('issue_date', [$dateStart, $dateEnd])
+            ->get();
+        } elseif($userProfileId == 3) { // agent
+            $invoices = DB::table('invoices')
+            ->whereBetween('issue_date', [$dateStart, $dateEnd])
+            ->where('agent_id', $agentId)
+            ->get();
+        }
 
         $commissionResult = [];
 
@@ -73,7 +82,7 @@ class CommissionsController extends Controller
             $commissionResult[$invoiceKey]['romaneio'] = $invoice->document;
             $commissionResult[$invoiceKey]['data_emissao'] = date_format($issueDate, "d/m/Y");
             $commissionResult[$invoiceKey]['cliente'] = $invoice->client_id;
-            $commissionResult[$invoiceKey]['cliente_nome'] = $invoice->client_name;
+            $commissionResult[$invoiceKey]['cliente_nome'] = Str::limit($invoice->client_name, 40, $end='...');
             $commissionResult[$invoiceKey]['cliente_estado'] = $invoice->client_address;
             $commissionResult[$invoiceKey]['representante_nome'] = $invoice->agent_name;
             $commissionResult[$invoiceKey]['tabela_preco'] = $invoice->price_list;
@@ -297,7 +306,6 @@ class CommissionsController extends Controller
             ->where('document', $invoice->document)
             ->get();
 
-            //dd($invoiceProducts);
             foreach($invoiceProducts as $invoiceProductKey => $invoiceProduct) {
 
                 $productId = $invoiceProduct->product_id;
@@ -328,7 +336,6 @@ class CommissionsController extends Controller
     
                 $commissionResult[$invoiceKey]['comissao_total'] += $commissionAmount;
                 $commissionResult[$invoiceKey]['tabela_preco'] = $tableCode;
-                $commissionResult[$invoiceKey]['cliente_estado'] = '';
     
                 // product data add
                 $commissionResult[$invoiceKey]['produtos'][$invoiceProductKey]['produto_nome'] = $productName;

@@ -3,8 +3,8 @@
 include('call-api.php');
 
 $dataListaMovimentacao = [
-    'datai' => '2021-01-01',
-    'dataf' => '2021-02-23',
+    'datai' => '2021-01-20',
+    'dataf' => '2021-01-20',
     '$format' => 'json',
     'tipo_operacao' => 'S',
 ];
@@ -27,6 +27,8 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
 
     $responseConsultaMovimentacao = CallAPI('GET', 'movimentacao/consulta', $dataConsultaMovimentacao);
     $resultConsultaMovimentacao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaMovimentacao), true);
+
+    $invoiceFilial = $resultConsultaMovimentacao['value'][0]['filial'];
 
     $issue_date = date_create($resultConsultaMovimentacao['value'][0]['data']);
     $issue_date = date_format($issue_date, "Y-m-d H:i:s");
@@ -74,32 +76,36 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
         'invoice_type' => 'Dedução',
     ];
 
-    $sql  = "INSERT INTO invoices (
-                                operation_code,
-                                document,
-                                issue_date, 
-                                client_id, 
-                                client_name, 
-                                client_address, 
-                                agent_id,
-                                agent_name,
-                                price_list,
-                                amount, 
-                                invoice_type) VALUES (
-                                                    :operation_code,
-                                                    :document,
-                                                    :issue_date,
-                                                    :client_id,
-                                                    :client_name,
-                                                    :client_name,
-                                                    :agent_id,
-                                                    :agent_name,
-                                                    :price_list,
-                                                    :amount,
-                                                    :invoice_type)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($data);
+    if($invoiceFilial == 12 || $invoiceFilial == 16) {
 
+        $sql  = "INSERT INTO invoices (
+            operation_code,
+            document,
+            issue_date, 
+            client_id, 
+            client_name, 
+            client_address, 
+            agent_id,
+            agent_name,
+            price_list,
+            amount, 
+            invoice_type) VALUES (
+                                :operation_code,
+                                :document,
+                                :issue_date,
+                                :client_id,
+                                :client_name,
+                                :client_address,
+                                :agent_id,
+                                :agent_name,
+                                :price_list,
+                                :amount,
+                                :invoice_type)";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($data);
+
+    }
 }
 
 $pdo = null;

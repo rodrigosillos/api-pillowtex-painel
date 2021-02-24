@@ -44,6 +44,14 @@ class DatabaseSeeder extends Seeder
                 'remember_token' => null,
                 'user_profile_id' => 1,
             ],
+            [
+                'name' => 'Sulivan Mariotti',
+                'email' => 'sulivan.mariotti@bugbusters.com.br',
+                'email_verified_at' => null,
+                'password' => '$2y$10$6i2mDhx4blyVk7VKpXOSi.JKvUEXQ/7El9jecGEcYXIjOnkQnoKmq',
+                'remember_token' => null,
+                'user_profile_id' => 1,
+            ],
         ]);
     }
 }

@@ -19,7 +19,7 @@ class CommissionsController extends Controller
 
     public function index(Request $request)
     {
-        return view('tables-datatable-commissions', ['data' => []]);
+        return view('invoices-list-commissions', ['invoices' => []]);
     }
 
     public function connection($method, $param)

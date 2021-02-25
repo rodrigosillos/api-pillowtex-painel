@@ -46,13 +46,13 @@
                     <h4 class="card-title">Comissões</h4>
                     <p class="card-title-desc">Módulo Comissões.</p>
 
-                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>
                             <th>Documento</th>
                             <th>Emissão</th>
-                            <th>Código</th>
-                            <th>Nome</th>
+                            <th>Cód. Cliente</th>
+                            <th>Nome Cliente</th>
                             <th>UF</th>
                             <th>Representante</th>
                             <th>Tabela Preço</th>
@@ -84,6 +84,7 @@
 
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div> <!-- end col -->

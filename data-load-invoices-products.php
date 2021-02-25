@@ -2,11 +2,13 @@
 
 include('call-api.php');
 
+$operationType = 'E'; // Entrada / Saida
+
 $dataListaMovimentacao = [
     'datai' => '2021-01-20',
     'dataf' => '2021-01-20',
     '$format' => 'json',
-    'tipo_operacao' => 'S',
+    'tipo_operacao' => $operationType,
 ];
 
 $responseListaMovimentacao = CallAPI('GET', 'movimentacao/lista_movimentacao', $dataListaMovimentacao);
@@ -18,7 +20,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
     
     $dataConsultaMovimentacao = [
-        'tipo_operacao' => 'S',
+        'tipo_operacao' => $operationType,
         'cod_operacao' => $valueListaMovimentacao['cod_operacao'],
         'ujuros' => 'false',
         '$format' => 'json',

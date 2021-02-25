@@ -2,11 +2,13 @@
 
 include('call-api.php');
 
+$operationType = 'E'; // Entrada / Saida
+
 $dataListaMovimentacao = [
     'datai' => '2021-01-20',
     'dataf' => '2021-01-20',
     '$format' => 'json',
-    'tipo_operacao' => 'S',
+    'tipo_operacao' => $operationType,
 ];
 
 $responseListaMovimentacao = CallAPI('GET', 'movimentacao/lista_movimentacao', $dataListaMovimentacao);
@@ -18,7 +20,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
     
     $dataConsultaMovimentacao = [
-        'tipo_operacao' => 'S',
+        'tipo_operacao' => $operationType,
         'cod_operacao' => $valueListaMovimentacao['cod_operacao'],
         'ujuros' => 'false',
         '$format' => 'json',
@@ -74,6 +76,7 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
         'price_list' => $resultConsultaMovimentacao['value'][0]['tabela'],
         'amount' => $resultConsultaMovimentacao['value'][0]['total'],
         'invoice_type' => 'Dedução',
+        'operation_type' => $operationType,
     ];
 
     if($invoiceFilial == 12 || $invoiceFilial == 16) {
@@ -89,7 +92,8 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
             agent_name,
             price_list,
             amount, 
-            invoice_type) VALUES (
+            invoice_type,
+            operation_type) VALUES (
                                 :operation_code,
                                 :document,
                                 :issue_date,
@@ -100,7 +104,8 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
                                 :agent_name,
                                 :price_list,
                                 :amount,
-                                :invoice_type)";
+                                :invoice_type,
+                                :operation_type)";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute($data);

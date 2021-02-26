@@ -14,7 +14,7 @@ class UserProfileIdToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('user_profile_id')->default(3);
+            $table->integer('user_profile_id')->default(1);
         });
     }
 

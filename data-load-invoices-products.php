@@ -5,8 +5,8 @@ include('call-api.php');
 $operationType = 'E'; // Entrada / Saida
 
 $dataListaMovimentacao = [
-    'datai' => '2021-01-20',
-    'dataf' => '2021-01-20',
+    'datai' => '2021-01-01',
+    'dataf' => '2021-01-31',
     '$format' => 'json',
     'tipo_operacao' => $operationType,
 ];

@@ -105,7 +105,7 @@
                                 {{ $invoice['media_base_comissao'] }}
                             </td>
                             <td>
-                                <div class="badge badge-soft-success font-size-12">Dedução</div>
+                                <div class="badge badge-soft-{{ $invoice['tipo_operacao_cor'] }} font-size-12">{{ $invoice['tipo_operacao'] }}</div>
                             </td>
                             <td>
                                 R${{ number_format($invoice['comissao_total'], 2, ',', '.') }}

@@ -88,6 +88,12 @@ class CommissionsController extends Controller
             $commissionResult[$invoiceKey]['representante_nome'] = Str::limit($invoice->agent_name, 40, $end='...');
             $commissionResult[$invoiceKey]['tabela_preco'] = $invoice->price_list;
             $commissionResult[$invoiceKey]['total'] = $invoice->amount;
+            $commissionResult[$invoiceKey]['tipo_operacao'] = $invoice->operation_type == 'E' ? 'Dedução' : 'S';
+
+            $commissionResult[$invoiceKey]['tipo_operacao_cor'] = 'warning';
+            
+            if($invoice->operation_type == 'S')
+                $commissionResult[$invoiceKey]['tipo_operacao_cor'] = 'success';
 
             // commission
             $tableId = $invoice->price_list;

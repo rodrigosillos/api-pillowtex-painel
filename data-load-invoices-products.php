@@ -2,7 +2,7 @@
 
 include('call-api.php');
 
-$operationType = 'E'; // Entrada / Saida
+$operationType = 'S'; // Entrada / Saida
 
 $dataListaMovimentacao = [
     'datai' => '2021-01-01',

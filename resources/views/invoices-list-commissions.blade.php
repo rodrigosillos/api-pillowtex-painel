@@ -68,7 +68,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($invoices as $key => $invoice)
+                        @foreach($invoices['data'] as $key => $invoice)
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox text-center">
@@ -99,7 +99,7 @@
                                 {{ $invoice['tabela_preco'] }}
                             </td>
                             <td>
-                                {{ number_format($invoice['total'], 2, ',', '.') }}
+                                R${{ number_format($invoice['total'], 2, ',', '.') }}
                             </td>
                             <td>
                                 {{ $invoice['media_base_comissao'] }}
@@ -120,6 +120,14 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h2 class="mb-3">Valor Total Venda: R${{ number_format($invoices['totalizador']['valor_venda'], 2, ',', '.') }}</h2>
+        </div>
+        <div class="col-lg-6">
+            <h2 class="mb-3">Valor Total Comissão: R${{ number_format($invoices['totalizador']['valor_comissao'], 2, ',', '.') }}</h2>
         </div>
     </div>
     <!-- end row -->

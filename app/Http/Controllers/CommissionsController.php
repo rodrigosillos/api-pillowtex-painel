@@ -19,7 +19,14 @@ class CommissionsController extends Controller
 
     public function index(Request $request)
     {
-        return view('invoices-list-commissions', ['invoices' => []]);
+        return view('invoices-list-commissions', ['invoices' => [
+            'data' => [],
+            'totalizador' => [
+                'valor_venda' => 0,
+                'valor_comissao' => 0,
+                ],
+            ]
+        ]);
     }
 
     public function connection($method, $param)

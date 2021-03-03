@@ -371,8 +371,10 @@ class CommissionsController extends Controller
     
                 }
     
-                $commissionResult['totalizador']['valor_comissao'] += $commissionResult['data'][$invoiceKey]['comissao_total'];
-                $commissionResult['totalizador']['valor_venda'] += $commissionResult['data'][$invoiceKey]['total'];
+                if($invoice->operation_type != 'E') {
+                    $commissionResult['totalizador']['valor_comissao'] += $commissionResult['data'][$invoiceKey]['comissao_total'];
+                    $commissionResult['totalizador']['valor_venda'] += $commissionResult['data'][$invoiceKey]['total'];
+                }
     
                 $commissionPercentageAverage = 0;
     

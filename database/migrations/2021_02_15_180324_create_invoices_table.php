@@ -27,6 +27,9 @@ class CreateInvoicesTable extends Migration
             $table->decimal('amount', $precision = 8, $scale = 2)->nullable();
             $table->string('invoice_type')->nullable();
             $table->string('operation_type', 1)->nullable();
+            $table->string('canceled', 10)->nullable();
+            $table->string('order_code')->nullable();
+            $table->string('invoice')->nullable();
             $table->timestamps();
         });
     }

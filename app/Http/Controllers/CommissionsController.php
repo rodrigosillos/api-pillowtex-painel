@@ -81,13 +81,13 @@ class CommissionsController extends Controller
             ->get();
         }
 
-        $commissionResult = [];
+        $commissionResult['data'] = [];
         $commissionResult['totalizador']['valor_venda'] = 0;
         $commissionResult['totalizador']['valor_comissao'] = 0;
 
         foreach($invoices as $invoiceKey => $invoice) {
 
-            if($invoice->client_id != null || $invoice->client_id != null){
+            if($invoice->client_id != null || $invoice->client_id != null || $invoice->canceled == false){
 
                 $issueDate = date_create($invoice->issue_date);
 
@@ -100,6 +100,9 @@ class CommissionsController extends Controller
                 $commissionResult['data'][$invoiceKey]['tabela_preco'] = $invoice->price_list;
                 $commissionResult['data'][$invoiceKey]['total'] = $invoice->amount;
                 $commissionResult['data'][$invoiceKey]['tipo_operacao'] = $invoice->operation_type == 'E' ? 'Dedução' : 'S';
+                $commissionResult['data'][$invoiceKey]['nota_fiscal'] = $invoice->invoice;
+                $commissionResult['data'][$invoiceKey]['pedido_codigo'] = $invoice->order_code;
+                $commissionResult['data'][$invoiceKey]['pedido_tipo'] = $invoice->invoice_type;
     
                 $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'warning';
                 
@@ -121,7 +124,7 @@ class CommissionsController extends Controller
                 if($tableId == 216)
                     $tableCode = 187;
         
-                $commissionPercentage = 8;
+                $commissionPercentage = 0;
                 $commissionAmount = 0;
                 $commissionResult['data'][$invoiceKey]['comissao_total'] = 0;
     

@@ -53,17 +53,20 @@
                                     <label class="custom-control-label" for="invoicecheck"></label>
                                 </div>
                             </th>
-                            <th>Documento</th>
+                            <th>NF</th>
                             <th>Emissão</th>
                             <th>Cód. Cliente</th>
                             <th>Nome Cliente</th>
-                            <th>UF</th>
-                            <th>Representante</th>
-                            <th>Tabela Preço</th>
+                            <th>Tipo Pedido</th>
+                            <th>Cod Pedido</th>
                             <th>Valor Total</th>
                             <th>%</th>
                             <th>Tipo</th>
                             <th>Comissão</th>
+                            <th>UF</th>
+                            <th>Representante</th>
+                            <th>Tabela Preço</th>
+                            <th>Documento</th>
                             <th style="width: 120px;">Ações</th>
                         </tr>
                     </thead>
@@ -76,28 +79,24 @@
                                     <label class="custom-control-label" for="invoicecheck{{ $key }}"></label>
                                 </div>
                             </td>
-                            
                             <td>
-                                <a href="consulta-produtos/{{ $invoice['romaneio'] }}" target="_blank" class="text-dark font-weight-bold">#{{ $invoice['romaneio'] }}</a> 
+                                <a href="consulta-produtos/{{ $invoice['romaneio'] }}" target="_blank" class="text-dark font-weight-bold">#{{ $invoice['nota_fiscal'] }}</a>
                             </td>
                             <td>
                                 {{ $invoice['data_emissao'] }}
-                            </td>
+                            </td>      
                             <td>
                                 {{ $invoice['cliente'] }}
                             </td>
                             <td>
                                 {{ $invoice['cliente_nome'] }}
+                            </td>       
+                            <td>
+                                {{ $invoice['pedido_tipo'] }}
                             </td>
                             <td>
-                                {{ $invoice['cliente_estado'] }}
-                            </td>
-                            <td>
-                                {{ $invoice['representante_nome'] }}
-                            </td>
-                            <td>
-                                {{ $invoice['tabela_preco'] }}
-                            </td>
+                                {{ $invoice['pedido_codigo'] }}
+                            </td>   
                             <td>
                                 @if ($invoice['tipo_operacao_cor'] == 'warning') - @endif R${{ number_format($invoice['total'], 2, ',', '.') }}
                             </td>
@@ -109,8 +108,19 @@
                             </td>
                             <td>
                             @if ($invoice['tipo_operacao_cor'] == 'warning') - @endif R${{ number_format($invoice['comissao_total'], 2, ',', '.') }}
+                            </td>          
+                            <td>
+                                {{ $invoice['cliente_estado'] }}
                             </td>
-                            
+                            <td>
+                                {{ $invoice['representante_nome'] }}
+                            </td>
+                            <td>
+                                {{ $invoice['tabela_preco'] }}
+                            </td>
+                            <td>
+                                {{ $invoice['romaneio'] }} 
+                            </td>
                             <td>
                                 <a href="consulta-produtos/{{ $invoice['romaneio'] }}" target="_blank" class="px-3 text-primary" data-toggle="tooltip" data-placement="top" title="Detalhes"><i class="uil uil-search-plus font-size-18"></i></a>
                                 <a href="javascript:void(0);" class="px-3 text-primary" data-toggle="tooltip" data-placement="top" title="Editar"><i class="uil uil-pen font-size-18"></i></a>

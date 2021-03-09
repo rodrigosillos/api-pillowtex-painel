@@ -6,7 +6,7 @@ $operationType = 'S'; // Entrada (Dedução) / Saida (Faturamento 50% / Substitu
 
 $dataListaMovimentacao = [
     'datai' => '2021-01-01',
-    'dataf' => '2021-01-31',
+    'dataf' => '2021-01-04',
     '$format' => 'json',
     'tipo_operacao' => $operationType,
 ];
@@ -31,6 +31,27 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
     $resultConsultaMovimentacao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaMovimentacao), true);
 
     $invoiceFilial = $resultConsultaMovimentacao['value'][0]['filial'];
+    $orderId = $resultConsultaMovimentacao['value'][0]['produtos'][0]['pedido'];
+    $orderCode = '';
+    $invoice = '';
+    $invoiceType = '';
+
+    if($orderId != null) {
+
+        $dataConsultaPedidoVenda = [
+            'pedidov' => $orderId,
+            '$format' => 'json',
+            '$dateformat' => 'iso',
+        ];
+
+        $responseConsultaPedidoVenda = CallAPI('GET', 'pedido_venda/consulta_simples', $dataConsultaPedidoVenda);
+        $resultConsultaPedidoVenda = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaPedidoVenda), true);
+
+        $orderCode = $resultConsultaPedidoVenda['value'][0]['cod_pedidov'];
+        $invoice = $resultConsultaPedidoVenda['value'][0]['notas'];
+        $invoiceType = $resultConsultaPedidoVenda['value'][0]['tipo_pedido'];
+
+    }
 
     $issue_date = date_create($resultConsultaMovimentacao['value'][0]['data']);
     $issue_date = date_format($issue_date, "Y-m-d H:i:s");
@@ -75,8 +96,11 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
         'agent_name' => $agent_name,
         'price_list' => $resultConsultaMovimentacao['value'][0]['tabela'],
         'amount' => $resultConsultaMovimentacao['value'][0]['total'],
-        'invoice_type' => 'Dedução',
+        'invoice_type' => $invoiceType,
         'operation_type' => $operationType,
+        'canceled' => $resultConsultaMovimentacao['value'][0]['cancelada'],
+        'order_code' => $orderCode,
+        'invoice' => $invoice,
     ];
 
     if($invoiceFilial == 12 || $invoiceFilial == 16) {
@@ -93,19 +117,25 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
             price_list,
             amount, 
             invoice_type,
-            operation_type) VALUES (
-                                :operation_code,
-                                :document,
-                                :issue_date,
-                                :client_id,
-                                :client_name,
-                                :client_address,
-                                :agent_id,
-                                :agent_name,
-                                :price_list,
-                                :amount,
-                                :invoice_type,
-                                :operation_type)";
+            operation_type,
+            canceled,
+            order_code,
+            invoice) VALUES (
+                            :operation_code,
+                            :document,
+                            :issue_date,
+                            :client_id,
+                            :client_name,
+                            :client_address,
+                            :agent_id,
+                            :agent_name,
+                            :price_list,
+                            :amount,
+                            :invoice_type,
+                            :operation_type,
+                            :canceled,
+                            :order_code,
+                            :invoice)";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute($data);

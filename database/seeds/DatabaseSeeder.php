@@ -69,5 +69,27 @@ class DatabaseSeeder extends Seeder
                 'user_profile_id' => 1,
             ],
         ]);
+
+        /*
+        DB::table('invoices')->insert([
+            [
+                'operation_code' => '',
+                'document' => '',
+                'issue_date' => '',
+                'client_id' => '',
+                'client_address' => '',
+                'agent_id' => '',
+                'price_list' => '',
+                'amount' => '',
+                'invoice_type' => '',
+                'operation_type' => '',
+                'canceled' => '',
+                'order_code' => '',
+                'invoice' => '',
+                'client_name' => '',
+                'agent_name,' => '',
+            ],
+        ]);
+        */
     }
 }

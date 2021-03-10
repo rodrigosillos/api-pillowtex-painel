@@ -1,27 +1,21 @@
 <?php
 
 include('call-api.php');
+include('connection-db.php');
 
-$operationType = 'E'; // Entrada (Dedução) / Saida (Faturamento 50% / Substituição / Liquidição)
+$sql = "select operation_code from invoices";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$invoicesAgents = $stmt->fetchAll();
 
-$dataListaMovimentacao = [
-    'datai' => '2021-01-01',
-    'dataf' => '2021-01-31',
-    '$format' => 'json',
-    'tipo_operacao' => $operationType,
-];
+$operationType = 'S';
 
-$responseListaMovimentacao = CallAPI('GET', 'movimentacao/lista_movimentacao', $dataListaMovimentacao);
-$resultListaMovimentacao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseListaMovimentacao), true);
+foreach ($invoicesAgents as $invoice__) {
+    $operationCode = $invoice__["operation_code"];
 
-$pdo = new PDO('mysql:host=db;dbname=pillowtex', 'root', 'qcLkozSAB3L4rp2TTUN7rJVlJa9C1CTb9hcdSLhcuiA=');
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
-    
     $dataConsultaMovimentacao = [
         'tipo_operacao' => $operationType,
-        'cod_operacao' => $valueListaMovimentacao['cod_operacao'],
+        'cod_operacao' => $operationCode,
         'ujuros' => 'false',
         '$format' => 'json',
         '$dateformat' => 'iso',
@@ -30,7 +24,13 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
     $responseConsultaMovimentacao = CallAPI('GET', 'movimentacao/consulta', $dataConsultaMovimentacao);
     $resultConsultaMovimentacao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaMovimentacao), true);
 
-    $invoiceFilial = $resultConsultaMovimentacao['value'][0]['filial'];
+    $invoiceFilial = 0;
+    $invoiceAgent = 0;
+
+    if ($resultConsultaMovimentacao['odata.count'] > 0) {
+        $invoiceFilial = $resultConsultaMovimentacao['value'][0]['filial'];
+        $invoiceAgent = $resultConsultaMovimentacao['value'][0]['representante'];
+    }
 
     foreach($resultConsultaMovimentacao['value'][0]['produtos'] as $valueProduct) {
 
@@ -69,6 +69,7 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
         }
 
         $data = [
+            'operation_code' => $operationCode,
             'document' => $resultConsultaMovimentacao['value'][0]['romaneio'],
             'order_id' => $valueProduct['pedido'],
             'invoice' => $valueProduct['nota'],
@@ -81,37 +82,35 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
             'price' => $valueProduct['preco'],
             'discount' => $valueProduct['desconto'],
         ];
-    
-        if($invoiceFilial == 12 || $invoiceFilial == 16) {
 
-            $sql  = "INSERT INTO invoices_product (
-                                                document,
-                                                order_id, 
-                                                invoice, 
-                                                product_id,
-                                                product_name,
-                                                division_id,
-                                                division_code,
-                                                division_description,
-                                                quantity,
-                                                price, 
-                                                discount) VALUES (
-                                                                :document,
-                                                                :order_id,
-                                                                :invoice,
-                                                                :product_id,
-                                                                :product_name,
-                                                                :division_id,
-                                                                :division_code,
-                                                                :division_description,
-                                                                :quantity,
-                                                                :price,
-                                                                :discount)";
+        $sql  = "INSERT INTO invoices_product (
+                                            operation_code,
+                                            document,
+                                            order_id, 
+                                            invoice, 
+                                            product_id,
+                                            product_name,
+                                            division_id,
+                                            division_code,
+                                            division_description,
+                                            quantity,
+                                            price, 
+                                            discount) VALUES (
+                                                            :operation_code,
+                                                            :document,
+                                                            :order_id,
+                                                            :invoice,
+                                                            :product_id,
+                                                            :product_name,
+                                                            :division_id,
+                                                            :division_code,
+                                                            :division_description,
+                                                            :quantity,
+                                                            :price,
+                                                            :discount)";
 
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute($data);
-
-        }
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($data);
 
     }
 

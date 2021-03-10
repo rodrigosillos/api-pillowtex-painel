@@ -91,6 +91,7 @@ class CommissionsController extends Controller
 
                 $issueDate = date_create($invoice->issue_date);
 
+                $commissionResult['data'][$invoiceKey]['operacao_codigo'] = $invoice->operation_code;
                 $commissionResult['data'][$invoiceKey]['romaneio'] = $invoice->document;
                 $commissionResult['data'][$invoiceKey]['data_emissao'] = date_format($issueDate, "d/m/Y");
                 $commissionResult['data'][$invoiceKey]['cliente'] = $invoice->client_id;
@@ -426,7 +427,9 @@ class CommissionsController extends Controller
 
         $commissionPercentage = 8;
         $commissionAmount = 0;
-        $commissionResult = [];
+        $commissionResult = [
+            'produtos' => [],
+        ];
         
         // products
         $invoiceProducts = DB::table('invoices_product')
@@ -625,7 +628,7 @@ class CommissionsController extends Controller
                 'table' => '187',
                 'percentage' => 0,
             ],
-        ];        
+        ];
 
         foreach($invoiceProducts as $invoiceProductKey => $invoiceProduct) {
 
@@ -695,5 +698,296 @@ class CommissionsController extends Controller
         }
 
         return view('tables-datatable-agents', ['data' => $agentsResult]);
+    }
+
+    public function getDebtors(Request $request)
+    {
+        $operationCode = $request->operation_code;
+        $resultDebtors = [
+            'data' => [],
+        ];
+
+        $commissionDebtors = 0;
+
+        
+        $debtors = DB::table('debtors')
+        ->where('operation_code', $operationCode)
+        ->get();
+
+        foreach($debtors as $debtorKey => $debtor) {
+
+            $document = $debtor->document;
+            $dueDate = date_create($debtor->due_date);
+            $effected = $debtor->effected;
+            $substituted = $debtor->substituted;
+            $amount = $debtor->amount;
+
+            $invoiceProducts = DB::table('invoices_product')
+            ->where('operation_code', $operationCode)
+            ->get();
+
+            // **********
+
+            $divisionDb = [
+                [
+                    'division' => '001',
+                    'table' => '214',
+                    'percentage' => 8,
+                ],
+                [
+                    'division' => '001',
+                    'table' => '187',
+                    'percentage' => 6,
+                ],
+                [
+                    'division' => '002',
+                    'table' => '214',
+                    'percentage' => 8,
+                ],
+                [
+                    'division' => '002',
+                    'table' => '187',
+                    'percentage' => 6,
+                ],
+                [
+                    'division' => '003',
+                    'table' => '214',
+                    'percentage' => 7.04,
+                ],
+                [
+                    'division' => '003',
+                    'table' => '187',
+                    'percentage' => 6,
+                ],
+                [
+                    'division' => '004',
+                    'table' => '214',
+                    'percentage' => 7.04,
+                ],
+                [
+                    'division' => '004',
+                    'table' => '187',
+                    'percentage' => 6,
+                ],
+                [
+                    'division' => '005',
+                    'table' => '214',
+                    'percentage' => 0,
+                ],
+                [
+                    'division' => '005',
+                    'table' => '187',
+                    'percentage' => 0,
+                ],
+                [
+                    'division' => '007',
+                    'table' => '214',
+                    'percentage' => 7,
+                ],
+                [
+                    'division' => '007',
+                    'table' => '187',
+                    'percentage' => 7,
+                ],
+                [
+                    'division' => '008',
+                    'table' => '214',
+                    'percentage' => 4,
+                ],
+                [
+                    'division' => '008',
+                    'table' => '187',
+                    'percentage' => 4,
+                ],
+                [
+                    'division' => '009',
+                    'table' => '214',
+                    'percentage' => 6,
+                ],
+                [
+                    'division' => '009',
+                    'table' => '187',
+                    'percentage' => 6,
+                ],
+                [
+                    'division' => '010',
+                    'table' => '214',
+                    'percentage' => 4,
+                ],
+                [
+                    'division' => '010',
+                    'table' => '187',
+                    'percentage' => 4,
+                ],
+                [
+                    'division' => '011',
+                    'table' => '214',
+                    'percentage' => 4,
+                ],
+                [
+                    'division' => '011',
+                    'table' => '187',
+                    'percentage' => 4,
+                ],
+                [
+                    'division' => '012',
+                    'table' => '214',
+                    'percentage' => 6,
+                ],
+                [
+                    'division' => '012',
+                    'table' => '187',
+                    'percentage' => 6,
+                ],
+                [
+                    'division' => '013',
+                    'table' => '214',
+                    'percentage' => 4,
+                ],
+                [
+                    'division' => '013',
+                    'table' => '187',
+                    'percentage' => 4,
+                ],
+                [
+                    'division' => '014',
+                    'table' => '214',
+                    'percentage' => 6,
+                ],
+                [
+                    'division' => '014',
+                    'table' => '187',
+                    'percentage' => 6,
+                ],
+                [
+                    'division' => '017',
+                    'table' => '214',
+                    'percentage' => 4,
+                ],
+                [
+                    'division' => '017',
+                    'table' => '187',
+                    'percentage' => 4,
+                ],
+                [
+                    'division' => '020',
+                    'table' => '214',
+                    'percentage' => 6,
+                ],
+                [
+                    'division' => '020',
+                    'table' => '187',
+                    'percentage' => 6,
+                ],
+                [
+                    'division' => '021',
+                    'table' => '214',
+                    'percentage' => 8,
+                ],
+                [
+                    'division' => '021',
+                    'table' => '187',
+                    'percentage' => 8,
+                ],
+                [
+                    'division' => '022',
+                    'table' => '214',
+                    'percentage' => 7,
+                ],
+                [
+                    'division' => '022',
+                    'table' => '187',
+                    'percentage' => 7,
+                ],
+                [
+                    'division' => 'L01',
+                    'table' => '214',
+                    'percentage' => 0,
+                ],
+                [
+                    'division' => 'L01',
+                    'table' => '187',
+                    'percentage' => 0,
+                ],
+                [
+                    'division' => 'indefinido',
+                    'table' => '214',
+                    'percentage' => 0,
+                ],
+                [
+                    'division' => 'indefinido',
+                    'table' => '187',
+                    'percentage' => 0,
+                ],
+            ];
+    
+            foreach($invoiceProducts as $invoiceProductKey => $invoiceProduct) {
+    
+                $orderId = $invoiceProduct->order_id;
+                $productInvoice = $invoiceProduct->invoice;
+                $productId = $invoiceProduct->product_id;
+                $productName = $invoiceProduct->product_name;
+                $productQty = $invoiceProduct->quantity;
+                $productDiscount = $invoiceProduct->discount;
+                $productPrice = $invoiceProduct->price;
+                $divisionCode = $invoiceProduct->division_code;
+                $divisionDescription = $invoiceProduct->division_description;
+
+                $invoice = DB::table('invoices')
+                ->where('operation_code', $operationCode)
+                ->get();
+
+                $tableId = $invoice[0]->price_list;
+                $clientAddress = $invoice[0]->client_address;
+
+                if($clientAddress == null)
+                    $clientAddress = 'SP';
+        
+                $tableCode = 214;
+        
+                if($tableId == 4)
+                    $tableCode = 214;
+            
+                if($tableId == 216)
+                    $tableCode = 187;
+    
+                $divisionKey = $this->searchForId($divisionCode, $tableCode, $divisionDb);
+    
+                if($divisionKey)
+                    $commissionPercentage = $divisionDb[$divisionKey]['percentage'];
+    
+                if($tableCode == 214) {
+                    if($productDiscount > 5)
+                        $commissionAmount = ($commissionAmount / 2);
+                }
+    
+                if($tableCode == 187) {
+                    if($clientAddress != 'SP' && $productDiscount < 5)
+                        $commissionPercentage = 4;
+                }
+                
+                // commission amout
+                $commissionAmount = floor(($productPrice * $productQty) * $commissionPercentage) / 100;
+                $commissionDebtors += $commissionAmount;
+               
+            }
+
+            // *************
+
+            $resultDebtors['data'][$debtorKey]['documento'] = $document;
+            $resultDebtors['data'][$debtorKey]['data_vencimento'] = date_format($dueDate, "d/m/Y");
+            $resultDebtors['data'][$debtorKey]['efetuado'] = $effected == 1 ? 'Baixado' : 'Em Aberto';
+            $resultDebtors['data'][$debtorKey]['substituido'] = $substituted == 1 ? 'Substituído' : 'Não Substituído';
+            $resultDebtors['data'][$debtorKey]['valor_inicial'] = $amount;
+            $resultDebtors['data'][$debtorKey]['comissao'] = (($commissionDebtors / 2) / count($debtors));
+
+            $commissionDebtors = 0;
+
+        }
+
+        return view('invoices-debtors', 
+        [
+            'debtors' => $resultDebtors,
+        ]);
     }
 }

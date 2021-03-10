@@ -15,12 +15,13 @@ class CreateInvoicesProductTable extends Migration
     {
         Schema::create('invoices_product', function (Blueprint $table) {
             $table->id();
+            $table->string('operation_code')->nullable();
             $table->string('document')->nullable();
             $table->integer('order_id')->nullable();
             $table->integer('invoice')->nullable();
             $table->integer('product_id');
             $table->string('product_name')->nullable();
-            $table->integer('division_id')->nullable();
+            $table->string('division_id')->nullable();
             $table->string('division_code')->nullable();
             $table->string('division_description')->nullable();
             $table->integer('quantity');

@@ -24,6 +24,7 @@ Route::get('/configurar-comissoes', 'SettingsController@index');
 Route::get('/consulta-config', 'SettingsController@get');
 Route::post('/consulta-comissoes', 'CommissionsController@getInvoices');
 Route::get('/consulta-produtos/{document}', 'CommissionsController@detailInvoice');
+Route::get('/consulta-titulos/{operation_code}', 'CommissionsController@getDebtors');
 
 //Language Translation
 Route::get('index/{locale}', 'HomeController@lang');

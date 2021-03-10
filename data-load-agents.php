@@ -1,6 +1,7 @@
 <?php
 
 include('call-api.php');
+include('connection-db.php');
 
 $dataAgent = [
     '$format' => 'json',
@@ -8,9 +9,6 @@ $dataAgent = [
 
 $responseAgent = CallAPI('GET', 'representantes/busca', $dataAgent);
 $resultAgent = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseAgent), true);
-
-$pdo = new PDO('mysql:host=db;dbname=pillowtex', 'root', 'qcLkozSAB3L4rp2TTUN7rJVlJa9C1CTb9hcdSLhcuiA=');
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 foreach ($resultAgent['value'] as $valueAgent) {
 

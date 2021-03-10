@@ -80,7 +80,7 @@
                                 </div>
                             </td>
                             <td>
-                                <a href="consulta-produtos/{{ $invoice['romaneio'] }}" target="_blank" class="text-dark font-weight-bold">#{{ $invoice['nota_fiscal'] }}</a>
+                                <a href="consulta-titulos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="text-dark font-weight-bold">#{{ $invoice['nota_fiscal'] }}</a>
                             </td>
                             <td>
                                 {{ $invoice['data_emissao'] }}

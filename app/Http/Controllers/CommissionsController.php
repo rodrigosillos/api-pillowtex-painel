@@ -95,15 +95,28 @@ class CommissionsController extends Controller
                 $commissionResult['data'][$invoiceKey]['romaneio'] = $invoice->document;
                 $commissionResult['data'][$invoiceKey]['data_emissao'] = date_format($issueDate, "d/m/Y");
                 $commissionResult['data'][$invoiceKey]['cliente'] = $invoice->client_id;
-                $commissionResult['data'][$invoiceKey]['cliente_nome'] = Str::limit($invoice->client_name, 40, $end='...');
+                $commissionResult['data'][$invoiceKey]['cliente_nome'] = Str::limit($invoice->client_name, 25, $end='...');
                 $commissionResult['data'][$invoiceKey]['cliente_estado'] = $invoice->client_address;
-                $commissionResult['data'][$invoiceKey]['representante_nome'] = Str::limit($invoice->agent_name, 40, $end='...');
+                $commissionResult['data'][$invoiceKey]['representante_nome'] = Str::limit($invoice->agent_name, 25, $end='...');
                 $commissionResult['data'][$invoiceKey]['tabela_preco'] = $invoice->price_list;
                 $commissionResult['data'][$invoiceKey]['total'] = $invoice->amount;
                 $commissionResult['data'][$invoiceKey]['tipo_operacao'] = $invoice->operation_type == 'E' ? 'Dedução' : 'S';
                 $commissionResult['data'][$invoiceKey]['nota_fiscal'] = $invoice->invoice;
                 $commissionResult['data'][$invoiceKey]['pedido_codigo'] = $invoice->order_code;
                 $commissionResult['data'][$invoiceKey]['pedido_tipo'] = $invoice->invoice_type;
+
+                //debtors
+                $debtors = DB::table('debtors')
+                ->where('operation_code', $invoice->operation_code)
+                ->get();
+
+                $commissionDebtors = 0;
+
+                foreach($debtors as $debtorKey => $debtor__) {
+                    $commissionDebtors += $debtor__->commission;
+                }
+
+                $commissionResult['data'][$invoiceKey]['liquidacao_50'] = $commissionDebtors;
     
                 $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'warning';
                 
@@ -374,6 +387,8 @@ class CommissionsController extends Controller
                     $commissionResult['data'][$invoiceKey]['produtos'][$invoiceProductKey]['produto_divisao'] = $divisionDescription;
     
                 }
+
+                $commissionResult['data'][$invoiceKey]['faturamento_50'] = $commissionResult['data'][$invoiceKey]['comissao_total'] / 2;
     
                 if($invoice->operation_type != 'E') {
                     $commissionResult['totalizador']['valor_comissao'] += $commissionResult['data'][$invoiceKey]['comissao_total'];
@@ -708,7 +723,6 @@ class CommissionsController extends Controller
         ];
 
         $commissionDebtors = 0;
-
         
         $debtors = DB::table('debtors')
         ->where('operation_code', $operationCode)
@@ -979,7 +993,10 @@ class CommissionsController extends Controller
             $resultDebtors['data'][$debtorKey]['efetuado'] = $effected == 1 ? 'Baixado' : 'Em Aberto';
             $resultDebtors['data'][$debtorKey]['substituido'] = $substituted == 1 ? 'Substituído' : 'Não Substituído';
             $resultDebtors['data'][$debtorKey]['valor_inicial'] = $amount;
-            $resultDebtors['data'][$debtorKey]['comissao'] = (($commissionDebtors / 2) / count($debtors));
+            $resultDebtors['data'][$debtorKey]['comissao'] = 0;
+            
+            if($effected == 1)
+                $resultDebtors['data'][$debtorKey]['comissao'] = (($commissionDebtors / 2) / count($debtors));
 
             $commissionDebtors = 0;
 

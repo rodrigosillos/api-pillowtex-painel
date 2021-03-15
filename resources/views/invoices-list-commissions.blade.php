@@ -61,12 +61,16 @@
                             <th>Cod Pedido</th>
                             <th>Valor Total</th>
                             <th>%</th>
-                            <th>Tipo</th>
                             <th>Comissão</th>
-                            <th>UF</th>
+                            <th>Faturamento 50%</th>
+                            <th>Liquidação 50%</th>
+                            <th>Substituido</th>
+                            <th>Substituidor</th>
                             <th>Representante</th>
                             <th>Tabela Preço</th>
                             <th>Documento</th>
+                            <th>UF</th>
+                            <th>Tipo</th>
                             <th style="width: 120px;">Ações</th>
                         </tr>
                     </thead>
@@ -84,7 +88,7 @@
                             </td>
                             <td>
                                 {{ $invoice['data_emissao'] }}
-                            </td>      
+                            </td>
                             <td>
                                 {{ $invoice['cliente'] }}
                             </td>
@@ -104,14 +108,20 @@
                                 {{ $invoice['media_base_comissao'] }}
                             </td>
                             <td>
-                                <div class="badge badge-soft-{{ $invoice['tipo_operacao_cor'] }} font-size-12">{{ $invoice['tipo_operacao'] }}</div>
-                            </td>
-                            <td>
                             @if ($invoice['tipo_operacao_cor'] == 'warning') - @endif R${{ number_format($invoice['comissao_total'], 2, ',', '.') }}
-                            </td>          
-                            <td>
-                                {{ $invoice['cliente_estado'] }}
                             </td>
+                            <td>
+                                R${{ number_format($invoice['faturamento_50'], 2, ',', '.') }}
+                            </td> 
+                            <td>
+                                R${{ number_format($invoice['liquidacao_50'], 2, ',', '.') }}
+                            </td> 
+                            <td>
+                                R$0,00
+                            </td> 
+                            <td>
+                                R$0,00
+                            </td> 
                             <td>
                                 {{ $invoice['representante_nome'] }}
                             </td>
@@ -120,6 +130,12 @@
                             </td>
                             <td>
                                 {{ $invoice['romaneio'] }} 
+                            </td>
+                            <td>
+                                {{ $invoice['cliente_estado'] }}
+                            </td>
+                            <td>
+                                <div class="badge badge-soft-{{ $invoice['tipo_operacao_cor'] }} font-size-12">{{ $invoice['tipo_operacao'] }}</div>
                             </td>
                             <td>
                                 <a href="consulta-produtos/{{ $invoice['romaneio'] }}" target="_blank" class="px-3 text-primary" data-toggle="tooltip" data-placement="top" title="Detalhes"><i class="uil uil-search-plus font-size-18"></i></a>

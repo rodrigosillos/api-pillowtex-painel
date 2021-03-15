@@ -11,6 +11,9 @@ $invoicesAgents = $stmt->fetchAll();
 $operationType = 'S';
 
 foreach ($invoicesAgents as $invoice__) {
+
+    print('.');
+
     $operationCode = $invoice__["operation_code"];
 
     $dataConsultaMovimentacao = [

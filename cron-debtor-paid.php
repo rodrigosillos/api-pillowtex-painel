@@ -249,8 +249,7 @@ foreach ($invoicesAgents as $invoice__) {
 
     foreach ($resultConsultaLancamento['value'] as $valueConsultaLancamento) {
 
-        //$effected = $valueConsultaLancamento['efetuado'];
-        $effected = 1;
+        $effected = $valueConsultaLancamento['efetuado'];
         $bookEntry = $valueConsultaLancamento['lancamento'];
 
         $sql = "select quantity, price, division_code, discount from invoices_product where operation_code = :operation_code";

@@ -19,9 +19,11 @@ class CreateInvoicesTable extends Migration
             $table->string('document')->nullable();
             $table->dateTime('issue_date');
             $table->integer('client_id')->nullable();
+            $table->string('client_code')->nullable();
             $table->string('client_name')->nullable();
             $table->string('client_address')->nullable();
             $table->integer('agent_id')->nullable();
+            $table->string('agent_code')->nullable();
             $table->string('agent_name')->nullable();
             $table->integer('price_list')->nullable();
             $table->decimal('amount', $precision = 8, $scale = 2)->nullable();

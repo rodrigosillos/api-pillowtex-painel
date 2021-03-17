@@ -90,7 +90,7 @@
                                 {{ $invoice['data_emissao'] }}
                             </td>
                             <td>
-                                {{ $invoice['cliente'] }}
+                                {{ $invoice['cliente_codigo'] }}
                             </td>
                             <td>
                                 {{ $invoice['cliente_nome'] }}

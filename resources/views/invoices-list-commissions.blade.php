@@ -53,17 +53,18 @@
                                     <label class="custom-control-label" for="invoicecheck"></label>
                                 </div>
                             </th>
-                            <th>NF</th>
+                            <th>NF PILLOW</th>
+                            <th>Nota Ref-Devolução</th>
                             <th>Emissão</th>
                             <th>Cód. Cliente</th>
                             <th>Nome Cliente</th>
                             <th>Tipo Pedido</th>
                             <th>Cod Pedido</th>
                             <th>Valor Total</th>
-                            <th>%</th>
+                            <th>Média de Comissão</th>
                             <th>Comissão</th>
-                            <th>Faturamento 50%</th>
-                            <th>Liquidação 50%</th>
+                            <th>Faturamento</th>
+                            <th>Liquidação</th>
                             <th>Substituido</th>
                             <th>Substituidor</th>
                             <th>Representante</th>
@@ -85,6 +86,9 @@
                             </td>
                             <td>
                                 <a href="consulta-titulos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="text-dark font-weight-bold">#{{ $invoice['nota_fiscal'] }}</a>
+                            </td>
+                            <td>
+                                <a href="consulta-titulos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="text-dark font-weight-bold">#</a>
                             </td>
                             <td>
                                 {{ $invoice['data_emissao'] }}
@@ -138,22 +142,37 @@
                                 <div class="badge badge-soft-{{ $invoice['tipo_operacao_cor'] }} font-size-12">{{ $invoice['tipo_operacao'] }}</div>
                             </td>
                             <td>
-                                <a href="consulta-produtos/{{ $invoice['romaneio'] }}" target="_blank" class="px-3 text-primary" data-toggle="tooltip" data-placement="top" title="Detalhes"><i class="uil uil-search-plus font-size-18"></i></a>
-                                <a href="javascript:void(0);" class="px-3 text-primary" data-toggle="tooltip" data-placement="top" title="Editar"><i class="uil uil-pen font-size-18"></i></a>
+                                <a href="consulta-titulos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="px-3 text-primary" data-toggle="tooltip" data-placement="top" title="Consulta Títulos"><i class="uil uil-search-plus font-size-18"></i></a>
+                                <a href="consulta-produtos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="px-3 text-primary" data-toggle="tooltip" data-placement="top" title="Consulta Produtos"><i class="uil uil-search-plus font-size-18"></i></a>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+
+                <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Valor Venda</th>
+                        <th>Valor Comissão</th>
+                        <th>Valor Faturamento</th>
+                        <th>Valor Liquidação</th>
+                        <th>Valor Substituidor</th>
+                        <th>Valor Substituição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>R${{ number_format($invoices['totalizador']['valor_venda'], 2, ',', '.') }}</td>
+                        <td>R${{ number_format($invoices['totalizador']['valor_comissao'], 2, ',', '.') }}</td>
+                        <td>R${{ number_format($invoices['totalizador']['valor_faturamento'], 2, ',', '.') }}</td>
+                        <td>R${{ number_format($invoices['totalizador']['valor_liquidacao'], 2, ',', '.') }}</td>
+                        <td>R$0,00</td>
+                        <td>R$0,00</td>
+                    </tr>
+                </tbody>
+                </table>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <h2 class="mb-3">Valor Total Venda: R${{ number_format($invoices['totalizador']['valor_venda'], 2, ',', '.') }}</h2>
-        </div>
-        <div class="col-lg-6">
-            <h2 class="mb-3">Valor Total Comissão: R${{ number_format($invoices['totalizador']['valor_comissao'], 2, ',', '.') }}</h2>
         </div>
     </div>
     <!-- end row -->

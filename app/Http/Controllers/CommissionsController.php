@@ -24,6 +24,8 @@ class CommissionsController extends Controller
             'totalizador' => [
                 'valor_venda' => 0,
                 'valor_comissao' => 0,
+                'valor_faturamento' => 0,
+                'valor_liquidacao' => 0,
                 ],
             ]
         ]);
@@ -74,6 +76,10 @@ class CommissionsController extends Controller
         $commissionResult['data'] = [];
         $commissionResult['totalizador']['valor_venda'] = 0;
         $commissionResult['totalizador']['valor_comissao'] = 0;
+        $commissionResult['totalizador']['valor_faturamento'] = 0;
+        $commissionResult['totalizador']['valor_liquidacao'] = 0;
+        $commissionResult['totalizador']['valor_substituidor'] = 0;
+        $commissionResult['totalizador']['valor_substituicao'] = 0;
 
         foreach($invoices as $invoiceKey => $invoice) {
 
@@ -161,6 +167,11 @@ class CommissionsController extends Controller
                         if($clientAddress != 'SP' && $productDiscount < 5)
                             $commissionPercentage = 4;
                     }
+
+                    if($tableCode == 214) {
+                        if($productDiscount > 5)
+                            $commissionPercentage = ($commissionPercentage / 2);
+                    }
                     
                     // commission amout
                     $commissionAmount = floor(($productPrice * $productQty) * $commissionPercentage) / 100;
@@ -192,6 +203,8 @@ class CommissionsController extends Controller
                 if($invoice->operation_type != 'E') {
                     $commissionResult['totalizador']['valor_comissao'] += $commissionResult['data'][$invoiceKey]['comissao_total'];
                     $commissionResult['totalizador']['valor_venda'] += $commissionResult['data'][$invoiceKey]['total'];
+                    $commissionResult['totalizador']['valor_liquidacao'] += $commissionResult['data'][$invoiceKey]['liquidacao_50'];
+                    $commissionResult['totalizador']['valor_faturamento'] += $commissionResult['data'][$invoiceKey]['faturamento_50'];
                 }
     
                 $commissionPercentageAverage = 0;
@@ -199,7 +212,8 @@ class CommissionsController extends Controller
                 if ($invoice->amount != 0)
                     $commissionPercentageAverage = sprintf("%.2f%%", $commissionResult['data'][$invoiceKey]['comissao_total'] / $invoice->amount);
         
-                    $commissionResult['data'][$invoiceKey]['media_base_comissao'] = $commissionPercentageAverage;
+                //$commissionResult['data'][$invoiceKey]['media_base_comissao'] = (int) $commissionPercentageAverage . '.00%';
+                $commissionResult['data'][$invoiceKey]['media_base_comissao'] = $commissionPercentageAverage;
     
                 // final
                 $commissionAmount = 0;
@@ -217,11 +231,11 @@ class CommissionsController extends Controller
 
     public function detailInvoice(Request $request)
     {
-        $invoiceDocument = $request->document;
+        $operationCode = $request->operation_code;
         
         // invoice
         $invoice = DB::table('invoices')
-        ->where('document', $invoiceDocument)
+        ->where('operation_code', $operationCode)
         ->get();
 
         // commission
@@ -247,7 +261,7 @@ class CommissionsController extends Controller
         
         // products
         $invoiceProducts = DB::table('invoices_product')
-        ->where('document', $invoiceDocument)
+        ->where('operation_code', $operationCode)
         ->get();
 
         foreach($invoiceProducts as $invoiceProductKey => $invoiceProduct) {

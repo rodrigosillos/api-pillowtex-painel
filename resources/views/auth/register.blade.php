@@ -23,16 +23,16 @@ Register
                 <div class="card">
                     <div class="card-body p-4">
                         <div class="text-center mt-2">
-                            <h5 class="text-primary">Register Account</h5>
-                            <p class="text-muted">Get your free Minible account now.</p>
+                            <h5 class="text-primary">Criar Conta</h5>
+                            <p class="text-muted">Crie uma conta para acessar o painel</p>
                         </div>
                         <div class="p-2 mt-4">
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
 
                                 <div class="form-group">
-                                    <label for="name">{{ __('Name') }}</label>
-                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Enter username">
+                                    <label for="name">{{ __('Nome') }}</label>
+                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Digite o nome">
 
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -42,8 +42,8 @@ Register
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="email">{{ __('E-Mail Address') }}</label>
-                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Enter email address">
+                                    <label for="email">{{ __('Endereço de E-Mail') }}</label>
+                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Digite o endereço de e-mail">
 
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
@@ -53,8 +53,8 @@ Register
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="password">{{ __('Password') }}</label>
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Enter password">
+                                    <label for="password">{{ __('Senha') }}</label>
+                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Digite a senha">
 
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
@@ -64,46 +64,21 @@ Register
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="password-confirm">{{ __('Confirm Password') }}</label>
-                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Enter password">
+                                    <label for="password-confirm">{{ __('Confirme a Senha') }}</label>
+                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Digite a senha">
                                 </div>
 
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="auth-terms-condition-check">
-                                    <label class="custom-control-label" for="auth-terms-condition-check">I accept <a href="javascript: void(0);" class="text-dark">Terms and Conditions</a></label>
+                                    <label class="custom-control-label" for="auth-terms-condition-check">Eu aceito <a href="javascript: void(0);" class="text-dark">os termos e condições</a></label>
                                 </div>
                                 
                                 <div class="mt-3 text-right">
-                                    <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">{{ __('Register') }}</button>
+                                    <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">{{ __('Criar') }}</button>
                                 </div>
 
                                 <div class="mt-4 text-center">
-                                    <div class="signin-other-title">
-                                        <h5 class="font-size-14 mb-3 title">Sign up using</h5>
-                                    </div>
-                                    
-
-                                    <ul class="list-inline">
-                                        <li class="list-inline-item">
-                                            <a href="#" class="social-list-item bg-primary text-white border-primary">
-                                                <i class="mdi mdi-facebook"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#" class="social-list-item bg-info text-white border-info">
-                                                <i class="mdi mdi-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#" class="social-list-item bg-danger text-white border-danger">
-                                                <i class="mdi mdi-google"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="mt-4 text-center">
-                                    <p class="text-muted mb-0">Already have an account ? <a href="{{url('login')}}" class="font-weight-medium text-primary"> Login</a></p>
+                                    <p class="text-muted mb-0">Já tem uma conta ? <a href="{{url('login')}}" class="font-weight-medium text-primary"> Entrar</a></p>
                                 </div>
                             </form>
                         </div>

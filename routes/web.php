@@ -23,7 +23,7 @@ Route::get('/representantes', 'CommissionsController@getAgents');
 Route::get('/configurar-comissoes', 'SettingsController@index');
 Route::post('/configurar-comissoes-salvar', 'SettingsController@set');
 Route::post('/consulta-comissoes', 'CommissionsController@getInvoices');
-Route::get('/consulta-produtos/{document}', 'CommissionsController@detailInvoice');
+Route::get('/consulta-produtos/{operation_code}', 'CommissionsController@detailInvoice');
 Route::get('/consulta-titulos/{operation_code}', 'CommissionsController@getDebtors');
 
 //Language Translation

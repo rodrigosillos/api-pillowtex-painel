@@ -23,7 +23,7 @@ Reset Password
                     <div class="card">
                         <div class="card-body p-4">
                             <div class="text-center mt-2">
-                                <h5 class="text-primary">{{ __('Reset Password') }}</h5>
+                                <h5 class="text-primary">{{ __('Redefinir senha') }}</h5>
                                 <p class="text-muted">Reset Password with Minible.</p>
                             </div>
                             <div class="p-2 mt-4">

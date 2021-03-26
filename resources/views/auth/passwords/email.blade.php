@@ -23,8 +23,8 @@ Reset Password
             <div class="card">
                 <div class="card-body p-4">
                     <div class="text-center mt-2">
-                        <h5 class="text-primary">{{ __('Reset Password') }}</h5>
-                        <p class="text-muted">Reset Password with Minible.</p>
+                        <h5 class="text-primary">{{ __('Redefinir senha') }}</h5>
+                        <p class="text-muted">Redefinir senha com a PillowTex.</p>
                     </div>
                     <div class="p-2 mt-4">
                         @if (session('status'))
@@ -37,8 +37,8 @@ Reset Password
                             @csrf
 
                             <div class="form-group">
-                                <label for="email">{{ __('E-Mail Address') }}</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus  placeholder="Enter email">
+                                <label for="email">{{ __('Endereço de e-mail') }}</label>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus  placeholder="Digite o endereço de e-mail">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -47,10 +47,10 @@ Reset Password
                                 @enderror
                             </div>
                             <div class="mt-3 text-right">
-                                <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">{{ __('Send Password Reset Link') }}</button>
+                                <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">{{ __('Enviar link de redefinição de senha') }}</button>
                             </div>
                             <div class="mt-4 text-center">
-                                <p class="mb-0">Remember It ? <a href="{{url('login')}}" class="font-weight-medium text-primary"> Signin </a></p>
+                                <p class="mb-0">Lembrou ? <a href="{{url('login')}}" class="font-weight-medium text-primary"> Entrar </a></p>
                             </div>
                         </form>
                     </div>

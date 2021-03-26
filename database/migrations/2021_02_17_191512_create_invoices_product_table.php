@@ -20,6 +20,7 @@ class CreateInvoicesProductTable extends Migration
             $table->integer('order_id')->nullable();
             $table->integer('invoice')->nullable();
             $table->integer('product_id');
+            $table->string('product_code');
             $table->string('product_name')->nullable();
             $table->string('division_id')->nullable();
             $table->string('division_code')->nullable();

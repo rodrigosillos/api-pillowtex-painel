@@ -46,11 +46,13 @@ foreach ($invoicesAgents as $invoice__) {
         $responseConsultaProduto = CallAPI('GET', 'produtos/consulta', $dataConsultaProduto);
         $resultConsultaProduto = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaProduto), true);
         
-        $productNname = "";
+        $productCode = "";
+        $productName = "";
         $divisionId = "";
         
         if($resultConsultaProduto['odata.count'] > 0) {
-            $productNname = $resultConsultaProduto['value'][0]['descricao1'];
+            $productCode = $resultConsultaProduto['value'][0]['cod_produto'];
+            $productName = $resultConsultaProduto['value'][0]['descricao1'];
             $divisionId = $resultConsultaProduto['value'][0]['divisao'];
         }
 
@@ -77,7 +79,8 @@ foreach ($invoicesAgents as $invoice__) {
             'order_id' => $valueProduct['pedido'],
             'invoice' => $valueProduct['nota'],
             'product_id' => $valueProduct['produto'],
-            'product_name' => $productNname,
+            'product_code' => $productCode,
+            'product_name' => $productName,
             'division_id' => $divisionId,
             'division_code' => $divisionCode,
             'division_description' => $divisionDescription,
@@ -92,6 +95,7 @@ foreach ($invoicesAgents as $invoice__) {
                                             order_id, 
                                             invoice, 
                                             product_id,
+                                            product_code,
                                             product_name,
                                             division_id,
                                             division_code,
@@ -104,6 +108,7 @@ foreach ($invoicesAgents as $invoice__) {
                                                             :order_id,
                                                             :invoice,
                                                             :product_id,
+                                                            :product_code,
                                                             :product_name,
                                                             :division_id,
                                                             :division_code,

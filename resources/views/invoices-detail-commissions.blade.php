@@ -45,8 +45,8 @@
                             <th>Preço</th>
                             <th>Preço Total</th>
                             <th>Desconto</th>
-                            <th>%</th>
-                            <th>Comissão</th>
+                            <th>% Comissão Produto</th>
+                            <th>Comissão Valor</th>
                             <th style="width: 120px;">Ações</th>
                         </tr>
                     </thead>

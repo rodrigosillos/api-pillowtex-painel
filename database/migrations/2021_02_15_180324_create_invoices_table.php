@@ -17,6 +17,7 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->string('operation_code')->nullable();
             $table->string('document')->nullable();
+            $table->string('ticket')->nullable();
             $table->dateTime('issue_date');
             $table->integer('client_id')->nullable();
             $table->string('client_code')->nullable();

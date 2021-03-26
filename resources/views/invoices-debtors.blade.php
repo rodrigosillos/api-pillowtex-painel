@@ -1,6 +1,6 @@
 @extends('layouts.master-icon-sidebar')
 @section('title')
-@lang('translation.Invoice_Detail')
+@lang('translation.Debtors_Detail')
 @endsection
 @section('css')
     <!-- DataTables -->
@@ -38,6 +38,7 @@
                             </th>
                             <th>N Documento</th>
                             <th>Data de Vencimento</th>
+                            <th>Data de Pagamento</th>
                             <th>Efetuado</th>
                             <th>Substituido</th>
                             <th>Valor</th>
@@ -58,6 +59,9 @@
                             <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#{{ $debtor['documento'] }}</a> </td>
                             <td>
                                 {{ $debtor['data_vencimento'] }}
+                            </td>
+                            <td>
+                                25/03/2021
                             </td>
                             <td>
                                 {{ $debtor['efetuado'] }}

@@ -106,6 +106,7 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
             $data = [
                 'operation_code' => $valueListaMovimentacao['cod_operacao'],
                 'document' => $resultConsultaMovimentacao['value'][0]['romaneio'],
+                'ticket' => $resultConsultaMovimentacao['value'][0]['ticket'],
                 'issue_date' => $issueDate,
                 'client_id' => $resultConsultaMovimentacao['value'][0]['cliente'],
                 'client_code' => $clientCode,
@@ -126,6 +127,7 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
             $sql  = "INSERT INTO invoices (
                                             operation_code,
                                             document,
+                                            ticket,
                                             issue_date, 
                                             client_id, 
                                             client_code, 
@@ -143,6 +145,7 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
                                             invoice) VALUES (
                                                             :operation_code,
                                                             :document,
+                                                            :ticket,
                                                             :issue_date,
                                                             :client_id,
                                                             :client_code,

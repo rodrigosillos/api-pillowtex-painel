@@ -42,9 +42,9 @@
                             <th>Produto</th>
                             <th>Quantidade</th>
                             <th>Divisão</th>
-                            <th>Preço</th>
-                            <th>Preço Total</th>
                             <th>Desconto</th>
+                            <th>Preço Líquido</th>
+                            <th>Total Líquido</th>
                             <th>% Comissão Produto</th>
                             <th>Comissão Valor</th>
                             <th style="width: 120px;">Ações</th>
@@ -65,7 +65,7 @@
                                 {{ $product['nota'] }}
                             </td>
                             <td>
-                                {{ $product['produto'] }}
+                                {{ $product['produto_codigo'] }}
                             </td>
                             <td>
                                 {{ $product['produto_nome'] }}
@@ -77,13 +77,13 @@
                                 {{ $product['produto_divisao'] }}
                             </td>
                             <td>
+                                {{ $product['desconto'] }}%
+                            </td>
+                            <td>
                                 R${{ number_format($product['preco'], 2, ',', '.') }}
                             </td>
                             <td>
                                 R${{ number_format($product['preco'] * $product['quantidade'], 2, ',', '.') }}
-                            </td>
-                            <td>
-                                {{ $product['desconto'] }}
                             </td>
                             <td>
                                 <div class="badge badge-soft-success font-size-12">{{ $product['produto_comissao_percentual'] }}</div>

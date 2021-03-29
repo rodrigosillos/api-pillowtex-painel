@@ -35,9 +35,9 @@ class CommissionsController extends Controller
     {
         $client = new Client();
 
-        $user = "administrator";
+        $user = "pillowtex_adm";
         $pass = "ABusters#94";
-        $environment = 'http://189.113.4.250:6017/api/millenium/';
+        $environment = 'http://177.85.33.76:6017/api/millenium/';
         $type = 'GET';
 
         $response = $client->request($type, $environment.$method.$param, [
@@ -269,6 +269,7 @@ class CommissionsController extends Controller
             $orderId = $invoiceProduct->order_id;
             $productInvoice = $invoiceProduct->invoice;
             $productId = $invoiceProduct->product_id;
+            $productCode = $invoiceProduct->product_code;
             $productName = $invoiceProduct->product_name;
             $productQty = $invoiceProduct->quantity;
             $productDiscount = $invoiceProduct->discount;
@@ -301,6 +302,7 @@ class CommissionsController extends Controller
             $commissionResult['produtos'][$invoiceProductKey]['pedido'] = $orderId;
             $commissionResult['produtos'][$invoiceProductKey]['nota'] = $productInvoice;
             $commissionResult['produtos'][$invoiceProductKey]['produto'] = $productId;
+            $commissionResult['produtos'][$invoiceProductKey]['produto_codigo'] = $productCode;
             $commissionResult['produtos'][$invoiceProductKey]['produto_nome'] = $productName;
             $commissionResult['produtos'][$invoiceProductKey]['quantidade'] = $productQty;
             $commissionResult['produtos'][$invoiceProductKey]['preco'] = $productPrice;

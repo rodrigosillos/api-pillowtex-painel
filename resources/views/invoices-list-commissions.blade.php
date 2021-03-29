@@ -54,15 +54,14 @@
                                 </div>
                             </th>
                             <th>NF PILLOW</th>
-                            <th>Nota Ref-Devolução</th>
                             <th>Emissão</th>
                             <th>Cód. Cliente</th>
                             <th>Nome Cliente</th>
                             <th>Tipo Pedido</th>
                             <th>Cod Pedido</th>
                             <th>Valor Total</th>
+                            <th>Valor Comissão</th>
                             <th>Média de Comissão</th>
-                            <th>Comissão</th>
                             <th>Faturamento</th>
                             <th>Liquidação</th>
                             <th>Substituido</th>
@@ -72,6 +71,7 @@
                             <th>Documento</th>
                             <th>UF</th>
                             <th>Tipo</th>
+                            <th>Nota Ref-Devolução</th>
                             <th style="width: 120px;">Ações</th>
                         </tr>
                     </thead>
@@ -86,9 +86,6 @@
                             </td>
                             <td>
                                 <a href="consulta-titulos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="text-dark font-weight-bold">#{{ $invoice['nota_fiscal'] }}</a>
-                            </td>
-                            <td>
-                                <a href="consulta-titulos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="text-dark font-weight-bold">#</a>
                             </td>
                             <td>
                                 {{ $invoice['data_emissao'] }}
@@ -109,10 +106,10 @@
                                 @if ($invoice['tipo_operacao_cor'] == 'warning') - @endif R${{ number_format($invoice['total'], 2, ',', '.') }}
                             </td>
                             <td>
-                                {{ $invoice['media_base_comissao'] }}
+                            @if ($invoice['tipo_operacao_cor'] == 'warning') - @endif R${{ number_format($invoice['comissao_total'], 2, ',', '.') }}
                             </td>
                             <td>
-                            @if ($invoice['tipo_operacao_cor'] == 'warning') - @endif R${{ number_format($invoice['comissao_total'], 2, ',', '.') }}
+                                {{ $invoice['media_base_comissao'] }}
                             </td>
                             <td>
                                 R${{ number_format($invoice['faturamento_50'], 2, ',', '.') }}
@@ -140,6 +137,9 @@
                             </td>
                             <td>
                                 <div class="badge badge-soft-{{ $invoice['tipo_operacao_cor'] }} font-size-12">{{ $invoice['tipo_operacao'] }}</div>
+                            </td>
+                            <td>
+                                <a href="consulta-titulos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="text-dark font-weight-bold">#</a>
                             </td>
                             <td>
                                 <a href="consulta-titulos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="px-3 text-primary" data-toggle="tooltip" data-placement="top" title="Consulta Títulos"><i class="uil uil-search-plus font-size-18"></i></a>

@@ -89,6 +89,7 @@ class CommissionsController extends Controller
 
                 $commissionResult['data'][$invoiceKey]['operacao_codigo'] = $invoice->operation_code;
                 $commissionResult['data'][$invoiceKey]['romaneio'] = $invoice->document;
+                $commissionResult['data'][$invoiceKey]['ticket'] = $invoice->ticket;
                 $commissionResult['data'][$invoiceKey]['data_emissao'] = date_format($issueDate, "d/m/Y");
                 $commissionResult['data'][$invoiceKey]['cliente_codigo'] = $invoice->client_code;
                 $commissionResult['data'][$invoiceKey]['cliente_nome'] = Str::limit($invoice->client_name, 25, $end='...');

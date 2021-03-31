@@ -69,6 +69,7 @@
                             <th>Representante</th>
                             <th>Tabela Preço</th>
                             <th>Documento</th>
+                            <th>Ticket</th>
                             <th>UF</th>
                             <th>Tipo</th>
                             <th>Nota Ref-Devolução</th>
@@ -113,7 +114,7 @@
                             </td>
                             <td>
                                 R${{ number_format($invoice['faturamento_50'], 2, ',', '.') }}
-                            </td> 
+                            </td>
                             <td>
                                 R${{ number_format($invoice['liquidacao_50'], 2, ',', '.') }}
                             </td> 
@@ -131,6 +132,9 @@
                             </td>
                             <td>
                                 {{ $invoice['romaneio'] }} 
+                            </td>
+                            <td>
+                                {{ $invoice['ticket'] }} 
                             </td>
                             <td>
                                 {{ $invoice['cliente_estado'] }}

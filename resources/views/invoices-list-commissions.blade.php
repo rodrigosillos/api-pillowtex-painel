@@ -53,7 +53,7 @@
                                     <label class="custom-control-label" for="invoicecheck"></label>
                                 </div>
                             </th>
-                            <th>NF PILLOW</th>
+                            <th>Nota Fiscal</th>
                             <th>Emissão</th>
                             <th>Cód. Cliente</th>
                             <th>Nome Cliente</th>

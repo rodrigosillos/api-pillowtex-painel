@@ -83,7 +83,7 @@ class CommissionsController extends Controller
 
         foreach($invoices as $invoiceKey => $invoice) {
 
-            if($invoice->client_id != null || $invoice->client_id != null || $invoice->canceled == false){
+            if($invoice->client_id != null && $invoice->canceled == false){
 
                 $issueDate = date_create($invoice->issue_date);
 

@@ -357,6 +357,11 @@ class CommissionsController extends Controller
 
             $document = $debtor->document;
             $dueDate = date_create($debtor->due_date);
+            
+            $paidDate = $debtor->paid_date;
+            if(!is_null($debtor->paid_date))
+                $paidDate = date_create($debtor->paid_date);
+
             $effected = $debtor->effected;
             $substituted = $debtor->substituted;
             $amount = $debtor->amount;
@@ -421,6 +426,11 @@ class CommissionsController extends Controller
 
             $resultDebtors['data'][$debtorKey]['documento'] = $document;
             $resultDebtors['data'][$debtorKey]['data_vencimento'] = date_format($dueDate, "d/m/Y");
+
+            $resultDebtors['data'][$debtorKey]['data_pagamento'] = $paidDate;
+            if(!is_null($debtor->paid_date))
+                $resultDebtors['data'][$debtorKey]['data_pagamento'] = date_format($paidDate, "d/m/Y");
+
             $resultDebtors['data'][$debtorKey]['efetuado'] = $effected == 1 ? 'Baixado' : 'Em Aberto';
             $resultDebtors['data'][$debtorKey]['substituido'] = $substituted == 1 ? 'Substituído' : 'Não Substituído';
             $resultDebtors['data'][$debtorKey]['valor_inicial'] = $amount;

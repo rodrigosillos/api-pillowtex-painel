@@ -7,7 +7,7 @@ $operationType = 'S'; // Entrada (Dedução) / Saida (Faturamento 50% / Substitu
 
 $dataListaMovimentacao = [
     'datai' => '2021-01-01',
-    'dataf' => '2021-01-31',
+    'dataf' => '2021-01-10',
     '$format' => 'json',
     'tipo_operacao' => $operationType,
 ];

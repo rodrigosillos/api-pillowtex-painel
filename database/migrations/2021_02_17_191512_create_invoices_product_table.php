@@ -26,8 +26,8 @@ class CreateInvoicesProductTable extends Migration
             $table->string('division_code')->nullable();
             $table->string('division_description')->nullable();
             $table->integer('quantity');
-            $table->integer('price');
-            $table->integer('discount');
+            $table->decimal('price', $precision = 8, $scale = 2)->nullable();
+            $table->decimal('discount', $precision = 8, $scale = 2)->nullable();
             $table->timestamps();
         });
     }

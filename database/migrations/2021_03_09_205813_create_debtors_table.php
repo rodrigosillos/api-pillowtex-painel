@@ -19,6 +19,7 @@ class CreateDebtorsTable extends Migration
             $table->string('operation_code')->nullable();
             $table->string('document')->nullable();
             $table->dateTime('due_date');
+            $table->dateTime('paid_date')->nullable();
             $table->string('effected', 10)->nullable();
             $table->string('substituted', 10)->nullable();
             $table->decimal('amount', $precision = 8, $scale = 2)->nullable();

@@ -60,9 +60,11 @@
                             <td>
                                 {{ $debtor['data_vencimento'] }}
                             </td>
+
                             <td>
-                                25/03/2021
+                                {{ $debtor['data_pagamento'] }}
                             </td>
+
                             <td>
                                 {{ $debtor['efetuado'] }}
                             </td>

@@ -310,15 +310,26 @@ foreach ($invoicesAgents as $invoice__) {
 
         if($effected == 1) {
 
+            $dataConsultaTitulo = [
+                'lancamento' => $bookEntry,
+                '$format' => 'json',
+                '$dateformat' => 'iso',
+            ];
+
+            $responseConsultaTitulo = CallAPI('GET', 'titulos_receber/consulta', $dataConsultaTitulo);
+            $resultConsultaTitulo = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaTitulo), true);
+            $paidDate = $resultConsultaTitulo['value'][0]['data_pagamento'];
+
             $bookEntryCommission = (($commissionDebtors / 2) / $countDebtors);
 
             $data = [
                 'effected' => $effected,
                 'commission' => $bookEntryCommission,
                 'book_entry' => $bookEntry,
+                'paid_date' => $paidDate,
             ];
     
-            $sql = "update debtors SET effected = :effected, commission = :commission where book_entry = :book_entry";
+            $sql = "update debtors SET effected = :effected, commission = :commission, paid_date = :paid_date where book_entry = :book_entry";
             $stmt = $pdo->prepare($sql);
             $stmt->execute($data);
 

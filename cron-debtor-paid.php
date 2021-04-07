@@ -320,6 +320,9 @@ foreach ($invoicesAgents as $invoice__) {
             $resultConsultaTitulo = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaTitulo), true);
             $paidDate = $resultConsultaTitulo['value'][0]['data_pagamento'];
 
+            $paidDate = date_create($paidDate);
+            $paidDate = date_format($paidDate, "Y-m-d H:i:s");
+
             $bookEntryCommission = (($commissionDebtors / 2) / $countDebtors);
 
             $data = [

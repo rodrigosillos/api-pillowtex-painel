@@ -6,8 +6,8 @@ include('connection-db.php');
 $operationType = 'S'; // Entrada (Dedução) / Saida (Faturamento 50% / Substituição / Liquidição)
 
 $dataListaMovimentacao = [
-    'datai' => '2020-10-01',
-    'dataf' => '2021-04-01',
+    'datai' => '2021-01-01',
+    'dataf' => '2021-01-31',
     '$format' => 'json',
     'tipo_operacao' => $operationType,
 ];

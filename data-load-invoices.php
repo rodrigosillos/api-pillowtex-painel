@@ -6,8 +6,8 @@ include('connection-db.php');
 $operationType = 'S'; // Entrada (Dedução) / Saida (Faturamento 50% / Substituição / Liquidição)
 
 $dataListaMovimentacao = [
-    'datai' => '2021-01-01',
-    'dataf' => '2021-01-31',
+    'datai' => '2021-03-18',
+    'dataf' => '2021-04-30',
     '$format' => 'json',
     'tipo_operacao' => $operationType,
 ];
@@ -38,7 +38,7 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
         $invoiceAgent = $resultConsultaMovimentacao['value'][0]['representante'];
     }
 
-    if($invoiceAgent == 219 || $invoiceAgent == 117) {
+    if($invoiceAgent == 219 || $invoiceAgent == 117 || $invoiceAgent == 217) {
 
         if($invoiceFilial == 12 || $invoiceFilial == 16) {
 

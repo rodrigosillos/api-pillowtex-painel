@@ -6,8 +6,8 @@ include('connection-db.php');
 $operationType = 'S'; // Entrada (Dedução) / Saida (Faturamento 50% / Substituição / Liquidição)
 
 $dataListaMovimentacao = [
-    'datai' => '2021-03-18',
-    'dataf' => '2021-04-30',
+    'datai' => '2020-10-01',
+    'dataf' => '2021-04-21',
     '$format' => 'json',
     'tipo_operacao' => $operationType,
 ];
@@ -122,6 +122,7 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
                 'canceled' => $resultConsultaMovimentacao['value'][0]['cancelada'],
                 'order_code' => $orderCode,
                 'invoice' => $invoice,
+                'courtesy' => $resultConsultaMovimentacao['value'][0]['cortesia'],
             ];
             
             $sql  = "INSERT INTO invoices (
@@ -142,7 +143,8 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
                                             operation_type,
                                             canceled,
                                             order_code,
-                                            invoice) VALUES (
+                                            invoice,
+                                            courtesy) VALUES (
                                                             :operation_code,
                                                             :document,
                                                             :ticket,
@@ -160,7 +162,8 @@ foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
                                                             :operation_type,
                                                             :canceled,
                                                             :order_code,
-                                                            :invoice)";
+                                                            :invoice,
+                                                            :courtesy)";
     
             $stmt = $pdo->prepare($sql);
             $stmt->execute($data);

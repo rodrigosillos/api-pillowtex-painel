@@ -33,6 +33,7 @@ class CreateInvoicesTable extends Migration
             $table->string('canceled', 10)->nullable();
             $table->string('order_code')->nullable();
             $table->string('invoice')->nullable();
+            $table->decimal('courtesy', $precision = 8, $scale = 2)->nullable();
             $table->timestamps();
         });
     }

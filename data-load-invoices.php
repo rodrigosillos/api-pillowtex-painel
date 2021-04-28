@@ -3,7 +3,7 @@
 include('call-api.php');
 include('connection-db.php');
 
-$operationType = 'S'; // Entrada (Dedução) / Saida (Faturamento 50% / Substituição / Liquidição)
+$operationType = 'E'; // Entrada (Dedução) / Saida (Faturamento 50% / Substituição / Liquidição)
 
 $dataListaMovimentacao = [
     'datai' => '2020-10-01',

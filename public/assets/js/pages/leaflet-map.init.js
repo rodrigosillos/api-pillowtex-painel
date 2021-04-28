@@ -1,1 +1,244 @@
-!function(e){var t={};function o(a){if(t[a])return t[a].exports;var r=t[a]={i:a,l:!1,exports:{}};return e[a].call(r.exports,r,r.exports,o),r.l=!0,r.exports}o.m=e,o.c=t,o.d=function(e,t,a){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:a})},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},o.t=function(e,t){if(1&t&&(e=o(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var a=Object.create(null);if(o.r(a),Object.defineProperty(a,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)o.d(a,r,function(t){return e[t]}.bind(null,r));return a},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p="/",o(o.s=46)}({46:function(e,t,o){e.exports=o(47)},47:function(e,t){var o=L.map("leaflet-map").setView([51.505,-.09],13);L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw",{maxZoom:18,attribution:'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',id:"mapbox/streets-v11",tileSize:512,zoomOffset:-1}).addTo(o);var a=L.map("leaflet-map-marker").setView([51.505,-.09],13);L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw",{maxZoom:18,attribution:'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',id:"mapbox/streets-v11",tileSize:512,zoomOffset:-1}).addTo(a),L.marker([51.5,-.09]).addTo(a),L.circle([51.508,-.11],{color:"#34c38f",fillColor:"#34c38f",fillOpacity:.5,radius:500}).addTo(a),L.polygon([[51.509,-.08],[51.503,-.06],[51.51,-.047]],{color:"#5b73e8",fillColor:"#5b73e8"}).addTo(a);var r=L.map("leaflet-map-popup").setView([51.505,-.09],13);L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw",{maxZoom:18,attribution:'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',id:"mapbox/streets-v11",tileSize:512,zoomOffset:-1}).addTo(r),L.marker([51.5,-.09]).addTo(r).bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup(),L.circle([51.508,-.11],500,{color:"#f46a6a",fillColor:"#f46a6a",fillOpacity:.5}).addTo(r).bindPopup("I am a circle."),L.polygon([[51.509,-.08],[51.503,-.06],[51.51,-.047]],{color:"#5b73e8",fillColor:"#5b73e8"}).addTo(r).bindPopup("I am a polygon.");L.popup();var i=L.map("leaflet-map-custom-icons").setView([51.5,-.09],13);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(i);var p=new(L.Icon.extend({options:{iconSize:[45,95],iconAnchor:[22,94],popupAnchor:[-3,-76]}}))({iconUrl:"assets/images/logo.svg"});L.marker([51.5,-.09],{icon:p}).addTo(i);var s=L.map("leaflet-map-interactive-map").setView([37.8,-96],4);L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw",{maxZoom:18,attribution:'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',id:"mapbox/light-v9",tileSize:512,zoomOffset:-1}).addTo(s);L.geoJson(statesData,{style:function(e){return{weight:2,opacity:1,color:"white",dashArray:"3",fillOpacity:.7,fillColor:(t=e.properties.density,t>1e3?"#497fe5":t>500?"#5b73e8":t>200?"#6d99eb":t>100?"#7fa5ed":t>50?"#91b2f0":t>20?"#a3bef2":t>10?"#b4cbf5":"#bdd1f6")};var t}}).addTo(s);var n=L.layerGroup();L.marker([39.61,-105.02]).bindPopup("This is Littleton, CO.").addTo(n),L.marker([39.74,-104.99]).bindPopup("This is Denver, CO.").addTo(n),L.marker([39.73,-104.8]).bindPopup("This is Aurora, CO.").addTo(n),L.marker([39.77,-105.23]).bindPopup("This is Golden, CO.").addTo(n);var c='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',m="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw",l=L.tileLayer(m,{id:"mapbox/light-v9",tileSize:512,zoomOffset:-1,attribution:c}),d=L.tileLayer(m,{id:"mapbox/streets-v11",tileSize:512,zoomOffset:-1,attribution:c}),f=L.map("leaflet-map-group-control",{center:[39.73,-104.99],zoom:10,layers:[d,n]}),b={Grayscale:l,Streets:d},y={Cities:n};L.control.layers(b,y).addTo(f)}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 23);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./resources/js/pages/leaflet-map.init.js":
+/*!************************************************!*\
+  !*** ./resources/js/pages/leaflet-map.init.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*
+Template Name: Minible - Responsive Bootstrap 4 Admin Dashboard
+Author: Themesbrand
+Version: 1.0.0
+Website: https://themesbrand.com/
+Contact: themesbrand@gmail.com
+File: leaflet init js
+*/
+// leaflet-map
+var mymap = L.map('leaflet-map').setView([51.505, -0.09], 13);
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+  maxZoom: 18,
+  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' + '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  id: 'mapbox/streets-v11',
+  tileSize: 512,
+  zoomOffset: -1
+}).addTo(mymap); // leaflet-map-marker
+
+var markermap = L.map('leaflet-map-marker').setView([51.505, -0.09], 13);
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+  maxZoom: 18,
+  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' + '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  id: 'mapbox/streets-v11',
+  tileSize: 512,
+  zoomOffset: -1
+}).addTo(markermap);
+L.marker([51.5, -0.09]).addTo(markermap);
+L.circle([51.508, -0.11], {
+  color: '#34c38f',
+  fillColor: '#34c38f',
+  fillOpacity: 0.5,
+  radius: 500
+}).addTo(markermap);
+L.polygon([[51.509, -0.08], [51.503, -0.06], [51.51, -0.047]], {
+  color: '#5b73e8',
+  fillColor: '#5b73e8'
+}).addTo(markermap); // Working with popups
+
+var popupmap = L.map('leaflet-map-popup').setView([51.505, -0.09], 13);
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+  maxZoom: 18,
+  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' + '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  id: 'mapbox/streets-v11',
+  tileSize: 512,
+  zoomOffset: -1
+}).addTo(popupmap);
+L.marker([51.5, -0.09]).addTo(popupmap).bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+L.circle([51.508, -0.11], 500, {
+  color: '#f46a6a',
+  fillColor: '#f46a6a',
+  fillOpacity: 0.5
+}).addTo(popupmap).bindPopup("I am a circle.");
+L.polygon([[51.509, -0.08], [51.503, -0.06], [51.51, -0.047]], {
+  color: '#5b73e8',
+  fillColor: '#5b73e8'
+}).addTo(popupmap).bindPopup("I am a polygon.");
+var popup = L.popup(); // leaflet-map-custom-icons
+
+var customiconsmap = L.map('leaflet-map-custom-icons').setView([51.5, -0.09], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(customiconsmap);
+var LeafIcon = L.Icon.extend({
+  options: {
+    iconSize: [45, 95],
+    iconAnchor: [22, 94],
+    popupAnchor: [-3, -76]
+  }
+});
+var greenIcon = new LeafIcon({
+  iconUrl: 'assets/images/logo.svg'
+});
+L.marker([51.5, -0.09], {
+  icon: greenIcon
+}).addTo(customiconsmap); // Interactive Choropleth Map
+
+var interactivemap = L.map('leaflet-map-interactive-map').setView([37.8, -96], 4);
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+  maxZoom: 18,
+  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' + '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  id: 'mapbox/light-v9',
+  tileSize: 512,
+  zoomOffset: -1
+}).addTo(interactivemap); // get color depending on population density value
+
+function getColor(d) {
+  return d > 1000 ? '#497fe5' : d > 500 ? '#5b73e8' : d > 200 ? '#6d99eb' : d > 100 ? '#7fa5ed' : d > 50 ? '#91b2f0' : d > 20 ? '#a3bef2' : d > 10 ? '#b4cbf5' : '#bdd1f6';
+}
+
+function style(feature) {
+  return {
+    weight: 2,
+    opacity: 1,
+    color: 'white',
+    dashArray: '3',
+    fillOpacity: 0.7,
+    fillColor: getColor(feature.properties.density)
+  };
+}
+
+var geojson = L.geoJson(statesData, {
+  style: style
+}).addTo(interactivemap); // leaflet-map-group-control
+
+var cities = L.layerGroup();
+L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.').addTo(cities), L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.').addTo(cities), L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.').addTo(cities), L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.').addTo(cities);
+var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' + '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+var grayscale = L.tileLayer(mbUrl, {
+  id: 'mapbox/light-v9',
+  tileSize: 512,
+  zoomOffset: -1,
+  attribution: mbAttr
+}),
+    streets = L.tileLayer(mbUrl, {
+  id: 'mapbox/streets-v11',
+  tileSize: 512,
+  zoomOffset: -1,
+  attribution: mbAttr
+});
+var layergroupcontrolmap = L.map('leaflet-map-group-control', {
+  center: [39.73, -104.99],
+  zoom: 10,
+  layers: [streets, cities]
+});
+var baseLayers = {
+  "Grayscale": grayscale,
+  "Streets": streets
+};
+var overlays = {
+  "Cities": cities
+};
+L.control.layers(baseLayers, overlays).addTo(layergroupcontrolmap);
+
+/***/ }),
+
+/***/ 23:
+/*!******************************************************!*\
+  !*** multi ./resources/js/pages/leaflet-map.init.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /home/painelpillowtex/projects/api-pillowtex-painel/resources/js/pages/leaflet-map.init.js */"./resources/js/pages/leaflet-map.init.js");
+
+
+/***/ })
+
+/******/ });

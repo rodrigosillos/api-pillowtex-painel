@@ -1,1 +1,288 @@
-!function(e){var t={};function n(a){if(t[a])return t[a].exports;var l=t[a]={i:a,l:!1,exports:{}};return e[a].call(l.exports,l,l.exports,n),l.l=!0,l.exports}n.m=e,n.c=t,n.d=function(e,t,a){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:a})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var a=Object.create(null);if(n.r(a),Object.defineProperty(a,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var l in e)n.d(a,l,function(t){return e[t]}.bind(null,l));return a},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="/",n(n.s=4)}({4:function(e,t,n){e.exports=n(5)},5:function(e,t){!function(e){"use strict";var t=function(){};t.prototype.init=function(){var t=e("#event-modal"),n=e("#modal-title"),a=e("#form-event"),l=null,r=null,i=document.getElementsByClassName("needs-validation"),o=(l=null,r=null,new Date),s=o.getDate(),d=o.getMonth(),c=o.getFullYear();new(0,FullCalendarInteraction.Draggable)(document.getElementById("external-events"),{itemSelector:".external-event",eventData:function(t){return{title:t.innerText,className:e(t).data("class")}}});var u=[{title:"All Day Event",start:new Date(c,d,1)},{title:"Long Event",start:new Date(c,d,s-5),end:new Date(c,d,s-2),className:"bg-warning"},{id:999,title:"Repeating Event",start:new Date(c,d,s-3,16,0),allDay:!1,className:"bg-info"},{id:999,title:"Repeating Event",start:new Date(c,d,s+4,16,0),allDay:!1,className:"bg-primary"},{title:"Meeting",start:new Date(c,d,s,10,30),allDay:!1,className:"bg-success"},{title:"Lunch",start:new Date(c,d,s,12,0),end:new Date(c,d,s,14,0),allDay:!1,className:"bg-danger"},{title:"Birthday Party",start:new Date(c,d,s+1,19,0),end:new Date(c,d,s+1,22,30),allDay:!1,className:"bg-success"},{title:"Click for Google",start:new Date(c,d,28),end:new Date(c,d,29),url:"http://google.com/",className:"bg-dark"}],v=(document.getElementById("external-events"),document.getElementById("calendar"));function f(l){t.modal("show"),a.removeClass("was-validated"),a[0].reset(),e("#event-title").val(),e("#event-category").val(),n.text("Add Event"),r=l}var m=new FullCalendar.Calendar(v,{plugins:["bootstrap","interaction","dayGrid","timeGrid"],editable:!0,droppable:!0,selectable:!0,defaultView:"dayGridMonth",themeSystem:"bootstrap",header:{left:"prev,next today",center:"title",right:"dayGridMonth,timeGridWeek,timeGridDay,listMonth"},eventClick:function(i){t.modal("show"),a[0].reset(),l=i.event,e("#event-title").val(l.title),e("#event-category").val(l.classNames[0]),r=null,n.text("Edit Event"),r=null},dateClick:function(e){f(e)},events:u});m.render(),e(a).on("submit",(function(n){n.preventDefault();e("#form-event :input");var a=e("#event-title").val(),o=e("#event-category").val();if(!1===i[0].checkValidity())event.preventDefault(),event.stopPropagation(),i[0].classList.add("was-validated");else{if(l)l.setProp("title",a),l.setProp("classNames",[o]);else{var s={title:a,start:r.date,allDay:r.allDay,className:o};m.addEvent(s)}t.modal("hide")}})),e("#btn-delete-event").on("click",(function(e){l&&(l.remove(),l=null,t.modal("hide"))})),e("#btn-new-event").on("click",(function(e){f({date:new Date,allDay:!0})}))},e.CalendarPage=new t,e.CalendarPage.Constructor=t}(window.jQuery),function(e){"use strict";window.jQuery.CalendarPage.init()}()}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./resources/js/pages/calendar.init.js":
+/*!*********************************************!*\
+  !*** ./resources/js/pages/calendar.init.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*
+Template Name: Minible - Responsive Bootstrap 4 Admin Dashboard
+Author: Themesbrand
+Version: 1.0.0
+Website: https://themesbrand.com/
+Contact: themesbrand@gmail.com
+File: Calendar init js
+*/
+!function ($) {
+  "use strict";
+
+  var CalendarPage = function CalendarPage() {};
+
+  CalendarPage.prototype.init = function () {
+    var addEvent = $("#event-modal");
+    var modalTitle = $("#modal-title");
+    var formEvent = $("#form-event");
+    var selectedEvent = null;
+    var newEventData = null;
+    var forms = document.getElementsByClassName('needs-validation');
+    var selectedEvent = null;
+    var newEventData = null;
+    var eventObject = null;
+    /* initialize the calendar */
+
+    var date = new Date();
+    var d = date.getDate();
+    var m = date.getMonth();
+    var y = date.getFullYear();
+    var Draggable = FullCalendarInteraction.Draggable;
+    var externalEventContainerEl = document.getElementById('external-events'); // init dragable
+
+    new Draggable(externalEventContainerEl, {
+      itemSelector: '.external-event',
+      eventData: function eventData(eventEl) {
+        return {
+          title: eventEl.innerText,
+          className: $(eventEl).data('class')
+        };
+      }
+    });
+    var defaultEvents = [{
+      title: 'All Day Event',
+      start: new Date(y, m, 1)
+    }, {
+      title: 'Long Event',
+      start: new Date(y, m, d - 5),
+      end: new Date(y, m, d - 2),
+      className: 'bg-warning'
+    }, {
+      id: 999,
+      title: 'Repeating Event',
+      start: new Date(y, m, d - 3, 16, 0),
+      allDay: false,
+      className: 'bg-info'
+    }, {
+      id: 999,
+      title: 'Repeating Event',
+      start: new Date(y, m, d + 4, 16, 0),
+      allDay: false,
+      className: 'bg-primary'
+    }, {
+      title: 'Meeting',
+      start: new Date(y, m, d, 10, 30),
+      allDay: false,
+      className: 'bg-success'
+    }, {
+      title: 'Lunch',
+      start: new Date(y, m, d, 12, 0),
+      end: new Date(y, m, d, 14, 0),
+      allDay: false,
+      className: 'bg-danger'
+    }, {
+      title: 'Birthday Party',
+      start: new Date(y, m, d + 1, 19, 0),
+      end: new Date(y, m, d + 1, 22, 30),
+      allDay: false,
+      className: 'bg-success'
+    }, {
+      title: 'Click for Google',
+      start: new Date(y, m, 28),
+      end: new Date(y, m, 29),
+      url: 'http://google.com/',
+      className: 'bg-dark'
+    }];
+    var draggableEl = document.getElementById('external-events');
+    var calendarEl = document.getElementById('calendar');
+
+    function addNewEvent(info) {
+      addEvent.modal('show');
+      formEvent.removeClass("was-validated");
+      formEvent[0].reset();
+      $("#event-title").val();
+      $('#event-category').val();
+      modalTitle.text('Add Event');
+      newEventData = info;
+    }
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: ['bootstrap', 'interaction', 'dayGrid', 'timeGrid'],
+      editable: true,
+      droppable: true,
+      selectable: true,
+      defaultView: 'dayGridMonth',
+      themeSystem: 'bootstrap',
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+      },
+      eventClick: function eventClick(info) {
+        addEvent.modal('show');
+        formEvent[0].reset();
+        selectedEvent = info.event;
+        $("#event-title").val(selectedEvent.title);
+        $('#event-category').val(selectedEvent.classNames[0]);
+        newEventData = null;
+        modalTitle.text('Edit Event');
+        newEventData = null;
+      },
+      dateClick: function dateClick(info) {
+        addNewEvent(info);
+      },
+      events: defaultEvents
+    });
+    calendar.render();
+    /*Add new event*/
+    // Form to add new event
+
+    $(formEvent).on('submit', function (ev) {
+      ev.preventDefault();
+      var inputs = $('#form-event :input');
+      var updatedTitle = $("#event-title").val();
+      var updatedCategory = $('#event-category').val(); // validation
+
+      if (forms[0].checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+        forms[0].classList.add('was-validated');
+      } else {
+        if (selectedEvent) {
+          selectedEvent.setProp("title", updatedTitle);
+          selectedEvent.setProp("classNames", [updatedCategory]);
+        } else {
+          var newEvent = {
+            title: updatedTitle,
+            start: newEventData.date,
+            allDay: newEventData.allDay,
+            className: updatedCategory
+          };
+          calendar.addEvent(newEvent);
+        }
+
+        addEvent.modal('hide');
+      }
+    });
+    $("#btn-delete-event").on('click', function (e) {
+      if (selectedEvent) {
+        selectedEvent.remove();
+        selectedEvent = null;
+        addEvent.modal('hide');
+      }
+    });
+    $("#btn-new-event").on('click', function (e) {
+      addNewEvent({
+        date: new Date(),
+        allDay: true
+      });
+    });
+  }, //init
+  $.CalendarPage = new CalendarPage(), $.CalendarPage.Constructor = CalendarPage;
+}(window.jQuery), //initializing 
+function ($) {
+  "use strict";
+
+  $.CalendarPage.init();
+}(window.jQuery);
+
+/***/ }),
+
+/***/ 2:
+/*!***************************************************!*\
+  !*** multi ./resources/js/pages/calendar.init.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /home/painelpillowtex/projects/api-pillowtex-painel/resources/js/pages/calendar.init.js */"./resources/js/pages/calendar.init.js");
+
+
+/***/ })
+
+/******/ });

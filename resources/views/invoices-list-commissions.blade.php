@@ -26,9 +26,9 @@
         <div class="col-md-8">
             <div class="float-right">
                 <div class="form-inline mb-3">
-                    <div class="input-daterange input-group" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
-                        <input type="text" class="form-control text-left" placeholder="De" name="dateStart" />
-                        <input type="text" class="form-control text-left" placeholder="Até" name="dateEnd" />
+                    <div class="input-daterange input-group" data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-autoclose="true">
+                        <input type="text" class="form-control text-left" placeholder="De" name="dateStart" value="{{ $dataForm['dateStart'] }}" />
+                        <input type="text" class="form-control text-left" placeholder="Até" name="dateEnd" value="{{ $dataForm['dateEnd'] }}" />
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-primary"><i class="mdi mdi-filter-variant"></i></button>
                         </div>

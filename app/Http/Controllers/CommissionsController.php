@@ -19,14 +19,19 @@ class CommissionsController extends Controller
 
     public function index(Request $request)
     {
-        return view('invoices-list-commissions', ['invoices' => [
-            'data' => [],
-            'totalizador' => [
-                'valor_venda' => 0,
-                'valor_comissao' => 0,
-                'valor_faturamento' => 0,
-                'valor_liquidacao' => 0,
+        return view('invoices-list-commissions', [
+            'invoices' => [
+                'data' => [],
+                'totalizador' => [
+                    'valor_venda' => 0,
+                    'valor_comissao' => 0,
+                    'valor_faturamento' => 0,
+                    'valor_liquidacao' => 0,
                 ],
+            ],
+            'dataForm' => [
+                'dateStart' => '',
+                'dateEnd' => '',
             ]
         ]);
     }
@@ -49,22 +54,25 @@ class CommissionsController extends Controller
 
     public function getInvoices(Request $request)
     {
-        $dateStart = $request->dateStart;
-        $dateEnd = $request->dateEnd;
+        $dateStart = Carbon::createFromFormat('d/m/Y', $request->dateStart)->format('Y-m-d');
+        $dateEnd = Carbon::createFromFormat('d/m/Y', $request->dateEnd)->format('Y-m-d');
+
+        $dateStartForm = $request->dateStart;
+        $dateEndForm = $request->dateEnd;
 
         $users = DB::table('users')
+        ->select(['agent_id', 'user_profile_id'])
         ->where('id', '=', Auth::user()->id)
-        ->get();
+        ->first();
 
-        if(isset($users[0])) {
-            $agentId = $users[0]->agent_id;
-            $userProfileId = $users[0]->user_profile_id;
+        if(isset($users)) {
+            $agentId = $users->agent_id;
+            $userProfileId = $users->user_profile_id;
         }
 
         if($userProfileId == 1) { // admin
             $invoices = DB::table('invoices')
             ->whereBetween('issue_date', [$dateStart, $dateEnd])
-            //->whereIn('document', [306789198, 306804648])
             ->get();
         } elseif($userProfileId == 3) { // agent
             $invoices = DB::table('invoices')
@@ -173,6 +181,12 @@ class CommissionsController extends Controller
                         if($productDiscount > 5)
                             $commissionPercentage = ($commissionPercentage / 2);
                     }
+
+                    if($invoice->invoice_type == 'PEDIDOS ESPECIAIS') {
+                        $dataConsultaMovimentacao = '?tipo_operacao='.$invoice->operation_type.'&cod_operacao='.$invoice->operation_code.'&ujuros=false&$format=json&$dateformat=iso';
+                        $resultConsultaMovimentacao = $this->connection('movimentacao/consulta', $dataConsultaMovimentacao);
+                        $commissionPercentage = $resultConsultaMovimentacao['value'][0]['comissao_r'];
+                    }
                     
                     // commission amout
                     $commissionAmount = floor(($productPrice * $productQty) * $commissionPercentage) / 100;
@@ -226,6 +240,10 @@ class CommissionsController extends Controller
         return view('invoices-list-commissions', 
         [
             'invoices' => $commissionResult,
+            'dataForm' => [
+                'dateStart' => $dateStartForm,
+                'dateEnd' => $dateEndForm,
+            ]
         ]);
 
     }
@@ -236,12 +254,15 @@ class CommissionsController extends Controller
         
         // invoice
         $invoice = DB::table('invoices')
+        ->select(['price_list', 'client_address', 'invoice_type', 'operation_type'])
         ->where('operation_code', $operationCode)
-        ->get();
+        ->first();
 
         // commission
-        $tableId = $invoice[0]->price_list;
-        $clientAddress = $invoice[0]->client_address;
+        $tableId = $invoice->price_list;
+        $clientAddress = $invoice->client_address;
+        $invoiceType = $invoice->invoice_type;
+        $operationType = $invoice->operation_type;
         
         if($clientAddress == null)
             $clientAddress = 'SP';
@@ -294,6 +315,12 @@ class CommissionsController extends Controller
             if($tableCode == 187) {
                 if($clientAddress != 'SP' && $productDiscount < 5)
                     $commissionPercentage = 4;
+            }
+
+            if($invoiceType == 'PEDIDOS ESPECIAIS') {
+                $dataConsultaMovimentacao = '?tipo_operacao='.$operationType.'&cod_operacao='.$operationCode.'&ujuros=false&$format=json&$dateformat=iso';
+                $resultConsultaMovimentacao = $this->connection('movimentacao/consulta', $dataConsultaMovimentacao);
+                $commissionPercentage = $resultConsultaMovimentacao['value'][0]['comissao_r'];
             }
             
             // commission amout

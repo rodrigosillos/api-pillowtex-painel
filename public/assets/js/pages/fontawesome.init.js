@@ -110,7 +110,7 @@ var icons='{"data":[{"attributes":{"id":"500px","membership":{"free":["brands"],
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/painelpillowtex/projects/api-pillowtex-painel/resources/js/pages/fontawesome.init.js */"./resources/js/pages/fontawesome.init.js");
+module.exports = __webpack_require__(/*! /home/rodrigosillos/Projects/api-pillowtex-painel/resources/js/pages/fontawesome.init.js */"./resources/js/pages/fontawesome.init.js");
 
 
 /***/ })

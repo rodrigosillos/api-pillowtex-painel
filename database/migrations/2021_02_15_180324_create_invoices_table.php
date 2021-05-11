@@ -27,13 +27,13 @@ class CreateInvoicesTable extends Migration
             $table->string('agent_code')->nullable();
             $table->string('agent_name')->nullable();
             $table->integer('price_list')->nullable();
-            $table->decimal('amount', $precision = 8, $scale = 2)->nullable();
+            $table->decimal('amount', $precision = 15, $scale = 2)->nullable();
             $table->string('invoice_type')->nullable();
             $table->string('operation_type', 1)->nullable();
             $table->string('canceled', 10)->nullable();
             $table->string('order_code')->nullable();
             $table->string('invoice')->nullable();
-            $table->decimal('courtesy', $precision = 8, $scale = 2)->nullable();
+            $table->decimal('courtesy', $precision = 15, $scale = 2)->nullable();
             $table->timestamps();
         });
     }

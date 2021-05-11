@@ -726,13 +726,13 @@ chart.render();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/painelpillowtex/projects/api-pillowtex-painel/resources/js/pages/apexcharts.init.js */"./resources/js/pages/apexcharts.init.js");
-__webpack_require__(/*! /home/painelpillowtex/projects/api-pillowtex-painel/resources/scss/bootstrap.scss */"./resources/scss/bootstrap.scss");
-__webpack_require__(/*! /home/painelpillowtex/projects/api-pillowtex-painel/resources/scss/bootstrap-dark.scss */"./resources/scss/bootstrap-dark.scss");
-__webpack_require__(/*! /home/painelpillowtex/projects/api-pillowtex-painel/resources/scss/icons.scss */"./resources/scss/icons.scss");
-__webpack_require__(/*! /home/painelpillowtex/projects/api-pillowtex-painel/resources/scss/app-rtl.scss */"./resources/scss/app-rtl.scss");
-__webpack_require__(/*! /home/painelpillowtex/projects/api-pillowtex-painel/resources/scss/app.scss */"./resources/scss/app.scss");
-module.exports = __webpack_require__(/*! /home/painelpillowtex/projects/api-pillowtex-painel/resources/scss/app-dark.scss */"./resources/scss/app-dark.scss");
+__webpack_require__(/*! /home/rodrigosillos/Projects/api-pillowtex-painel/resources/js/pages/apexcharts.init.js */"./resources/js/pages/apexcharts.init.js");
+__webpack_require__(/*! /home/rodrigosillos/Projects/api-pillowtex-painel/resources/scss/bootstrap.scss */"./resources/scss/bootstrap.scss");
+__webpack_require__(/*! /home/rodrigosillos/Projects/api-pillowtex-painel/resources/scss/bootstrap-dark.scss */"./resources/scss/bootstrap-dark.scss");
+__webpack_require__(/*! /home/rodrigosillos/Projects/api-pillowtex-painel/resources/scss/icons.scss */"./resources/scss/icons.scss");
+__webpack_require__(/*! /home/rodrigosillos/Projects/api-pillowtex-painel/resources/scss/app-rtl.scss */"./resources/scss/app-rtl.scss");
+__webpack_require__(/*! /home/rodrigosillos/Projects/api-pillowtex-painel/resources/scss/app.scss */"./resources/scss/app.scss");
+module.exports = __webpack_require__(/*! /home/rodrigosillos/Projects/api-pillowtex-painel/resources/scss/app-dark.scss */"./resources/scss/app-dark.scss");
 
 
 /***/ })

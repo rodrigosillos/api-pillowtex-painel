@@ -274,7 +274,7 @@ function ($) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/painelpillowtex/projects/api-pillowtex-painel/resources/js/pages/vector-maps.init.js */"./resources/js/pages/vector-maps.init.js");
+module.exports = __webpack_require__(/*! /home/rodrigosillos/Projects/api-pillowtex-painel/resources/js/pages/vector-maps.init.js */"./resources/js/pages/vector-maps.init.js");
 
 
 /***/ })

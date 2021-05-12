@@ -18,13 +18,15 @@ Auth::routes();
 // Route::get('{any}', 'HomeController@index');
 
 Route::get('/index', 'DashboardController@index');
-Route::get('/comissoes', 'CommissionsController@index');
-Route::get('/representantes', 'CommissionsController@getAgents');
+Route::get('/comissoes', 'InvoicesController@index');
+Route::get('/representantes', 'AgentsController@get');
 Route::get('/configurar-comissoes', 'SettingsController@index');
+Route::get('/consulta-produtos/{operation_code}', 'InvoiceDetailsController@get');
+Route::get('/consulta-titulos/{operation_code}', 'DebtorsController@get');
+
 Route::post('/configurar-comissoes-salvar', 'SettingsController@set');
-Route::post('/consulta-comissoes', 'CommissionsController@getInvoices');
-Route::get('/consulta-produtos/{operation_code}', 'CommissionsController@detailInvoice');
-Route::get('/consulta-titulos/{operation_code}', 'CommissionsController@getDebtors');
+Route::post('/consulta-comissoes', 'InvoicesController@get');
+
 
 //Language Translation
 Route::get('index/{locale}', 'HomeController@lang');

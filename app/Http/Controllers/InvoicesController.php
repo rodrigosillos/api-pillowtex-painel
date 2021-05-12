@@ -1,0 +1,242 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use App;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Auth;
+use Illuminate\Support\Str;
+use PDF;
+
+class InvoicesController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index(Request $request)
+    {
+        return view('invoices-list-commissions', [
+            'invoices' => [
+                'data' => [],
+                'totalizador' => [
+                    'valor_venda' => 0,
+                    'valor_comissao' => 0,
+                    'valor_faturamento' => 0,
+                    'valor_liquidacao' => 0,
+                ],
+            ],
+            'dataForm' => [
+                'dateStart' => '',
+                'dateEnd' => '',
+            ]
+        ]);
+    }
+
+    public function connection($method, $param)
+    {
+        $client = new Client();
+
+        $user = "pillowtex_adm";
+        $pass = "ABusters#94";
+        $environment = 'http://177.85.33.76:6017/api/millenium/';
+        $type = 'GET';
+
+        $response = $client->request($type, $environment.$method.$param, [
+            'auth' => [$user, $pass]
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    public function get(Request $request)
+    {
+        $dateStart = Carbon::createFromFormat('d/m/Y', $request->dateStart)->format('Y-m-d');
+        $dateEnd = Carbon::createFromFormat('d/m/Y', $request->dateEnd)->format('Y-m-d');
+
+        $dateStartForm = $request->dateStart;
+        $dateEndForm = $request->dateEnd;
+
+        $users = DB::table('users')
+        ->select(['agent_id', 'user_profile_id'])
+        ->where('id', '=', Auth::user()->id)
+        ->first();
+
+        if(isset($users)) {
+            $agentId = $users->agent_id;
+            $userProfileId = $users->user_profile_id;
+        }
+
+        if($userProfileId == 1) { // admin
+            $invoices = DB::table('invoices')
+            ->whereBetween('issue_date', [$dateStart, $dateEnd])
+            ->get();
+        } elseif($userProfileId == 3) { // agent
+            $invoices = DB::table('invoices')
+            ->whereBetween('issue_date', [$dateStart, $dateEnd])
+            ->where('agent_id', $agentId)
+            ->get();
+        }
+
+        $commissionResult['data'] = [];
+        $commissionResult['totalizador']['valor_venda'] = 0;
+        $commissionResult['totalizador']['valor_comissao'] = 0;
+        $commissionResult['totalizador']['valor_faturamento'] = 0;
+        $commissionResult['totalizador']['valor_liquidacao'] = 0;
+        $commissionResult['totalizador']['valor_substituidor'] = 0;
+        $commissionResult['totalizador']['valor_substituicao'] = 0;
+
+        foreach($invoices as $invoiceKey => $invoice) {
+
+            $issueDate = date_create($invoice->issue_date);
+
+            $commissionResult['data'][$invoiceKey]['operacao_codigo'] = $invoice->operation_code;
+            $commissionResult['data'][$invoiceKey]['romaneio'] = $invoice->document;
+            $commissionResult['data'][$invoiceKey]['ticket'] = $invoice->ticket;
+            $commissionResult['data'][$invoiceKey]['data_emissao'] = date_format($issueDate, "d/m/Y");
+            $commissionResult['data'][$invoiceKey]['cliente_codigo'] = $invoice->client_code;
+            $commissionResult['data'][$invoiceKey]['cliente_nome'] = Str::limit($invoice->client_name, 25, $end='...');
+            $commissionResult['data'][$invoiceKey]['cliente_estado'] = $invoice->client_address;
+            $commissionResult['data'][$invoiceKey]['representante_nome'] = Str::limit($invoice->agent_name, 25, $end='...');
+            $commissionResult['data'][$invoiceKey]['tabela_preco'] = $invoice->price_list;
+            $commissionResult['data'][$invoiceKey]['total'] = $invoice->amount;
+            $commissionResult['data'][$invoiceKey]['tipo_operacao'] = $invoice->operation_type == 'E' ? 'Dedução' : 'S';
+            $commissionResult['data'][$invoiceKey]['nota_fiscal'] = $invoice->invoice;
+            $commissionResult['data'][$invoiceKey]['pedido_codigo'] = $invoice->order_code;
+            $commissionResult['data'][$invoiceKey]['pedido_tipo'] = $invoice->invoice_type;
+
+            $debtors = DB::table('debtors')
+            ->select(['commission'])
+            ->where('operation_code', $invoice->operation_code)
+            ->get();
+
+            $commissionDebtors = 0;
+
+            foreach($debtors as $debtorKey => $debtor__) {
+                $commissionDebtors += $debtor__->commission;
+            }
+
+            $commissionResult['data'][$invoiceKey]['liquidacao_50'] = $commissionDebtors;
+            $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'warning';
+            
+            if($invoice->operation_type == 'S')
+                $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'success';
+
+            $tableId = $invoice->price_list;
+            $clientAddress = $invoice->client_address;
+    
+            $commissionPercentage = 0;
+            $commissionAmount = 0;
+            $commissionResult['data'][$invoiceKey]['comissao_total'] = 0;
+
+            $invoiceProducts = DB::table('invoices_product')
+            ->where('document', $invoice->document)
+            ->get();
+
+            foreach($invoiceProducts as $invoiceProductKey => $invoiceProduct) {
+
+                $orderId = $invoiceProduct->order_id;
+                $productInvoice = $invoiceProduct->invoice;
+                $productId = $invoiceProduct->product_id;
+                $productName = $invoiceProduct->product_name;
+                $productQty = $invoiceProduct->quantity;
+                $productDiscount = $invoiceProduct->discount;
+                $productPrice = $invoiceProduct->price;
+                $divisionCode = $invoiceProduct->division_code;
+                $divisionDescription = $invoiceProduct->division_description;
+
+                if($invoice->invoice_type != 'PEDIDOS ESPECIAIS') {
+
+                    if($clientAddress == null)
+                        $clientAddress = 'SP';
+        
+                    $tableCode = 214;
+            
+                    if($tableId == 216)
+                        $tableCode = 187;
+
+                    $commissionSettings = DB::table('commission_settings')
+                    ->select(['percentage'])
+                    ->where('product_division', $divisionCode)
+                    ->where('price_list', $tableCode)
+                    ->get();
+
+                    if(isset($commissionSettings[0]))
+                        $commissionPercentage = $commissionSettings[0]->percentage;
+    
+                    if($tableCode == 187) {
+                        if($clientAddress != 'SP' && $productDiscount < 5)
+                            $commissionPercentage = 4;
+                    }
+
+                    if($tableCode == 214) {
+                        if($productDiscount > 5)
+                            $commissionPercentage = ($commissionPercentage / 2);
+                    }
+
+                } else {
+
+                    $dataConsultaMovimentacao = '?tipo_operacao='.$invoice->operation_type.'&cod_operacao='.$invoice->operation_code.'&ujuros=false&$format=json&$dateformat=iso';
+                    $resultConsultaMovimentacao = $this->connection('movimentacao/consulta', $dataConsultaMovimentacao);
+                    $commissionPercentage = $resultConsultaMovimentacao['value'][0]['comissao_r'];
+                
+                }
+                
+                $commissionAmount = floor(($productPrice * $productQty) * $commissionPercentage) / 100;
+
+                if($tableCode == 214) {
+                    if($productDiscount > 5)
+                        $commissionAmount = ($commissionAmount / 2);
+                }
+    
+                $commissionResult['data'][$invoiceKey]['comissao_total'] += $commissionAmount;
+                $commissionResult['data'][$invoiceKey]['tabela_preco'] = $tableCode;
+    
+                $commissionResult['data'][$invoiceKey]['produtos'][$invoiceProductKey]['pedido'] = $orderId;
+                $commissionResult['data'][$invoiceKey]['produtos'][$invoiceProductKey]['nota'] = $productInvoice;
+                $commissionResult['data'][$invoiceKey]['produtos'][$invoiceProductKey]['produto'] = $productId;
+                $commissionResult['data'][$invoiceKey]['produtos'][$invoiceProductKey]['produto_nome'] = $productName;
+                $commissionResult['data'][$invoiceKey]['produtos'][$invoiceProductKey]['quantidade'] = $productQty;
+                $commissionResult['data'][$invoiceKey]['produtos'][$invoiceProductKey]['preco'] = $productPrice;
+                $commissionResult['data'][$invoiceKey]['produtos'][$invoiceProductKey]['desconto'] = $productDiscount;
+                $commissionResult['data'][$invoiceKey]['produtos'][$invoiceProductKey]['produto_comissao'] = $commissionAmount;
+                $commissionResult['data'][$invoiceKey]['produtos'][$invoiceProductKey]['produto_comissao_percentual'] = sprintf("%.2f%%", $commissionPercentage);
+                $commissionResult['data'][$invoiceKey]['produtos'][$invoiceProductKey]['produto_divisao'] = $divisionDescription;
+
+            }
+
+            $commissionResult['data'][$invoiceKey]['faturamento_50'] = $commissionResult['data'][$invoiceKey]['comissao_total'] / 2;
+
+            if($invoice->operation_type != 'E') {
+                $commissionResult['totalizador']['valor_comissao'] += $commissionResult['data'][$invoiceKey]['comissao_total'];
+                $commissionResult['totalizador']['valor_venda'] += $commissionResult['data'][$invoiceKey]['total'];
+                $commissionResult['totalizador']['valor_liquidacao'] += $commissionResult['data'][$invoiceKey]['liquidacao_50'];
+                $commissionResult['totalizador']['valor_faturamento'] += $commissionResult['data'][$invoiceKey]['faturamento_50'];
+            }
+
+            $commissionPercentageAverage = 0;
+
+            if ($invoice->amount != 0)
+                $commissionPercentageAverage = sprintf("%.2f%%", $commissionResult['data'][$invoiceKey]['comissao_total'] / $invoice->amount);
+    
+            $commissionResult['data'][$invoiceKey]['media_base_comissao'] = $commissionPercentageAverage;
+
+            $commissionAmount = 0;
+
+        }
+
+        return view('invoices-list-commissions', 
+        [
+            'invoices' => $commissionResult,
+            'dataForm' => [
+                'dateStart' => $dateStartForm,
+                'dateEnd' => $dateEndForm,
+            ]
+        ]);
+
+    }
+}

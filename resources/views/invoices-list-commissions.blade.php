@@ -20,7 +20,7 @@
         <div class="col-md-4">
             <div>
                 <button type="button" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-printer mr-1"></i> Imprimir</button>
-                <button type="button" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-file-excel-outline mr-1"></i> Exportar</button>
+                <a href="{{ route('exportExcel', 'xls') }}"><button type="button" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-file-excel-outline mr-1"></i> Exportar</button></a>
             </div>
         </div>
         <div class="col-md-8">

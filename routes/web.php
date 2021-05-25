@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,7 @@ Route::get('/representantes', 'AgentsController@get');
 Route::get('/configurar-comissoes', 'SettingsController@index');
 Route::get('/consulta-produtos/{operation_code}', 'InvoiceDetailsController@get');
 Route::get('/consulta-titulos/{operation_code}', 'DebtorsController@get');
+Route::get('/exportExcel/{type}', 'ExcelController@exportExcel')->name('exportExcel');
 
 Route::post('/configurar-comissoes-salvar', 'SettingsController@set');
 Route::post('/consulta-comissoes', 'InvoicesController@get');

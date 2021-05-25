@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
-use App;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+
+use GuzzleHttp\Client;
+use Carbon\Carbon;
+
+use App;
 use PDF;
 
 class InvoicesController extends Controller
@@ -74,10 +76,13 @@ class InvoicesController extends Controller
         }
 
         if($userProfileId == 1) { // admin
+
             $invoices = DB::table('invoices')
-            ->whereBetween('issue_date', [$dateStart, $dateEnd])
+            ->whereBetween('invoices.issue_date', [$dateStart, $dateEnd])
             ->get();
+        
         } elseif($userProfileId == 3) { // agent
+
             $invoices = DB::table('invoices')
             ->whereBetween('issue_date', [$dateStart, $dateEnd])
             ->where('agent_id', $agentId)
@@ -110,20 +115,9 @@ class InvoicesController extends Controller
             $commissionResult['data'][$invoiceKey]['nota_fiscal'] = $invoice->invoice;
             $commissionResult['data'][$invoiceKey]['pedido_codigo'] = $invoice->order_code;
             $commissionResult['data'][$invoiceKey]['pedido_tipo'] = $invoice->invoice_type;
-
-            $debtors = DB::table('debtors')
-            ->select(['commission'])
-            ->where('operation_code', $invoice->operation_code)
-            ->get();
-
-            $commissionDebtors = 0;
-
-            foreach($debtors as $debtorKey => $debtor__) {
-                $commissionDebtors += $debtor__->commission;
-            }
-
-            $commissionResult['data'][$invoiceKey]['liquidacao_50'] = $commissionDebtors;
+            $commissionResult['data'][$invoiceKey]['liquidacao_50'] = $invoice->commission_debtors;
             $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'warning';
+            $commissionResult['data'][$invoiceKey]['comissao_total'] = $invoice->commission_amount;
             
             if($invoice->operation_type == 'S')
                 $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'success';
@@ -133,8 +127,9 @@ class InvoicesController extends Controller
     
             $commissionPercentage = 0;
             $commissionAmount = 0;
-            $commissionResult['data'][$invoiceKey]['comissao_total'] = 0;
+            //$commissionResult['data'][$invoiceKey]['comissao_total'] = 0;
             
+            /*
             $invoiceProducts = DB::table('invoices_product')
             ->select(['quantity', 'discount', 'price', 'division_code'])
             ->where('document', $invoice->document)
@@ -189,6 +184,7 @@ class InvoicesController extends Controller
                 $commissionResult['data'][$invoiceKey]['tabela_preco'] = $tableCode;
 
             }
+            */
 
             $commissionResult['data'][$invoiceKey]['faturamento_50'] = $commissionResult['data'][$invoiceKey]['comissao_total'] / 2;
 

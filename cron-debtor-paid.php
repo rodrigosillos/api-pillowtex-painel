@@ -208,9 +208,9 @@ $divisionDb = [
 
 $operationTypes = ['E', 'S'];
 
-foreach ($operationTypes as $type__) {
+foreach ($operationTypes as $operationType) {
 
-    $sql = "select operation_code from invoices where operation_type = '".$type__."'";
+    $sql = "select operation_code from invoices where operation_type = '".$operationType."'";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $invoicesAgents = $stmt->fetchAll();
@@ -228,7 +228,7 @@ foreach ($operationTypes as $type__) {
         $countDebtors = $stmt->rowCount();
     
         $dataConsultaMovimentacao = [
-            'tipo_operacao' => $type__,
+            'tipo_operacao' => $operationType,
             'cod_operacao' => $operationCode,
             'ujuros' => 'false',
             '$format' => 'json',
@@ -241,7 +241,7 @@ foreach ($operationTypes as $type__) {
         $invoiceFilial = $resultConsultaMovimentacao['value'][0]['filial'];
     
         $dataConsultaLancamento = [
-            'tipo_operacao' => $type__,
+            'tipo_operacao' => $operationType,
             'cod_operacao' => $operationCode,
             'tipo' => 'R',
             '$format' => 'json',
@@ -263,6 +263,7 @@ foreach ($operationTypes as $type__) {
             $invoiceProducts = $stmt->fetchAll();
     
             $commissionDebtors = 0;
+            $bookEntryCommissionTotal = 0;
     
             foreach($invoiceProducts as $productKey => $product__) {
     
@@ -314,7 +315,7 @@ foreach ($operationTypes as $type__) {
     
             if($effected == 1) {
 
-                print('.');
+                print($bookEntry . "\xA");
     
                 $dataConsultaTitulo = [
                     'lancamento' => $bookEntry,
@@ -330,6 +331,7 @@ foreach ($operationTypes as $type__) {
                 $paidDate = date_format($paidDate, "Y-m-d H:i:s");
     
                 $bookEntryCommission = (($commissionDebtors / 2) / $countDebtors);
+                $bookEntryCommissionTotal += $bookEntryCommission;
     
                 $data = [
                     'effected' => $effected,
@@ -343,7 +345,16 @@ foreach ($operationTypes as $type__) {
                 $stmt->execute($data);
     
             }
+
+            $data = [
+                'commission_debtors' => $bookEntryCommissionTotal,
+                'operation_code' => $operationCode,
+            ];
     
+            $sql = "update invoices SET commission_debtors = :commission_debtors where operation_code = :operation_code";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($data);
+
             $commissionDebtors = 0;
     
         }
@@ -351,7 +362,5 @@ foreach ($operationTypes as $type__) {
     }
 
 }
-
-//$operationType = 'S';
 
 $pdo = null;

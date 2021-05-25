@@ -34,6 +34,8 @@ class CreateInvoicesTable extends Migration
             $table->string('order_code')->nullable();
             $table->string('invoice')->nullable();
             $table->decimal('courtesy', $precision = 15, $scale = 2)->nullable();
+            $table->decimal('commission_debtors', $precision = 15, $scale = 2)->nullable();
+            $table->decimal('commission_amount', $precision = 15, $scale = 2)->nullable();
             $table->timestamps();
         });
     }

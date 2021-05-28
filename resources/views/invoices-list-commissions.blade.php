@@ -61,7 +61,7 @@
                             <th>Cod Pedido</th>
                             <th>Valor Total</th>
                             <th>Valor Comissão</th>
-                            <th>Média de Comissão</th>
+                            <!--<th>Média de Comissão</th>-->
                             <th>Faturamento</th>
                             <th>Liquidação</th>
                             <th>Substituido</th>
@@ -109,9 +109,11 @@
                             <td>
                             @if ($invoice['tipo_operacao_cor'] == 'warning') - @endif R${{ number_format($invoice['comissao_total'], 2, ',', '.') }}
                             </td>
+                            <!--
                             <td>
                                 {{ $invoice['media_base_comissao'] }}
                             </td>
+                            -->
                             <td>
                                 R${{ number_format($invoice['faturamento_50'], 2, ',', '.') }}
                             </td>

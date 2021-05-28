@@ -79,6 +79,7 @@ class InvoicesController extends Controller
 
             $invoices = DB::table('invoices')
             ->whereBetween('invoices.issue_date', [$dateStart, $dateEnd])
+            ->where('hidden', '=', 0)
             ->get();
         
         } elseif($userProfileId == 3) { // agent
@@ -86,6 +87,7 @@ class InvoicesController extends Controller
             $invoices = DB::table('invoices')
             ->whereBetween('issue_date', [$dateStart, $dateEnd])
             ->where('agent_id', $agentId)
+            ->where('hidden', '=', 0)
             ->get();
         }
 
@@ -109,7 +111,7 @@ class InvoicesController extends Controller
             $commissionResult['data'][$invoiceKey]['cliente_nome'] = Str::limit($invoice->client_name, 25, $end='...');
             $commissionResult['data'][$invoiceKey]['cliente_estado'] = $invoice->client_address;
             $commissionResult['data'][$invoiceKey]['representante_nome'] = Str::limit($invoice->agent_name, 25, $end='...');
-            $commissionResult['data'][$invoiceKey]['tabela_preco'] = $invoice->price_list;
+            $commissionResult['data'][$invoiceKey]['tabela_preco'] = $invoice->price_list == 216 ? 187 : 214;
             $commissionResult['data'][$invoiceKey]['total'] = $invoice->amount;
             $commissionResult['data'][$invoiceKey]['tipo_operacao'] = $invoice->operation_type == 'E' ? 'Dedução' : 'S';
             $commissionResult['data'][$invoiceKey]['nota_fiscal'] = $invoice->invoice;

@@ -54,6 +54,7 @@ class InvoicesController extends Controller
             'data_form' => [
                 'date_start' => '',
                 'date_end' => '',
+                'search_agent' => '',
             ]
         ]);
         
@@ -67,6 +68,7 @@ class InvoicesController extends Controller
 
         $dateStartForm = $request->dateStart;
         $dateEndForm = $request->dateEnd;
+        $searchAgent = $request->search_agent;
 
         $users = DB::table('users')
         ->select(['agent_id', 'user_profile_id'])
@@ -78,13 +80,21 @@ class InvoicesController extends Controller
             $userProfileId = $users->user_profile_id;
         }
 
-        if($userProfileId == 1) { // admin
+        if($userProfileId == 1 && $searchAgent == 'todos') {
 
             $invoices = DB::table('invoices')
             ->whereBetween('invoices.issue_date', [$dateStart, $dateEnd])
             ->where('hidden', '=', 0)
             ->get();
         
+        } elseif($userProfileId == 1 && $searchAgent != 'todos') {
+
+            $invoices = DB::table('invoices')
+            ->whereBetween('invoices.issue_date', [$dateStart, $dateEnd])
+            ->where('agent_id', $searchAgent)
+            ->where('hidden', '=', 0)
+            ->get();
+
         } elseif($userProfileId == 3) { // agent
 
             $invoices = DB::table('invoices')
@@ -218,6 +228,7 @@ class InvoicesController extends Controller
             'data_form' => [
                 'date_start' => $dateStartForm,
                 'date_end' => $dateEndForm,
+                'search_agent' => $searchAgent,
             ]
         ]);
 

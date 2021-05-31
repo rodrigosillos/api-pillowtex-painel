@@ -10,12 +10,18 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 class InvoicesExport implements FromCollection, WithHeadings, WithMapping
 {
+    protected $invoice_check;
+
+    function __construct($invoice_check) {
+        $this->invoice_check = $invoice_check;
+    }
+    
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return Invoice::all();
+        return Invoice::whereIn('operation_code', $this->invoice_check)->get();
     }
 
     public function headings(): array

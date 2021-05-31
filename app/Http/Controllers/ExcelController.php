@@ -14,8 +14,8 @@ class ExcelController extends Controller
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function exportExcel($type) 
+    public function exportExcel(Request $request) 
     {
-        return Excel::download(new InvoicesExport, 'invoices.'.$type);
+        return Excel::download(new InvoicesExport($request->invoice_check), 'invoices.xls');
     }
 }

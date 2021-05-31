@@ -21,7 +21,7 @@ foreach ($invoices as $invoice) {
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':operation_code', $operationCode, PDO::PARAM_STR);
     $stmt->execute();
-    $products = $stmt->fetchAll();    
+    $products = $stmt->fetchAll();
     
     foreach ($products as $product) {
         

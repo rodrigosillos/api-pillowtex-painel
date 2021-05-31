@@ -27,6 +27,7 @@
             <label class="col-md-2 col-form-label">Representantes</label>
             <div class="col-md-10">
                 <select name="agent" class="form-control">
+                    <option value="todos">SELECIONE ...</option>
                     @foreach($invoices['agents'] as $key => $agent)
                         <option value="{{ $agent['agent_id'] }}">{{ $agent['name'] }}</option>
                     @endforeach

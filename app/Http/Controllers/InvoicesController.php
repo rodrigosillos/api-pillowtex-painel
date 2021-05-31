@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
+use App\Http\Controllers\AgentsController;
+
 use GuzzleHttp\Client;
 use Carbon\Carbon;
 
@@ -37,10 +39,11 @@ class InvoicesController extends Controller
     }
 
     public function index(Request $request)
-    {
+    {           
         $collection = collect([
             'invoices' => [
                 'data' => [],
+                'agents' => (new AgentsController)->get('array'),
                 'totalizador' => [
                     'valor_venda' => 0,
                     'valor_comissao' => 0,
@@ -92,6 +95,7 @@ class InvoicesController extends Controller
         }
 
         $commissionResult['data'] = [];
+        $commissionResult['agents'] = (new AgentsController)->get('array');
         $commissionResult['totalizador']['valor_venda'] = 0;
         $commissionResult['totalizador']['valor_comissao'] = 0;
         $commissionResult['totalizador']['valor_faturamento'] = 0;

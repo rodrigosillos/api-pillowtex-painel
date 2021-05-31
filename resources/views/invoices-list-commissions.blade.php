@@ -17,13 +17,23 @@
     <form action="{{url('consulta-comissoes')}}" method="post">
     {{ csrf_field() }}
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div>
                 <button type="button" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-printer mr-1"></i> Imprimir</button>
                 <a href="{{ route('exportExcel', 'xls') }}"><button type="button" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-file-excel-outline mr-1"></i> Exportar</button></a>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-3">
+            <label class="col-md-2 col-form-label">Representantes</label>
+            <div class="col-md-10">
+                <select name="agent" class="form-control">
+                    @foreach($invoices['agents'] as $key => $agent)
+                        <option value="{{ $agent['agent_id'] }}">{{ $agent['name'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
             <div class="float-right">
                 <div class="form-inline mb-3">
                     <div class="input-daterange input-group" data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-autoclose="true">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AgentsController extends Controller
 {
@@ -11,10 +12,11 @@ class AgentsController extends Controller
         $this->middleware('auth');
     }
 
-    public function get(Request $request)
+    public function get($output = 'view')
     {
         $agents = DB::table('users')
         ->where('user_profile_id', 3)
+        ->orderBy('name')
         ->get();
 
         $agentsResult = [];
@@ -28,6 +30,9 @@ class AgentsController extends Controller
 
         }
 
-        return view('tables-datatable-agents', ['data' => $agentsResult]);
+        if($output == 'view')
+            return view('tables-datatable-agents', ['data' => $agentsResult]);
+
+        return $agentsResult;
     }
 }

@@ -8,11 +8,11 @@ $operationTypes = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / 
 $countItem = 0;
 $invoiceFilial = 0;
 
-foreach($operationTypes as $operationType){
+foreach($operationTypes as $operationType) {
 
     $dataListaMovimentacao = [
-        'datai' => '2021-03-01',
-        'dataf' => '2021-05-21',
+        'datai' => '2021-05-22',
+        'dataf' => '2021-07-06',
         '$format' => 'json',
         'tipo_operacao' => $operationType,
     ];
@@ -21,9 +21,6 @@ foreach($operationTypes as $operationType){
     $resultListaMovimentacao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseListaMovimentacao), true);
     
     foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
-
-        //print($valueListaMovimentacao['cod_operacao']);
-        //exit();
     
         $dataConsultaMovimentacao = [
             'tipo_operacao' => $operationType,
@@ -137,6 +134,7 @@ foreach($operationTypes as $operationType){
                         'order_code' => $orderCode,
                         'invoice' => $invoiceNumber,
                         'courtesy' => $resultConsultaMovimentacao['value'][0]['cortesia'],
+                        'hidden' => 0,
                     ];
                 
                     $sql  = "INSERT INTO invoices (
@@ -158,7 +156,8 @@ foreach($operationTypes as $operationType){
                                                     canceled,
                                                     order_code,
                                                     invoice,
-                                                    courtesy) VALUES (
+                                                    courtesy,
+                                                    hidden) VALUES (
                                                                     :operation_code,
                                                                     :document,
                                                                     :ticket,
@@ -177,7 +176,8 @@ foreach($operationTypes as $operationType){
                                                                     :canceled,
                                                                     :order_code,
                                                                     :invoice,
-                                                                    :courtesy)";
+                                                                    :courtesy,
+                                                                    :hidden)";
             
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute($data);

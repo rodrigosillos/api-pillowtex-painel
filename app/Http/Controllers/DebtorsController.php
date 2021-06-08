@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class DebtorsController extends Controller
 {
@@ -20,14 +21,29 @@ class DebtorsController extends Controller
         ];
 
         $commissionDebtors = 0;
+        $agentId = Auth::user()->id;
         
-        $debtors = DB::table('debtors')
-        ->select(['document', 'due_date', 'paid_date', 'effected', 'substituted', 'amount'])
-        ->where('operation_code', $operationCode)
-        ->get();
+        if(isset($request->operation_code)){
+
+            $debtors = DB::table('debtors')
+            ->select(['document', 'due_date', 'paid_date', 'effected', 'substituted', 'amount'])
+            ->where('operation_code', $operationCode)
+            ->get();
+        
+        } else {
+
+            $debtors = DB::select(DB::raw(" 
+                select i.client_name, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount 
+                from invoices i 
+                inner join debtors d on i.operation_code = d.operation_code 
+                where i.agent_id = ".$agentId." and d.effected = 1 and paid_date between '2021-06-01' and '2021-06-30'"
+            ));
+        
+        }
 
         foreach($debtors as $debtorKey => $debtor) {
 
+            $client_name = $debtor->client_name;
             $document = $debtor->document;
             $dueDate = date_create($debtor->due_date);
             
@@ -93,6 +109,7 @@ class DebtorsController extends Controller
                
             }
 
+            $resultDebtors['data'][$debtorKey]['cliente'] = $client_name;
             $resultDebtors['data'][$debtorKey]['documento'] = $document;
             $resultDebtors['data'][$debtorKey]['data_vencimento'] = date_format($dueDate, "d/m/Y");
 

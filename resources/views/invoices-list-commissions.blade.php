@@ -17,6 +17,7 @@
     <form action="{{url('consulta-comissoes')}}" method="post">
         {{ csrf_field() }}
         <div class="row">
+            @if ( Auth::user()->user_profile_id <> 3 )
             <div class="col-md-6">
                 <label class="col-md-2 col-form-label">Representantes</label>
                 <div class="col-md-10">
@@ -28,9 +29,9 @@
                     </select>
                 </div>
             </div>
+            @endif
             <div class="col-md-6">
-                
-                <div class="float-right">
+                <div class="@if ( Auth::user()->user_profile_id == 3 ) float-left @else float-right @endif">
                     <!--<div class="form-inline mb-3">-->
                         <label class="col-md-4 col-form-label">Data de Emissão</label>
                         <div class="input-daterange input-group" data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-autoclose="true">
@@ -59,6 +60,13 @@
                     <button type="submit" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-file-excel-outline mr-1"></i> Exportar</button>
                 </div>
             </div>
+            @if ( Auth::user()->user_profile_id == 3 )
+            <div class="col-md-3">
+                <div>
+                    <a href="#"><button type="button" class="btn btn-warning waves-effect waves-light mb-3"><i class="mdi mdi-printer mr-1"></i> Títulos Pagos!</button></a>
+                </div>
+            </div>
+            @endif
         </div>
 
         <div class="row">

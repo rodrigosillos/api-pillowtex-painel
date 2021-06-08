@@ -36,6 +36,7 @@
                                     <label class="custom-control-label" for="invoicecheck"></label>
                                 </div>
                             </th>
+                            <th>Cliente</th>
                             <th>N Documento</th>
                             <th>Data de Vencimento</th>
                             <th>Data de Pagamento</th>
@@ -56,7 +57,10 @@
                                 </div>
                             </td>
                             
-                            <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#{{ $debtor['documento'] }}</a> </td>
+                            <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#{{ $debtor['cliente'] }}</a> </td>
+                            <td>
+                                {{ $debtor['documento'] }}
+                            </td>
                             <td>
                                 {{ $debtor['data_vencimento'] }}
                             </td>

@@ -23,12 +23,14 @@ class DebtorsController extends Controller
         $commissionDebtors = 0;
         $agentId = Auth::user()->id;
         
-        if(isset($request->operation_code)){
+        if(isset($request->operation_code)) {
 
-            $debtors = DB::table('debtors')
-            ->select(['document', 'due_date', 'paid_date', 'effected', 'substituted', 'amount'])
-            ->where('operation_code', $operationCode)
-            ->get();
+            $debtors = DB::select(DB::raw(" 
+                select i.client_name, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount 
+                from debtors d
+                inner join invoices i on d.operation_code = i.operation_code 
+                where d.operation_code = ".$operationCode
+            ));
         
         } else {
 

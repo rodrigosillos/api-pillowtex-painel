@@ -63,7 +63,7 @@
             @if ( Auth::user()->user_profile_id == 3 )
             <div class="col-md-3">
                 <div>
-                    <a href="#"><button type="button" class="btn btn-warning waves-effect waves-light mb-3"><i class="mdi mdi-printer mr-1"></i> Títulos Pagos!</button></a>
+                    <a href="{{url('consulta-titulos')}}" target="_blank"><button type="button" class="btn btn-warning waves-effect waves-light mb-3"><i class="mdi mdi-printer mr-1"></i> Títulos Pagos!</button></a>
                 </div>
             </div>
             @endif

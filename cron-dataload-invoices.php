@@ -11,8 +11,8 @@ $invoiceFilial = 0;
 foreach($operationTypes as $operationType) {
 
     $dataListaMovimentacao = [
-        'datai' => '2021-05-22',
-        'dataf' => '2021-07-06',
+        'datai' => '2021-05-01',
+        'dataf' => '2021-07-31',
         '$format' => 'json',
         'tipo_operacao' => $operationType,
     ];
@@ -38,8 +38,10 @@ foreach($operationTypes as $operationType) {
             if($resultConsultaMovimentacao['value'][0]['cliente'] != null && $resultConsultaMovimentacao['value'][0]['cancelada'] == false){
 
                 $invoiceFilial = $resultConsultaMovimentacao['value'][0]['filial'];
+                $invoiceAgentId = $resultConsultaMovimentacao['value'][0]['representante_cliente'];
 
-                if($invoiceFilial == 12 || $invoiceFilial == 16) {
+                if($invoiceAgentId == 219) {
+                //if($invoiceFilial == 12 || $invoiceFilial == 16) {
 
                     $countItem++;
                     print($countItem . ' - ' . $operationType . "\xA");
@@ -127,7 +129,7 @@ foreach($operationTypes as $operationType) {
                         'agent_code' => $agentCode,
                         'agent_name' => $agentName,
                         'price_list' => $resultConsultaMovimentacao['value'][0]['tabela'],
-                        'amount' => $resultConsultaMovimentacao['value'][0]['total'],
+                        'amount' => $resultConsultaMovimentacao['value'][0]['valor_final'],
                         'invoice_type' => $invoiceType,
                         'operation_type' => $operationType,
                         'canceled' => $resultConsultaMovimentacao['value'][0]['cancelada'],

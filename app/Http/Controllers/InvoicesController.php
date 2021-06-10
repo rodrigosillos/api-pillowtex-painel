@@ -131,9 +131,9 @@ class InvoicesController extends Controller
             $commissionResult['data'][$invoiceKey]['nota_fiscal'] = $invoice->invoice;
             $commissionResult['data'][$invoiceKey]['pedido_codigo'] = $invoice->order_code;
             $commissionResult['data'][$invoiceKey]['pedido_tipo'] = $invoice->invoice_type;
-            $commissionResult['data'][$invoiceKey]['liquidacao_50'] = $invoice->commission_debtors;
             $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'warning';
             $commissionResult['data'][$invoiceKey]['comissao_total'] = $invoice->commission_amount;
+            $commissionResult['data'][$invoiceKey]['liquidacao_50'] = $invoice->commission_debtors;
             
             if($invoice->operation_type == 'S')
                 $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'success';
@@ -143,64 +143,6 @@ class InvoicesController extends Controller
     
             $commissionPercentage = 0;
             $commissionAmount = 0;
-            //$commissionResult['data'][$invoiceKey]['comissao_total'] = 0;
-            
-            /*
-            $invoiceProducts = DB::table('invoices_product')
-            ->select(['quantity', 'discount', 'price', 'division_code'])
-            ->where('document', $invoice->document)
-            ->get();
-
-            foreach($invoiceProducts as $invoiceProductKey => $invoiceProduct) {
-
-                $productQty = $invoiceProduct->quantity;
-                $productDiscount = $invoiceProduct->discount;
-                $productPrice = $invoiceProduct->price;
-                $divisionCode = $invoiceProduct->division_code;
-
-                if($invoice->invoice_type == 'PEDIDOS ESPECIAIS') {
-
-                    $dataConsultaMovimentacao = '?tipo_operacao='.$invoice->operation_type.'&cod_operacao='.$invoice->operation_code.'&ujuros=false&$format=json&$dateformat=iso';
-                    $resultConsultaMovimentacao = $this->connection('movimentacao/consulta', $dataConsultaMovimentacao);
-                    $commissionPercentage = $resultConsultaMovimentacao['value'][0]['comissao_r'];
-
-                } else {
-                
-                    $tableCode = 214;
-
-                    if($clientAddress == null)
-                        $clientAddress = 'SP';
-            
-                    if($tableId == 216)
-                        $tableCode = 187;
-
-                    $commissionSettings = DB::table('commission_settings')
-                    ->select(['percentage'])
-                    ->where('product_division', $divisionCode)
-                    ->where('price_list', $tableCode)
-                    ->get();
-
-                    if(isset($commissionSettings[0]))
-                        $commissionPercentage = $commissionSettings[0]->percentage;
-
-                    if($tableCode == 187 && $clientAddress != 'SP' && $productDiscount < 5)
-                        $commissionPercentage = 4;
-
-                    if($tableCode == 214 && $productDiscount > 5)
-                        $commissionPercentage = ($commissionPercentage / 2);
-
-                }                
-                
-                $commissionAmount = floor(($productPrice * $productQty) * $commissionPercentage) / 100;
-
-                if($tableCode == 214 && $productDiscount > 5)
-                    $commissionAmount = ($commissionAmount / 2);
-    
-                $commissionResult['data'][$invoiceKey]['comissao_total'] += $commissionAmount;
-                $commissionResult['data'][$invoiceKey]['tabela_preco'] = $tableCode;
-
-            }
-            */
 
             $commissionResult['data'][$invoiceKey]['faturamento_50'] = $commissionResult['data'][$invoiceKey]['comissao_total'] / 2;
 

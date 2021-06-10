@@ -21,12 +21,12 @@ class DebtorsController extends Controller
         ];
 
         $commissionDebtors = 0;
-        $agentId = Auth::user()->id;
+        $agentId = Auth::user()->agent_id;
         
         if(isset($request->operation_code)) {
 
             $debtors = DB::select(DB::raw(" 
-                select i.client_name, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount 
+                select i.client_name, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission 
                 from debtors d
                 inner join invoices i on d.operation_code = i.operation_code 
                 where d.operation_code = ".$operationCode
@@ -35,10 +35,10 @@ class DebtorsController extends Controller
         } else {
 
             $debtors = DB::select(DB::raw(" 
-                select i.client_name, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount 
-                from invoices i 
-                inner join debtors d on i.operation_code = d.operation_code 
-                where i.agent_id = ".$agentId." and d.effected = 1 and paid_date between '2021-06-01' and '2021-06-30'"
+                select i.client_name, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission
+                from debtors d
+                inner join invoices i on d.operation_code = i.operation_code 
+                where i.agent_id = ".$agentId
             ));
         
         }
@@ -56,7 +56,9 @@ class DebtorsController extends Controller
             $effected = $debtor->effected;
             $substituted = $debtor->substituted;
             $amount = $debtor->amount;
+            $commission = $debtor->commission;
 
+            /*
             $invoiceProducts = DB::table('invoices_product')
             ->where('operation_code', $operationCode)
             ->get();
@@ -110,6 +112,7 @@ class DebtorsController extends Controller
                 $commissionDebtors += $commissionAmount;
                
             }
+            */
 
             $resultDebtors['data'][$debtorKey]['cliente'] = $client_name;
             $resultDebtors['data'][$debtorKey]['documento'] = $document;
@@ -122,12 +125,10 @@ class DebtorsController extends Controller
             $resultDebtors['data'][$debtorKey]['efetuado'] = $effected == 1 ? 'Baixado' : 'Em Aberto';
             $resultDebtors['data'][$debtorKey]['substituido'] = $substituted == 1 ? 'Substituído' : 'Não Substituído';
             $resultDebtors['data'][$debtorKey]['valor_inicial'] = $amount;
-            $resultDebtors['data'][$debtorKey]['comissao'] = 0;
+            $resultDebtors['data'][$debtorKey]['comissao'] = $commission;
             
-            if($effected == 1)
-                $resultDebtors['data'][$debtorKey]['comissao'] = (($commissionDebtors / 2) / count($debtors));
-
-            $commissionDebtors = 0;
+            //if($effected == 1)
+            //    $resultDebtors['data'][$debtorKey]['comissao'] = (($commissionDebtors / 2) / count($debtors));
 
         }
 

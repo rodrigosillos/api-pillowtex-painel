@@ -29,7 +29,7 @@ class DebtorsController extends Controller
                 select i.client_name, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission 
                 from debtors d
                 inner join invoices i on d.operation_code = i.operation_code 
-                where d.operation_code = ".$operationCode
+                where d.operation_code = ".$operationCode." and paid_date between '2021-05-01' and '20201-05-31'"
             ));
         
         } else {
@@ -38,7 +38,7 @@ class DebtorsController extends Controller
                 select i.client_name, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission
                 from debtors d
                 inner join invoices i on d.operation_code = i.operation_code 
-                where i.agent_id = ".$agentId
+                where i.agent_id = ".$agentId." and paid_date between '2021-05-01' and '20201-05-31'"
             ));
         
         }
@@ -58,62 +58,6 @@ class DebtorsController extends Controller
             $amount = $debtor->amount;
             $commission = $debtor->commission;
 
-            /*
-            $invoiceProducts = DB::table('invoices_product')
-            ->where('operation_code', $operationCode)
-            ->get();
-    
-            foreach($invoiceProducts as $invoiceProductKey => $invoiceProduct) {
-    
-                $orderId = $invoiceProduct->order_id;
-                $productInvoice = $invoiceProduct->invoice;
-                $productId = $invoiceProduct->product_id;
-                $productName = $invoiceProduct->product_name;
-                $productQty = $invoiceProduct->quantity;
-                $productDiscount = $invoiceProduct->discount;
-                $productPrice = $invoiceProduct->price;
-                $divisionCode = $invoiceProduct->division_code;
-                $divisionDescription = $invoiceProduct->division_description;
-
-                $invoice = DB::table('invoices')
-                ->where('operation_code', $operationCode)
-                ->get();
-
-                $tableId = $invoice[0]->price_list;
-                $clientAddress = $invoice[0]->client_address;
-
-                if($clientAddress == null)
-                    $clientAddress = 'SP';
-        
-                $tableCode = 214;
-        
-                if($tableId == 4)
-                    $tableCode = 214;
-            
-                if($tableId == 216)
-                    $tableCode = 187;
-    
-                $commissionSettings = DB::table('commission_settings')
-                ->where('product_division', $divisionCode)
-                ->where('price_list', $tableCode)
-                ->get();
-
-                if(isset($commissionSettings[0]))
-                    $commissionPercentage = $commissionSettings[0]->percentage;
-    
-                if($tableCode == 187 && $clientAddress != 'SP' && $productDiscount < 5)
-                    $commissionPercentage = 4;
-                
-                $commissionAmount = floor(($productPrice * $productQty) * $commissionPercentage) / 100;
-
-                if($tableCode == 214 && $productDiscount > 5) 
-                    $commissionAmount = ($commissionAmount / 2);
-
-                $commissionDebtors += $commissionAmount;
-               
-            }
-            */
-
             $resultDebtors['data'][$debtorKey]['cliente'] = $client_name;
             $resultDebtors['data'][$debtorKey]['documento'] = $document;
             $resultDebtors['data'][$debtorKey]['data_vencimento'] = date_format($dueDate, "d/m/Y");
@@ -126,9 +70,6 @@ class DebtorsController extends Controller
             $resultDebtors['data'][$debtorKey]['substituido'] = $substituted == 1 ? 'Substituído' : 'Não Substituído';
             $resultDebtors['data'][$debtorKey]['valor_inicial'] = $amount;
             $resultDebtors['data'][$debtorKey]['comissao'] = $commission;
-            
-            //if($effected == 1)
-            //    $resultDebtors['data'][$debtorKey]['comissao'] = (($commissionDebtors / 2) / count($debtors));
 
         }
 

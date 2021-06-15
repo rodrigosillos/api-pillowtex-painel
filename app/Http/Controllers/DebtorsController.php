@@ -22,6 +22,9 @@ class DebtorsController extends Controller
 
         $commissionDebtors = 0;
         $agentId = Auth::user()->agent_id;
+
+        $lastMonth = date("m", strtotime("first day of previous month"));
+        $lastDayMonth = date("d", strtotime("last day of previous month"));
         
         if(isset($request->operation_code)) {
 
@@ -29,16 +32,16 @@ class DebtorsController extends Controller
                 select i.client_name, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission 
                 from debtors d
                 inner join invoices i on d.operation_code = i.operation_code 
-                where d.operation_code = ".$operationCode." and paid_date between '2021-05-01' and '20201-05-31'"
+                where d.operation_code = ".$operationCode." and d.paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
             ));
         
         } else {
 
             $debtors = DB::select(DB::raw(" 
-                select i.client_name, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission
-                from debtors d
-                inner join invoices i on d.operation_code = i.operation_code 
-                where i.agent_id = ".$agentId." and paid_date between '2021-05-01' and '20201-05-31'"
+                select d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission, i.client_name
+                from debtors d 
+                inner join invoices i on d.operation_code = i.operation_code
+                where i.agent_id = ".$agentId." and d.paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
             ));
         
         }

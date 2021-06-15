@@ -14,7 +14,7 @@ foreach ($invoicesAgents as $invoice__) {
     $operationType = $invoice__["operation_type"];
     $commissionAmount = $invoice__["commission_amount"];
 
-    print($operationCode . "\xA");
+    print('operacao: ' . $operationCode . "\xA");
 
     $dataSearchDefault = [
         'tipo_operacao' => $operationType,
@@ -64,11 +64,17 @@ foreach ($invoicesAgents as $invoice__) {
 
         if(!is_null($resultConsultaTitulo['value'][0]['data_pagamento'])) {
 
-            $paidDate = date_create($resultConsultaTitulo['value'][0]['data_pagamento']);
-            $paidDate = date_format($paidDate, "Y-m-d H:i:s");
+            $paidDateCreate = date_create($resultConsultaTitulo['value'][0]['data_pagamento']);
+            
+            $paidDate = date_format($paidDateCreate, "Y-m-d H:i:s");
+            $paidDateMonth = date_format($paidDateCreate, "m");
 
             $bookEntryCommission = (($commissionAmount / 2) / $qtyDebtors);
-            $bookEntryCommissionTotal += $bookEntryCommission;
+
+            if($paidDateMonth == '05') {
+                $bookEntryCommissionTotal += $bookEntryCommission;
+                print('liquidacao: ' . $bookEntryCommissionTotal . "\xA");
+            }
        
         }
 

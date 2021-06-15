@@ -11,8 +11,8 @@ $invoiceFilial = 0;
 foreach($operationTypes as $operationType) {
 
     $dataListaMovimentacao = [
-        'datai' => '2021-05-01',
-        'dataf' => '2021-07-31',
+        'datai' => '2021-01-01',
+        'dataf' => '2021-05-31',
         '$format' => 'json',
         'tipo_operacao' => $operationType,
     ];
@@ -40,9 +40,7 @@ foreach($operationTypes as $operationType) {
                 $invoiceFilial = $resultConsultaMovimentacao['value'][0]['filial'];
                 $invoiceAgentId = $resultConsultaMovimentacao['value'][0]['representante_cliente'];
 
-                if($invoiceAgentId == 219) {
-                //if($invoiceFilial == 12 || $invoiceFilial == 16) {
-
+                if($invoiceAgentId == 219 && $invoiceFilial == 12 || $invoiceAgentId == 219 && $invoiceFilial == 16) {
                     $countItem++;
                     print($countItem . ' - ' . $operationType . "\xA");
         

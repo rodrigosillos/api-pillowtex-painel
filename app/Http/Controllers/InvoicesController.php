@@ -70,6 +70,9 @@ class InvoicesController extends Controller
         $dateEndForm = $request->dateEnd;
         $searchAgent = $request->search_agent;
 
+        $lastMonth = date("m", strtotime("first day of previous month"));
+        $lastDayMonth = date("d", strtotime("last day of previous month"));
+
         $users = DB::table('users')
         ->select(['agent_id', 'user_profile_id'])
         ->where('id', '=', Auth::user()->id)
@@ -95,21 +98,43 @@ class InvoicesController extends Controller
             ->where('hidden', '=', 0)
             ->get();
 
-        } elseif($userProfileId == 3) { // agent
+        } elseif($userProfileId == 3) {
 
-            $invoices = DB::table('invoices')
-            ->whereBetween('issue_date', [$dateStart, $dateEnd])
-            ->where('agent_id', $agentId)
-            ->where('hidden', '=', 0)
-            ->get();
+            $invoices = DB::select(DB::raw("
+                select * 
+                from invoices
+                where issue_date between '".$dateStart."' and '".$dateEnd."'
+                and agent_id = ".$agentId."
+                and hidden = 0"
+            ));
+
+            $invoicesRevenues = DB::select(DB::raw("
+                select *
+                from invoices 
+                where agent_id = ".$agentId." 
+                and operation_code in (select operation_code 
+                                        from debtors 
+                                        where paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."')"
+            ));
+
+            $invoices = array_merge((array) $invoices, (array) $invoicesRevenues);
         }
+
+        $totalCommissionDebtors = DB::select(DB::raw(" 
+            select sum(commission_debtors) as commission_debtors 
+            from invoices 
+            where agent_id = ".$agentId." 
+            and operation_code in (select operation_code 
+                                    from debtors 
+                                    where paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."')"
+        ));
 
         $commissionResult['data'] = [];
         $commissionResult['agents'] = (new AgentsController)->get('array');
         $commissionResult['totalizador']['valor_venda'] = 0;
         $commissionResult['totalizador']['valor_comissao'] = 0;
         $commissionResult['totalizador']['valor_faturamento'] = 0;
-        $commissionResult['totalizador']['valor_liquidacao'] = 0;
+        $commissionResult['totalizador']['valor_liquidacao'] = $totalCommissionDebtors[0]->commission_debtors;
         $commissionResult['totalizador']['valor_substituidor'] = 0;
         $commissionResult['totalizador']['valor_substituicao'] = 0;
 
@@ -138,18 +163,13 @@ class InvoicesController extends Controller
             if($invoice->operation_type == 'S')
                 $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'success';
 
-            $tableId = $invoice->price_list;
-            $clientAddress = $invoice->client_address;
-    
-            $commissionPercentage = 0;
-            $commissionAmount = 0;
-
-            $commissionResult['data'][$invoiceKey]['faturamento_50'] = $commissionResult['data'][$invoiceKey]['comissao_total'] / 2;
+            $commissionResult['data'][$invoiceKey]['faturamento_50'] = 0;
+            if (date_format($issueDate, "m") == $lastMonth)
+                $commissionResult['data'][$invoiceKey]['faturamento_50'] = $commissionResult['data'][$invoiceKey]['comissao_total'] / 2;
 
             if($invoice->operation_type != 'E') {
                 $commissionResult['totalizador']['valor_comissao'] += $commissionResult['data'][$invoiceKey]['comissao_total'];
                 $commissionResult['totalizador']['valor_venda'] += $commissionResult['data'][$invoiceKey]['total'];
-                $commissionResult['totalizador']['valor_liquidacao'] += $commissionResult['data'][$invoiceKey]['liquidacao_50'];
                 $commissionResult['totalizador']['valor_faturamento'] += $commissionResult['data'][$invoiceKey]['faturamento_50'];
             }
 
@@ -159,8 +179,6 @@ class InvoicesController extends Controller
                 $commissionPercentageAverage = sprintf("%.2f%%", $commissionResult['data'][$invoiceKey]['comissao_total'] / $invoice->amount);
     
             $commissionResult['data'][$invoiceKey]['media_base_comissao'] = $commissionPercentageAverage;
-
-            $commissionAmount = 0;
 
         }
 

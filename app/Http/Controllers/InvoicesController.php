@@ -74,6 +74,7 @@ class InvoicesController extends Controller
         $lastDayMonth = date("d", strtotime("last day of previous month"));
 
         $whereAgent = '';
+        $whereSearchAgent = '';
 
         $users = DB::table('users')
         ->select(['agent_id', 'user_profile_id'])
@@ -85,22 +86,20 @@ class InvoicesController extends Controller
             $userProfileId = $users->user_profile_id;
         }
 
-        if($userProfileId == 1 && $searchAgent == 'todos') {
+        if($searchAgent != 'todos')
+            $whereSearchAgent = "and agent_id = " . $searchAgent;
 
-            $invoices = DB::table('invoices')
-            ->whereBetween('invoices.issue_date', [$dateStart, $dateEnd])
-            ->where('hidden', '=', 0)
-            ->get();
-        
-        } elseif($userProfileId == 1 && $searchAgent != 'todos') {
+        if($userProfileId == 1) {
 
-            $invoices = DB::table('invoices')
-            ->whereBetween('invoices.issue_date', [$dateStart, $dateEnd])
-            ->where('agent_id', $searchAgent)
-            ->where('hidden', '=', 0)
-            ->get();
+            $invoices = DB::select(DB::raw("
+                select * 
+                from invoices
+                where issue_date between '".$dateStart."' and '".$dateEnd."'
+                " . $whereSearchAgent . "
+                and hidden = 0"
+            ));
 
-        } elseif($userProfileId == 3) {
+        } else {
 
             $invoices = DB::select(DB::raw("
                 select * 
@@ -110,19 +109,19 @@ class InvoicesController extends Controller
                 and hidden = 0"
             ));
 
-            $invoicesBilling = DB::select(DB::raw("
-                select *
-                from invoices 
-                where agent_id = ".$agentId." 
-                and operation_code in (select operation_code 
-                                        from debtors 
-                                        where paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."')"
-            ));
-
-            $invoices = array_merge((array) $invoices, (array) $invoicesBilling);
-
             $whereAgent = "agent_id = ".$agentId." and ";
         }
+
+        $invoicesBilling = DB::select(DB::raw("
+            select *
+            from invoices 
+            where " . $whereAgent . "
+            operation_code in (select operation_code 
+                                    from debtors 
+                                    where paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."')"
+        ));
+
+        $invoices = array_merge((array) $invoices, (array) $invoicesBilling);
 
         $totalCommissionDebtors = DB::select(DB::raw(" 
             select sum(commission_debtors) as commission_debtors 

@@ -73,6 +73,8 @@ class InvoicesController extends Controller
         $lastMonth = date("m", strtotime("first day of previous month"));
         $lastDayMonth = date("d", strtotime("last day of previous month"));
 
+        $whereAgent = '';
+
         $users = DB::table('users')
         ->select(['agent_id', 'user_profile_id'])
         ->where('id', '=', Auth::user()->id)
@@ -108,7 +110,7 @@ class InvoicesController extends Controller
                 and hidden = 0"
             ));
 
-            $invoicesRevenues = DB::select(DB::raw("
+            $invoicesBilling = DB::select(DB::raw("
                 select *
                 from invoices 
                 where agent_id = ".$agentId." 
@@ -117,14 +119,15 @@ class InvoicesController extends Controller
                                         where paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."')"
             ));
 
-            $invoices = array_merge((array) $invoices, (array) $invoicesRevenues);
+            $invoices = array_merge((array) $invoices, (array) $invoicesBilling);
+
+            $whereAgent = "agent_id = ".$agentId." and ";
         }
 
         $totalCommissionDebtors = DB::select(DB::raw(" 
             select sum(commission_debtors) as commission_debtors 
             from invoices 
-            where agent_id = ".$agentId." 
-            and operation_code in (select operation_code 
+            where " . $whereAgent . "operation_code in (select operation_code 
                                     from debtors 
                                     where paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."')"
         ));

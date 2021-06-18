@@ -20,7 +20,6 @@ class DebtorsController extends Controller
             'data' => [],
         ];
 
-        $commissionDebtors = 0;
         $agentId = Auth::user()->agent_id;
 
         $lastMonth = date("m", strtotime("first day of previous month"));

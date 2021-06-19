@@ -40,6 +40,7 @@ class AgentsController extends Controller
         if ($output == 'array')
             return $agentsResult;
         
-        return view('tables-datatable-agents', ['data' => $agentsResult]);
+        //return view('tables-datatable-agents', ['data' => $agentsResult]);
+        return view('agents-list', ['data' => $agentsResult]);
     }
 }

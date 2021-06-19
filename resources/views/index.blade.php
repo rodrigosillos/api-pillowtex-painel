@@ -47,7 +47,7 @@
                 </div>
                 <div>
                     <h4 class="mb-1 mt-1"><span data-plugin="counterup">45,254</span></h4>
-                    <p class="text-muted mb-0">QTDE DE PEDIDOS ATENDIDOS/QTDE DE PEDIDOS COM DESCONTO</p>
+                    <p class="text-muted mb-0">PEDIDOS ATENDIDOS/PEDIDOS COM DESCONTO</p>
                 </div>
                 <p class="text-muted mt-3 mb-0"><span class="text-danger mr-1"><i class="mdi mdi-arrow-down-bold ml-1"></i>6.24%</span> since last week
                 </p>

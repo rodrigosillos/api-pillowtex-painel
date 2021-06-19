@@ -14,10 +14,13 @@ class AgentsController extends Controller
 
     public function get($output = 'view')
     {
-        $agents = DB::table('users')
-        ->where('user_profile_id', 3)
-        ->orderBy('name')
-        ->get();
+
+        $agents = DB::select(DB::raw("
+            select * 
+            from users
+            where user_profile_id = 3
+            order by name"
+        ));
 
         $agentsResult = [];
 

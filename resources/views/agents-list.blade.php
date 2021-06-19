@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master-icon-sidebar')
 @section('title')
 @lang('translation.Agents')
 @endsection

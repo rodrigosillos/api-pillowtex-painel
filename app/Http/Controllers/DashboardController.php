@@ -10,7 +10,7 @@ class DashboardController extends Controller
 {
     public function index($output = 'view')
     {
-        //card - liquidation
+        //card1 - liquidation
         $userAgentId = Auth::user()->agent_id;
         $userProfileId = Auth::user()->user_profile_id;
 
@@ -32,8 +32,14 @@ class DashboardController extends Controller
 
         $card1 = ($invoices[0]->commission_amount / 2);
 
+        //card2 - total orders
+        $card2 = DB::select(DB::raw("
+            select count(distinct(order_id)) as total_pedidos from invoices_product where discount <> 0"
+        ));
+
         $data = [
             'card1' => $card1,
+            'card2' => $card2[0]->total_pedidos,
         ];
 
         if($output == 'array')

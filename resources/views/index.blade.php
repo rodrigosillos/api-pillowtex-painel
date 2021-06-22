@@ -30,7 +30,7 @@
                     <div id="orders-chart"> </div>
                 </div>
                 <div>
-                    <h4 class="mb-1 mt-1">%<span data-plugin="counterup">5</span></h4>
+                    <h4 class="mb-1 mt-1"><span data-plugin="counterup">5</span></h4>
                     <p class="text-muted mb-0">% DE DESCONTO MÉDIO / RELAÇÃO AO FATURAMENTO</p>
                 </div>
                 <p class="text-muted mt-3 mb-0"><span class="text-danger mr-1"><i class="mdi mdi-arrow-down-bold ml-1"></i>0.00%</span> desde o mês passado

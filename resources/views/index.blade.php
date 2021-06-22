@@ -14,10 +14,10 @@
                     <div id="total-revenue-chart"></div>
                 </div>
                 <div>
-                    <h4 class="mb-1 mt-1">$<span data-plugin="counterup">34,152</span></h4>
-                    <p class="text-muted mb-0">% DE COMISSÃO REPRESENTA O FATURAMENTO</p>
+                    <h4 class="mb-1 mt-1">R$<span data-plugin="counterup">{{ number_format($card1, 2, '.', ',') }}</span></h4>
+                    <p class="text-muted mb-0">R$ DE COMISSÃO REPRESENTA O FATURAMENTO</p>
                 </div>
-                <p class="text-muted mt-3 mb-0"><span class="text-success mr-1"><i class="mdi mdi-arrow-up-bold ml-1"></i>2.65%</span> since last week
+                <p class="text-muted mt-3 mb-0"><span class="text-success mr-1"><i class="mdi mdi-arrow-up-bold ml-1"></i>0.00%</span> desde o mês passado
                 </p>
             </div>
         </div>
@@ -30,10 +30,10 @@
                     <div id="orders-chart"> </div>
                 </div>
                 <div>
-                    <h4 class="mb-1 mt-1"><span data-plugin="counterup">5,643</span></h4>
+                    <h4 class="mb-1 mt-1"><span data-plugin="counterup">0/span></h4>
                     <p class="text-muted mb-0">- % DE DESCONTO MÉDIO / RELAÇÃO AO FATURAMENTO</p>
                 </div>
-                <p class="text-muted mt-3 mb-0"><span class="text-danger mr-1"><i class="mdi mdi-arrow-down-bold ml-1"></i>0.82%</span> since last week
+                <p class="text-muted mt-3 mb-0"><span class="text-danger mr-1"><i class="mdi mdi-arrow-down-bold ml-1"></i>0.00%</span> desde o mês passado
                 </p>
             </div>
         </div>
@@ -46,10 +46,10 @@
                     <div id="customers-chart"> </div>
                 </div>
                 <div>
-                    <h4 class="mb-1 mt-1"><span data-plugin="counterup">45,254</span></h4>
+                    <h4 class="mb-1 mt-1"><span data-plugin="counterup">0</span></h4>
                     <p class="text-muted mb-0">PEDIDOS ATENDIDOS/PEDIDOS COM DESCONTO</p>
                 </div>
-                <p class="text-muted mt-3 mb-0"><span class="text-danger mr-1"><i class="mdi mdi-arrow-down-bold ml-1"></i>6.24%</span> since last week
+                <p class="text-muted mt-3 mb-0"><span class="text-danger mr-1"><i class="mdi mdi-arrow-down-bold ml-1"></i>0.00%</span> desde o mês passado
                 </p>
             </div>
         </div>
@@ -63,10 +63,10 @@
                     <div id="growth-chart"></div>
                 </div>
                 <div>
-                    <h4 class="mb-1 mt-1">+ <span data-plugin="counterup">12.58</span>%</h4>
+                    <h4 class="mb-1 mt-1">+ <span data-plugin="counterup">0</span>%</h4>
                     <p class="text-muted mb-0">Growth</p>
                 </div>
-                <p class="text-muted mt-3 mb-0"><span class="text-success mr-1"><i class="mdi mdi-arrow-up-bold ml-1"></i>10.51%</span> since last week
+                <p class="text-muted mt-3 mb-0"><span class="text-success mr-1"><i class="mdi mdi-arrow-up-bold ml-1"></i>0.00%</span> desde o mês passado
                 </p>
             </div>
         </div>
@@ -98,68 +98,50 @@
                         <table class="table table-borderless table-centered table-nowrap">
                             <tbody>
                                 <tr>
-                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-4.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
+                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
                                     <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">Glenn Holden</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Nevada</p>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">ERICO MARCHONI BIANCO</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> São Paulo</p>
                                     </td>
-                                    <td><span class="badge badge-soft-danger font-size-12">Cancel</span></td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>$250.00</td>
+                                    <td><span class="badge badge-soft-success font-size-12">Ativo</span></td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$0.00</td>
                                 </tr>
                                 <tr>
-                                    <td><img src="{{ URL::asset('assets/images/users/avatar-5.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
+                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
                                     <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">Lolita Hamill</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Texas</p>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">ERICO MARCHONI BIANCO</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> São Paulo</p>
                                     </td>
-                                    <td><span class="badge badge-soft-success font-size-12">Success</span></td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-danger" data-feather="trending-down"></i>$110.00</td>
+                                    <td><span class="badge badge-soft-success font-size-12">Ativo</span></td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$0.00</td>
                                 </tr>
                                 <tr>
-                                    <td><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
+                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
                                     <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">Robert Mercer</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> California</p>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">ERICO MARCHONI BIANCO</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> São Paulo</p>
                                     </td>
-                                    <td><span class="badge badge-soft-info font-size-12">Active</span></td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>$420.00</td>
+                                    <td><span class="badge badge-soft-success font-size-12">Ativo</span></td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$0.00</td>
                                 </tr>
                                 <tr>
-                                    <td><img src="{{ URL::asset('assets/images/users/avatar-7.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
+                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
                                     <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">Marie Kim</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Montana</p>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">ERICO MARCHONI BIANCO</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> São Paulo</p>
                                     </td>
-                                    <td><span class="badge badge-soft-warning font-size-12">Pending</span></td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-danger" data-feather="trending-down"></i>$120.00</td>
+                                    <td><span class="badge badge-soft-success font-size-12">Ativo</span></td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$0.00</td>
                                 </tr>
                                 <tr>
-                                    <td><img src="{{ URL::asset('assets/images/users/avatar-8.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
+                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
                                     <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">Sonya Henshaw</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Colorado</p>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">ERICO MARCHONI BIANCO</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> São Paulo</p>
                                     </td>
-                                    <td><span class="badge badge-soft-info font-size-12">Active</span></td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>$112.00</td>
-                                </tr>
-                                <tr>
-                                    <td><img src="{{ URL::asset('assets/images/users/avatar-2.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                    <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">Marie Kim</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Australia</p>
-                                    </td>
-                                    <td><span class="badge badge-soft-success font-size-12">Success</span></td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-danger" data-feather="trending-down"></i>$120.00</td>
-                                </tr>
-                                <tr>
-                                    <td><img src="{{ URL::asset('assets/images/users/avatar-1.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                    <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">Sonya Henshaw</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> India</p>
-                                    </td>
-                                    <td><span class="badge badge-soft-danger font-size-12">Cancel</span></td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>$112.00</td>
-                                </tr>
+                                    <td><span class="badge badge-soft-success font-size-12">Ativo</span></td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$0.00</td>
+                                </tr>                                                                                                                                
                             </tbody>
                         </table>
                     </div> <!-- enbd table-responsive-->

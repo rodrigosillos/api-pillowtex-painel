@@ -37,9 +37,15 @@ class DashboardController extends Controller
             select count(distinct(order_id)) as total_pedidos from invoices_product where discount <> 0"
         ));
 
+        //card5 - devolution
+        $card5 = DB::select(DB::raw("
+            select sum(amount) as total_devolucao from invoices where operation_type = 'E'"
+        ));
+
         $data = [
             'card1' => $card1,
             'card2' => $card2[0]->total_pedidos,
+            'card5' => $card5[0]->total_devolucao,
         ];
 
         if($output == 'array')

@@ -64,7 +64,7 @@
                 </div>
                 <div>
                     <h4 class="mb-1 mt-1">+ <span data-plugin="counterup">0</span>%</h4>
-                    <p class="text-muted mb-0">Growth</p>
+                    <p class="text-muted mb-0">.</p>
                 </div>
                 <p class="text-muted mt-3 mb-0"><span class="text-success mr-1"><i class="mdi mdi-arrow-up-bold ml-1"></i>0.00%</span> desde o mês passado
                 </p>
@@ -103,45 +103,9 @@
                                         <h6 class="font-size-15 mb-1 font-weight-normal">ERICO MARCHONI BIANCO</h6>
                                         <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> São Paulo</p>
                                     </td>
-                                    <td><span class="badge badge-soft-success font-size-12">Ativo</span></td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$0.00</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                    <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">ERICO MARCHONI BIANCO</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> São Paulo</p>
-                                    </td>
-                                    <td><span class="badge badge-soft-success font-size-12">Ativo</span></td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$0.00</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                    <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">ERICO MARCHONI BIANCO</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> São Paulo</p>
-                                    </td>
-                                    <td><span class="badge badge-soft-success font-size-12">Ativo</span></td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$0.00</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                    <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">ERICO MARCHONI BIANCO</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> São Paulo</p>
-                                    </td>
-                                    <td><span class="badge badge-soft-success font-size-12">Ativo</span></td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$0.00</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                    <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">ERICO MARCHONI BIANCO</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> São Paulo</p>
-                                    </td>
-                                    <td><span class="badge badge-soft-success font-size-12">Ativo</span></td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$0.00</td>
-                                </tr>                                                                                                                                
+                                    <td><span class="badge badge-soft-success font-size-12">Tipo E</span></td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R${{ number_format($card5, 2, '.', ',') }}</td>
+                                </tr>                                                                                                                             
                             </tbody>
                         </table>
                     </div> <!-- enbd table-responsive-->

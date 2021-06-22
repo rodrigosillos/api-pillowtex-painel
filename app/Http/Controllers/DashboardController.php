@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function index($output = 'view')
     {
         //card - liquidation
         $userAgentId = Auth::user()->agent_id;
@@ -35,6 +35,9 @@ class DashboardController extends Controller
         $data = [
             'card1' => $card1,
         ];
+
+        if($output == 'array')
+            return $data;
         
         return view('index', $data);
     }

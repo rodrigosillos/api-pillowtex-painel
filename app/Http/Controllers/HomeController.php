@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
-use App;
+use App\Http\Controllers\DashboardController;
 
 class HomeController extends Controller
 {
@@ -33,7 +34,7 @@ class HomeController extends Controller
 
     public function root()
     {
-        return view('index');     
+        return view('index', (new DashboardController)->index('array'));
     }
 
     /*Language Translation*/

@@ -34,6 +34,8 @@ class AgentsController extends Controller
             $agentsResult[$agentKey]['agent_code'] = $agentValue->agent_code;
             $agentsResult[$agentKey]['name'] = $agentValue->name;
             $agentsResult[$agentKey]['email'] = $agentValue->email;
+            $agentsResult[$agentKey]['cidade'] = $agentValue->address_city;
+            $agentsResult[$agentKey]['estado'] = $agentValue->address_state;
 
         }
 

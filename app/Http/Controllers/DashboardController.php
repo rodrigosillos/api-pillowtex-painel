@@ -42,10 +42,16 @@ class DashboardController extends Controller
             select sum(amount) as total_devolucao from invoices where operation_type = 'E'"
         ));
 
+        //card6 - attended states
+        $card6 = DB::select(DB::raw("
+            select distinct(address_state), address_city from users order by address_state"
+        ));
+
         $data = [
             'card1' => $card1,
             'card2' => $card2[0]->total_pedidos,
             'card5' => $card5[0]->total_devolucao,
+            'card6' => $card6,
         ];
 
         if($output == 'array')

@@ -113,6 +113,27 @@
             </div><!-- end card-body-->
         </div> <!-- end card-->
     </div><!-- end col -->
+
+    <div class="col-xl-4">
+    <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title mb-4">CIDADES/ESTADOS ATENDIDOS POR REPRESENTANTE</h4>
+
+                <ol class="activity-feed mb-0 ps-2" data-simplebar style="max-height: 336px;">
+                    @foreach($card6 as $agent)
+                    <li class="feed-item">
+                        <div class="feed-item-list">
+                            <p class="text-muted mb-1 font-size-13">{{ $agent->address_city }}</p>
+                            <p class="mt-0 mb-0">{{ $agent->address_state }} <span class="text-primary">+</span></p>
+                        </div>
+                    </li>
+                    @endforeach
+                </ol>
+
+            </div>
+        </div>
+    </div> <!-- end Col -->
 </div><!-- end row -->
 
 @endsection

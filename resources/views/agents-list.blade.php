@@ -46,6 +46,8 @@
                             <th>Código</th>
                             <th>Nome</th>
                             <th>E-mail</th>
+                            <th>Cidade</th>
+                            <th>Estado</th>
                             <th style="width: 120px;">Action</th>
                         </tr>
                     </thead>
@@ -60,15 +62,11 @@
                             </td>
                             
                             <td><a href="javascript: void(0);" class="text-dark font-weight-bold">{{ $odata['agent_id'] }}</a> </td>
-                            <td>
-                            {{ $odata['agent_code'] }}
-                            </td>
+                            <td>{{ $odata['agent_code'] }}</td>
                             <td>{{ $odata['name'] }}</td>
-                            
-                            <td>
-                            {{ $odata['email'] }}
-                            </td>
-                            
+                            <td>{{ $odata['email'] }}</td>
+                            <td>{{ $odata['cidade'] }}</td>
+                            <td>{{ $odata['estado'] }}</td>
                             <td>
                                 <a href="javascript:void(0);" class="px-3 text-primary" data-toggle="tooltip" data-placement="top" title="Edit"><i class="uil uil-pen font-size-18"></i></a>
                                 <a href="javascript:void(0);" class="px-3 text-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="uil uil-trash-alt font-size-18"></i></a>

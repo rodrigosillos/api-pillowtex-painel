@@ -21,6 +21,15 @@ foreach ($resultAgent['value'] as $valueAgent) {
 
         if ($stmt->rowCount() == 0) {
 
+            $address_city = $valueAgent['cidade'];
+            $address_state = $valueAgent['estado'];
+
+            if(empty($valueAgent['cidade']))
+                $address_city = 'São Paulo';
+
+            if(empty($valueAgent['estado']))
+                $address_state = 'SP';
+                
             $data = [
                 'name' => $valueAgent['nome'],
                 'email' => $valueAgent['e_mail'],
@@ -30,6 +39,8 @@ foreach ($resultAgent['value'] as $valueAgent) {
                 'user_profile_id' => 3,
                 'agent_id' => $valueAgent['representante'],
                 'agent_code' => $valueAgent['codigo'],
+                'address_city' => $address_city,
+                'address_state' => $address_state,
             ];
 
             $sql  = "INSERT INTO users (
@@ -40,7 +51,9 @@ foreach ($resultAgent['value'] as $valueAgent) {
                                         remember_token,
                                         user_profile_id, 
                                         agent_id, 
-                                        agent_code) VALUES (
+                                        agent_code,
+                                        address_city,
+                                        address_state) VALUES (
                                                     :name,
                                                     :email,
                                                     :email_verified_at,
@@ -48,7 +61,9 @@ foreach ($resultAgent['value'] as $valueAgent) {
                                                     :remember_token,
                                                     :user_profile_id,
                                                     :agent_id,
-                                                    :agent_code)";
+                                                    :agent_code,
+                                                    :address_city,
+                                                    :address_state)";
             $stmt = $pdo->prepare($sql);
             $stmt->execute($data);
         }

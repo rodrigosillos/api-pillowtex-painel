@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class DebtorsController extends Controller
 {
@@ -28,7 +29,7 @@ class DebtorsController extends Controller
         if(isset($request->operation_code)) {
 
             $debtors = DB::select(DB::raw(" 
-                select i.client_name, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission 
+                select i.client_name, d.book_entry, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission 
                 from debtors d
                 inner join invoices i on d.operation_code = i.operation_code 
                 where d.operation_code = ".$operationCode." and d.paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
@@ -37,7 +38,7 @@ class DebtorsController extends Controller
         } else {
 
             $debtors = DB::select(DB::raw(" 
-                select d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission, i.client_name
+                select i.client_name, d.book_entry, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission
                 from debtors d 
                 inner join invoices i on d.operation_code = i.operation_code
                 where i.agent_id = ".$agentId." and d.paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
@@ -48,6 +49,7 @@ class DebtorsController extends Controller
         foreach($debtors as $debtorKey => $debtor) {
 
             $client_name = $debtor->client_name;
+            $lancamento = $debtor->book_entry;
             $document = $debtor->document;
             $dueDate = date_create($debtor->due_date);
             
@@ -60,7 +62,8 @@ class DebtorsController extends Controller
             $amount = $debtor->amount;
             $commission = $debtor->commission;
 
-            $resultDebtors['data'][$debtorKey]['cliente'] = $client_name;
+            $resultDebtors['data'][$debtorKey]['cliente'] = Str::limit($client_name, 25, $end='...');
+            $resultDebtors['data'][$debtorKey]['lancamento'] = $lancamento;
             $resultDebtors['data'][$debtorKey]['documento'] = $document;
             $resultDebtors['data'][$debtorKey]['data_vencimento'] = date_format($dueDate, "d/m/Y");
 

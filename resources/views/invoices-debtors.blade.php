@@ -37,6 +37,7 @@
                                 </div>
                             </th>
                             <th>Cliente</th>
+                            <th>Lançamento</th>
                             <th>N Documento</th>
                             <th>Data de Vencimento</th>
                             <th>Data de Pagamento</th>
@@ -58,6 +59,9 @@
                             </td>
                             
                             <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#{{ $debtor['cliente'] }}</a> </td>
+                            <td>
+                                {{ $debtor['lancamento'] }}
+                            </td>
                             <td>
                                 {{ $debtor['documento'] }}
                             </td>

@@ -8,6 +8,8 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoicesAgents = $stmt->fetchAll();
 
+$lastMonth = date("m", strtotime("first day of previous month"));
+
 foreach ($invoicesAgents as $invoice__) {
 
     $operationCode = $invoice__["operation_code"];
@@ -69,13 +71,14 @@ foreach ($invoicesAgents as $invoice__) {
             $paidDate = date_format($paidDateCreate, "Y-m-d H:i:s");
             $paidDateMonth = date_format($paidDateCreate, "m");
 
-            $bookEntryCommission = (($commissionAmount / 2) / $qtyDebtors);
+            if($substituted == false){
 
-            if($paidDateMonth == '05') {
-                $bookEntryCommissionTotal += $bookEntryCommission;
-                print('liquidacao: ' . $bookEntryCommissionTotal . "\xA");
+                $bookEntryCommission = (($commissionAmount / 2) / $qtyDebtors);
+
+                if($paidDateMonth == $lastMonth)
+                    $bookEntryCommissionTotal += $bookEntryCommission;
             }
-       
+
         }
 
         $data = [
@@ -88,6 +91,7 @@ foreach ($invoicesAgents as $invoice__) {
             'substituted' => $substituted,
             'amount' => $amount,
             'commission' => $bookEntryCommission,
+            'low_payment' => 0,
         ];
         
         $sql = "INSERT INTO debtors (
@@ -99,7 +103,8 @@ foreach ($invoicesAgents as $invoice__) {
                                     effected, 
                                     substituted, 
                                     amount,
-                                    commission) VALUES (
+                                    commission,
+                                    low_payment) VALUES (
                                                     :book_entry,
                                                     :operation_code,
                                                     :document,
@@ -108,7 +113,8 @@ foreach ($invoicesAgents as $invoice__) {
                                                     :effected,
                                                     :substituted,
                                                     :amount,
-                                                    :commission)";
+                                                    :commission,
+                                                    :low_payment)";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute($data);

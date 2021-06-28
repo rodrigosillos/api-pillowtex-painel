@@ -192,7 +192,7 @@
                             <th>Valor Comissão</th>
                             <th>Valor Faturamento</th>
                             <th>Valor Liquidação</th>
-                            <th>Valor Substituidor</th>
+                            <th>Valor Substituído</th>
                             <th>Valor Substituição</th>
                         </tr>
                     </thead>
@@ -202,8 +202,8 @@
                             <td>R${{ number_format($invoices['totalizador']['valor_comissao'], 2, ',', '.') }}</td>
                             <td>R${{ number_format($invoices['totalizador']['valor_faturamento'], 2, ',', '.') }}</td>
                             <td>R${{ number_format($invoices['totalizador']['valor_liquidacao'], 2, ',', '.') }}</td>
-                            <td>R$0,00</td>
-                            <td>R$0,00</td>
+                            <td>R${{ number_format($invoices['totalizador']['valor_substituido'], 2, ',', '.') }}</td>
+                            <td>R${{ number_format($invoices['totalizador']['valor_substituicao'], 2, ',', '.') }}</td>
                         </tr>
                     </tbody>
                     </table>

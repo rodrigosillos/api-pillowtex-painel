@@ -175,6 +175,22 @@ class InvoicesController extends Controller
             $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'warning';
             $commissionResult['data'][$invoiceKey]['comissao_total'] = $invoice->commission_amount;
             $commissionResult['data'][$invoiceKey]['liquidacao_50'] = $invoice->commission_debtors;
+
+            $valorSubstituidoOperacao = DB::select(DB::raw("
+                select sum(amount) as valor_substituido
+                from debtors
+                where operation_code = ".$invoice->operation_code." and substituted = 1 and paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
+            ));
+
+            $commissionResult['data'][$invoiceKey]['valor_substituido'] = $valorSubstituidoOperacao[0]->valor_substituido;
+
+            $valorSubstituidorOperacao = DB::select(DB::raw("
+                select sum(amount) as valor_substituidor
+                from debtors
+                where operation_code = ".$invoice->operation_code." and low_payment = 1 and paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
+            ));
+
+            $commissionResult['data'][$invoiceKey]['valor_substituidor'] = $valorSubstituidorOperacao[0]->valor_substituidor;
             
             if($invoice->operation_type == 'S')
                 $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'success';

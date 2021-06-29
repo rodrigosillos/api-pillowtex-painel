@@ -150,10 +150,10 @@
                                     R${{ number_format($invoice['liquidacao_50'], 2, ',', '.') }}
                                 </td> 
                                 <td>
-                                    R$0,00
+                                    R${{ number_format($invoice['valor_substituido'], 2, ',', '.') }}
                                 </td> 
                                 <td>
-                                    R$0,00
+                                    R${{ number_format($invoice['valor_substituidor'], 2, ',', '.') }}
                                 </td> 
                                 <td>
                                     {{ $invoice['representante_nome'] }}

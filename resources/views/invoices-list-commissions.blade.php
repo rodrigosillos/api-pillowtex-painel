@@ -93,7 +93,6 @@
                                 <!--<th>Média de Comissão</th>-->
                                 <th>Faturamento</th>
                                 <th>Liquidação</th>
-                                <th>Substituido</th>
                                 <th>Substituidor</th>
                                 <th>Representante</th>
                                 <th>Tabela Preço</th>
@@ -148,10 +147,7 @@
                                 </td>
                                 <td>
                                     R${{ number_format($invoice['liquidacao_50'], 2, ',', '.') }}
-                                </td> 
-                                <td>
-                                    R${{ number_format($invoice['valor_substituido'], 2, ',', '.') }}
-                                </td> 
+                                </td>
                                 <td>
                                     R${{ number_format($invoice['valor_substituidor'], 2, ',', '.') }}
                                 </td> 

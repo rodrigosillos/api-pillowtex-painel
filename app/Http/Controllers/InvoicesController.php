@@ -176,6 +176,7 @@ class InvoicesController extends Controller
             $commissionResult['data'][$invoiceKey]['comissao_total'] = $invoice->commission_amount;
             $commissionResult['data'][$invoiceKey]['liquidacao_50'] = $invoice->commission_debtors;
 
+            /*
             $valorSubstituidoOperacao = DB::select(DB::raw("
                 select sum(amount) as valor_substituido
                 from debtors
@@ -183,6 +184,7 @@ class InvoicesController extends Controller
             ));
 
             $commissionResult['data'][$invoiceKey]['valor_substituido'] = $valorSubstituidoOperacao[0]->valor_substituido;
+            */
 
             $valorSubstituidorOperacao = DB::select(DB::raw("
                 select sum(amount) as valor_substituidor

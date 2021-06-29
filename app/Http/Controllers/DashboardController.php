@@ -30,6 +30,15 @@ class DashboardController extends Controller
             and hidden = 0"
         ));
 
+        // card - total de vendas por representante
+            $cardTotalVendas = DB::select(DB::raw("
+            select sum(amount) as total_venda 
+            from invoices 
+            where issue_date between '".$currentYear."-".$lastMonth."-01' and '".$currentYear."-".$lastMonth."-".$lastDayMonth."'
+            " . $whereAgent . "
+            and hidden = 0"
+        ));
+
         $card1 = ($invoices[0]->commission_amount / 2);
 
         //card2 - total orders
@@ -52,6 +61,8 @@ class DashboardController extends Controller
             'card2' => $card2[0]->total_pedidos,
             'card5' => $card5[0]->total_devolucao,
             'card6' => $card6,
+            'vendas_representantes' => $cardTotalVendas[0]->total_venda,
+            'comissoes_representantes' => $invoices[0]->commission_amount,
         ];
 
         if($output == 'array')

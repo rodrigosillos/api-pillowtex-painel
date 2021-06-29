@@ -4,7 +4,7 @@
 @section('content')
 @component('common-components.breadcrumb')
     @slot('pagetitle') PillowTex @endslot
-    @slot('title') PillowTex @endslot
+    @slot('title') Dashboard - Maio/2021 @endslot
 @endcomponent 
 <div class="row">
 
@@ -133,7 +133,7 @@
             </div>
 
             <div class="col-sm-9">
-                R$4.624,09
+                un. R$4.624,09 - total: R$148.773,58
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-primary" role="progressbar"
                         style="width: 52%" aria-valuenow="52" aria-valuemin="0"
@@ -148,7 +148,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO-LICENCIADO </p>
             </div>
             <div class="col-sm-9">
-                R$8.004,75
+                un. R$8.004,75 - total: R$282.343,14
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-info" role="progressbar"
                         style="width: 45%" aria-valuenow="45" aria-valuemin="0"
@@ -163,7 +163,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-success me-2"></i> IMPORTADO FL PROMOO </p>
             </div>
             <div class="col-sm-9">
-                R$25,47
+                un. R$25,47 - total: R$611,28
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-success" role="progressbar"
                         style="width: 48%" aria-valuenow="48" aria-valuemin="0"
@@ -178,7 +178,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-warning me-2"></i> NACIONAL-LICENCIADO </p>
             </div>
             <div class="col-sm-9">
-                R$2.510,07
+                un. R$2.510,07 - total: R$53.974,14
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-warning" role="progressbar"
                         style="width: 78%" aria-valuenow="78" aria-valuemin="0"
@@ -193,7 +193,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> NACIONAL </p>
             </div>
             <div class="col-sm-9">
-                R$112,60
+                un. R$112,60 - total: R$1.508,82
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-purple" role="progressbar"
                         style="width: 63%" aria-valuenow="63" aria-valuemin="0"
@@ -208,7 +208,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> IMPORTADO-NG </p>
             </div>
             <div class="col-sm-9">
-                R$190,41
+                un. R$190,41 - total: R$4.569,84
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-purple" role="progressbar"
                         style="width: 63%" aria-valuenow="63" aria-valuemin="0"

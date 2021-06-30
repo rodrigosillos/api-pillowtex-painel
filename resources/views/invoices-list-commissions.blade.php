@@ -10,11 +10,11 @@
 
 @section('content')
 @component('common-components.breadcrumb')
-    @slot('pagetitle') PillowTex @endslot
-    @slot('title') Comissões @endslot
+    @slot('pagetitle') COMISSÕES @endslot
+    @slot('title') FATURAMENTO @endslot
 @endcomponent
 
-    <form action="{{url('consulta-comissoes')}}" method="post">
+    <form action="{{url('consulta-faturamento')}}" method="post">
         {{ csrf_field() }}
         <div class="row">
             @if ( Auth::user()->user_profile_id <> 3 )
@@ -56,17 +56,24 @@
         <div class="row">
             <div class="col-md-3">
                 <div>
-                    <button type="button" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-printer mr-1"></i> Imprimir</button>
+                    <!--<button type="button" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-printer mr-1"></i> Imprimir</button>-->
                     <button type="submit" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-file-excel-outline mr-1"></i> Exportar</button>
                 </div>
             </div>
-            @if ( Auth::user()->user_profile_id == 3 )
             <div class="col-md-3">
                 <div>
-                    <a href="{{url('consulta-titulos')}}" target="_blank"><button type="button" class="btn btn-warning waves-effect waves-light mb-3"><i class="mdi mdi-printer mr-1"></i> Visualizar todos títulos</button></a>
+                    <a href="{{url('liquidacao')}}" target="_blank">
+                    <button type="button" class="btn btn-primary waves-effect waves-light">
+                        Liquidação <i class="uil uil-arrow-right ml-2"></i> 
+                    </button>
+                    </a>
+                    <a href="{{url('substituicao')}}" target="_blank">
+                    <button type="button" class="btn btn-primary waves-effect waves-light">
+                        Substituição <i class="uil uil-arrow-right ml-2"></i> 
+                    </button>
+                    </a>
                 </div>
             </div>
-            @endif
         </div>
 
         <div class="row">
@@ -90,18 +97,15 @@
                                 <th>Cod Pedido</th>
                                 <th>Valor Total</th>
                                 <th>Valor Comissão</th>
-                                <!--<th>Média de Comissão</th>-->
                                 <th>Faturamento</th>
-                                <th>Liquidação</th>
-                                <th>Substituidor</th>
                                 <th>Representante</th>
+                                <th>Tipo</th>
                                 <th>Tabela Preço</th>
                                 <th>Documento</th>
                                 <th>Ticket</th>
                                 <th>UF</th>
-                                <th>Tipo</th>
                                 <th>Nota Ref-Devolução</th>
-                                <th style="width: 120px;">Ações</th>
+                                <th style="width: 120px;">Produtos</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -137,28 +141,20 @@
                                 <td>
                                 @if ($invoice['tipo_operacao_cor'] == 'warning') - @endif R${{ number_format($invoice['comissao_total'], 2, ',', '.') }}
                                 </td>
-                                <!--
-                                <td>
-                                    {{ $invoice['media_base_comissao'] }}
-                                </td>
-                                -->
                                 <td>
                                     R${{ number_format($invoice['faturamento_50'], 2, ',', '.') }}
                                 </td>
                                 <td>
-                                    R${{ number_format($invoice['liquidacao_50'], 2, ',', '.') }}
+                                    {{ $invoice['representante_nome'] }}
                                 </td>
                                 <td>
-                                    R${{ number_format($invoice['valor_substituidor'], 2, ',', '.') }}
-                                </td> 
-                                <td>
-                                    {{ $invoice['representante_nome'] }}
+                                    <div class="badge badge-soft-{{ $invoice['tipo_operacao_cor'] }} font-size-12">{{ $invoice['tipo_operacao'] }}</div>
                                 </td>
                                 <td>
                                     {{ $invoice['tabela_preco'] }}
                                 </td>
                                 <td>
-                                    {{ $invoice['romaneio'] }} 
+                                    {{ $invoice['romaneio'] }}
                                 </td>
                                 <td>
                                     {{ $invoice['ticket'] }} 
@@ -167,14 +163,11 @@
                                     {{ $invoice['cliente_estado'] }}
                                 </td>
                                 <td>
-                                    <div class="badge badge-soft-{{ $invoice['tipo_operacao_cor'] }} font-size-12">{{ $invoice['tipo_operacao'] }}</div>
-                                </td>
-                                <td>
                                     <a href="consulta-titulos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="text-dark font-weight-bold">#</a>
                                 </td>
                                 <td>
-                                    <a href="consulta-titulos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="px-3 text-primary" data-toggle="tooltip" data-placement="top" title="Consulta Títulos"><i class="uil uil-search-plus font-size-18"></i></a>
-                                    <a href="consulta-produtos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="px-3 text-primary" data-toggle="tooltip" data-placement="top" title="Consulta Produtos"><i class="uil uil-search-plus font-size-18"></i></a>
+                                    <!--<a href="consulta-titulos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="px-3 text-primary" data-toggle="tooltip" data-placement="top" title="Consulta Títulos"><i class="uil uil-search-plus font-size-18"></i></a>-->
+                                    <a href="consulta-produtos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="px-3 text-primary" data-toggle="tooltip" data-placement="top" title="Visualizar Produtos"><i class="uil uil-search-plus font-size-18"></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -187,9 +180,6 @@
                             <th>Valor Venda</th>
                             <th>Valor Comissão</th>
                             <th>Valor Faturamento</th>
-                            <th>Valor Liquidação</th>
-                            <th>Valor Substituído</th>
-                            <th>Valor Substituição</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -197,9 +187,6 @@
                             <td>R${{ number_format($invoices['totalizador']['valor_venda'], 2, ',', '.') }}</td>
                             <td>R${{ number_format($invoices['totalizador']['valor_comissao'], 2, ',', '.') }}</td>
                             <td>R${{ number_format($invoices['totalizador']['valor_faturamento'], 2, ',', '.') }}</td>
-                            <td>R${{ number_format($invoices['totalizador']['valor_liquidacao'], 2, ',', '.') }}</td>
-                            <td>R${{ number_format($invoices['totalizador']['valor_substituido'], 2, ',', '.') }}</td>
-                            <td>R${{ number_format($invoices['totalizador']['valor_substituicao'], 2, ',', '.') }}</td>
                         </tr>
                     </tbody>
                     </table>

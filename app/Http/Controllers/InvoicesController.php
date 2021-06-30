@@ -123,7 +123,7 @@ class InvoicesController extends Controller
                                     where paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."')"
         ));
 
-        $invoices = array_merge((array) $invoices, (array) $invoicesBilling);
+        //$invoices = array_merge((array) $invoices, (array) $invoicesBilling);
 
         $totalCommissionDebtors = DB::select(DB::raw(" 
             select sum(commission_debtors) as commission_debtors 

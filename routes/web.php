@@ -19,16 +19,22 @@ Auth::routes();
 // Route::get('{any}', 'HomeController@index');
 
 Route::get('/index', 'DashboardController@index');
-Route::get('/comissoes', 'InvoicesController@index');
+
 Route::get('/representantes', 'AgentsController@get');
 Route::get('/configurar-comissoes', 'SettingsController@index');
 Route::get('/consulta-produtos/{operation_code}', 'InvoiceDetailsController@get');
-Route::get('/consulta-titulos/{operation_code?}', 'DebtorsController@get');
-
 Route::post('/export-excel', 'ExcelController@exportExcel')->name('export-excel');
 Route::post('/configurar-comissoes-salvar', 'SettingsController@set');
-Route::post('/consulta-comissoes', 'InvoicesController@get');
 
+//faturamento
+Route::get('/faturamento', 'InvoicesController@index');
+Route::post('/consulta-faturamento', 'InvoicesController@get');
+
+//liquidacao
+Route::get('/liquidacao', 'DebtorsController@getLiquidacao');
+
+//substituicao
+Route::get('/substituicao', 'DebtorsController@getSubstituicao');
 
 //Language Translation
 Route::get('index/{locale}', 'HomeController@lang');

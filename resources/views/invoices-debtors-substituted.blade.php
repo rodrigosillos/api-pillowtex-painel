@@ -1,6 +1,6 @@
 @extends('layouts.master-icon-sidebar')
 @section('title')
-@lang('translation.Debtors_Detail')
+@lang('translation.Substituicao_Titulo')
 @endsection
 @section('css')
     <!-- DataTables -->
@@ -11,7 +11,7 @@
 @section('content')
 @component('common-components.breadcrumb')
     @slot('pagetitle') COMISSÕES @endslot
-    @slot('title') LIQUIDAÇÃO @endslot
+    @slot('title') SUBSTITUIÇÃO @endslot
 @endcomponent
  
     <div class="row">
@@ -44,7 +44,7 @@
                             <th>Efetuado</th>
                             <th>Substituido</th>
                             <th>Valor</th>
-                            <th>Comissão Liquidação</th>
+                            <th>Comissão Substituição</th>
                             <th style="width: 120px;">Ações</th>
                         </tr>
                     </thead>

@@ -27,9 +27,9 @@ return [
   "Inbox"=> "Inbox",
   "Read_Email"=> "Read Email",
   "Invoices"=> "Invoices",
-  "Invoice_List"=> "Comissões",
+  "Invoice_List"=> "FATURAMENTO",
   "Invoice_Detail"=> "Produtos",
-  "Debtors_Detail"=> "Títulos a Receber",
+  "Debtors_Detail"=> "LIQUIDAÇÃO",
   "Contacts"=> "Contacts",
   "User_Grid"=> "User Grid",
   "User_List"=> "User List",
@@ -145,11 +145,14 @@ return [
   "Modules"=> "Módulos",
   "Commissions"=> "Comissões",
   "Sales"=> "Vendas",
-  "Calculate_Commission"=> "Cálculo de Comissão",
+  "Calculate_Commission"=> "Faturamento",
   "Discounts"=> "Descontos",
   "Commission_Percentage"=> "Percentual Comissão",
   "States"=> "Estados",
   "Agents"=> "Representantes",
+  "Liquidacao"=> "Liquidação",
+  "Substituicao"=> "Substituição",
+  "Substituicao_Titulo"=> "SUBSTITUIÇÃO",
 ];
 
 ?>

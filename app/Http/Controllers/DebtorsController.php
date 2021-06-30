@@ -31,20 +31,11 @@ class DebtorsController extends Controller
         $lastMonth = date("m", strtotime("first day of previous month"));
         $lastDayMonth = date("d", strtotime("last day of previous month"));
 
-        /*
-        $debtors = DB::select(DB::raw(" 
-            select i.client_name, d.book_entry, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission 
-            from debtors d
-            inner join invoices i on d.operation_code = i.operation_code 
-            where d.operation_code = ".$operationCode." and d.paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
-        ));
-        */
-
         $debtors = DB::select(DB::raw(" 
             select i.client_name, d.book_entry, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission
             from debtors d 
             inner join invoices i on d.operation_code = i.operation_code
-            where ".$whereAgent." d.substituted = 0 and d.paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
+            where ".$whereAgent." d.substituted = 0 and d.low_payment = 0 and d.paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
         ));
 
         foreach($debtors as $debtorKey => $debtor) {

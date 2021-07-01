@@ -8,11 +8,11 @@ $countItem = 0;
 
 foreach($operationTypes as $operationType) {
 
-    $sql = "select operation_code, client_address, price_list from invoices where operation_type = '".$operationType."'";
+    $sql = "select operation_code, client_address, price_list from invoices where operation_type = '".$operationType."' and issue_date between '2021-06-01' and '2021-06-30'";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $invoicesAgents = $stmt->fetchAll();
-    
+
     foreach ($invoicesAgents as $invoice__) {
         
         $operationCode = $invoice__["operation_code"];
@@ -38,22 +38,22 @@ foreach($operationTypes as $operationType) {
             $resultConsultaMovimentacao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaMovimentacao), true);
         
             if ($resultConsultaMovimentacao['odata.count'] > 0) {
-    
+
                 $invoiceFilial = $resultConsultaMovimentacao['value'][0]['filial'];
                 $invoiceAgent = $resultConsultaMovimentacao['value'][0]['representante'];
-    
+
                 if(isset($resultConsultaMovimentacao['value'][0]['produtos'])){
-    
+
                     $commissionAmount = 0;
                     $invoiceFilial = 0;
                     $invoiceAgent = 0;
                     $commissionPercentage = 0;
-    
+
                     foreach($resultConsultaMovimentacao['value'][0]['produtos'] as $valueProduct) {
-    
+
                         $countItem++;
                         print($countItem . ' - ' . $operationType . "\xA");
-    
+
                         $productDiscount = $valueProduct['desconto'];
                         $productPrice = $valueProduct['preco'];
                         $productQty = $valueProduct['quantidade'];
@@ -74,7 +74,7 @@ foreach($operationTypes as $operationType) {
                         
                         $productName = "";
                         $divisionId = "";
-    
+
                         $responseConsultaProduto = CallAPI('GET', 'produtos/consulta', $dataConsultaProduto);
                         $resultConsultaProduto = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaProduto), true);
                         
@@ -99,9 +99,9 @@ foreach($operationTypes as $operationType) {
                             $divisionCode = $resultConsultaDivisao['value'][0]['cod_divisao'];
                             $divisionDescription = $resultConsultaDivisao['value'][0]['descricao'];
                         }
-    
+
                         $tableCode = 214;
-    
+
                         if($clientAddress == null)
                             $clientAddress = 'SP';
                 
@@ -114,18 +114,18 @@ foreach($operationTypes as $operationType) {
                         $stmt->bindParam(':price_list', $tableCode, PDO::PARAM_STR);
                         $stmt->execute();
                         $resultSettings = $stmt->fetch(\PDO::FETCH_ASSOC);
-    
+
                         if ($stmt->rowCount() > 0)
                             $commissionPercentage = $resultSettings['percentage'];
-    
+
                         if($tableCode == 187 && $clientAddress != 'SP' && $productDiscount < 5)
                             $commissionPercentage = 4;
-    
+
                         if($tableCode == 214 && $productDiscount > 5)
                             $commissionPercentage = ($commissionPercentage / 2);
                             
                         $commissionAmount = floor(($productPrice * $productQty) * $commissionPercentage) / 100;
-    
+
                         if($tableCode == 214 && $productDiscount > 5)
                             $commissionAmount = ($commissionAmount / 2);
             
@@ -179,7 +179,7 @@ foreach($operationTypes as $operationType) {
                         $stmt->execute($data);
                 
                     }
-    
+
                     $data = [
                         'commission_amount' => $commissionAmount,
                         'operation_code' => $operationCode,
@@ -188,24 +188,24 @@ foreach($operationTypes as $operationType) {
                     $sql = "update invoices SET commission_amount = :commission_amount where operation_code = :operation_code";
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute($data);
-    
+
                 } else {
-    
+
                     $txt = "nao tem produto: " . $operationCode;
                     $myfile = file_put_contents('log-dataload-invoices-products.txt', $txt.PHP_EOL , FILE_APPEND | LOCK_EX);
-    
+
                 }
-    
-    
+
+
             } else {
-    
+
                 $txt = "erro no metodo (movimentacao/consulta): operacao: " . $operationCode;
                 $myfile = file_put_contents('log-dataload-invoices-products.txt', $txt.PHP_EOL , FILE_APPEND | LOCK_EX);
-    
+
             }            
 
         }
-    
+
     }
 
 }

@@ -2,7 +2,7 @@
 
 include('connection-db.php');
 
-$sql = "select operation_code, client_address, price_list from invoices";
+$sql = "select operation_code, client_address, price_list from invoices where issue_date between '2021-06-01' and '2021-06-30'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();

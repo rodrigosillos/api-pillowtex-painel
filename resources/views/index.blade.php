@@ -4,7 +4,7 @@
 @section('content')
 @component('common-components.breadcrumb')
     @slot('pagetitle') PillowTex @endslot
-    @slot('title') DASHBOARD - Maio/2021 @endslot
+    @slot('title') DASHBOARD - Junho/2021 @endslot
 @endcomponent 
 <div class="row">
 

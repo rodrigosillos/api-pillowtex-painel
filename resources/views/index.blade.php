@@ -133,7 +133,7 @@
             </div>
 
             <div class="col-sm-9">
-                un. R$4.624,09 - total: R$148.773,58
+                R$365.830,98
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-primary" role="progressbar"
                         style="width: 52%" aria-valuenow="52" aria-valuemin="0"
@@ -148,7 +148,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO-LICENCIADO </p>
             </div>
             <div class="col-sm-9">
-                un. R$8.004,75 - total: R$282.343,14
+                R$124.476,66
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-info" role="progressbar"
                         style="width: 45%" aria-valuenow="45" aria-valuemin="0"
@@ -160,25 +160,10 @@
 
         <div class="row align-items-center g-0 mt-3">
             <div class="col-sm-3">
-                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-success me-2"></i> IMPORTADO FL PROMOO </p>
-            </div>
-            <div class="col-sm-9">
-                un. R$25,47 - total: R$611,28
-                <div class="progress mt-1" style="height: 6px;">
-                    <div class="progress-bar progress-bar bg-success" role="progressbar"
-                        style="width: 48%" aria-valuenow="48" aria-valuemin="0"
-                        aria-valuemax="48">
-                    </div>
-                </div>
-            </div>
-        </div> <!-- end row-->
-
-        <div class="row align-items-center g-0 mt-3">
-            <div class="col-sm-3">
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-warning me-2"></i> NACIONAL-LICENCIADO </p>
             </div>
             <div class="col-sm-9">
-                un. R$2.510,07 - total: R$53.974,14
+                R$101.329,64
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-warning" role="progressbar"
                         style="width: 78%" aria-valuenow="78" aria-valuemin="0"
@@ -193,7 +178,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> NACIONAL </p>
             </div>
             <div class="col-sm-9">
-                un. R$112,60 - total: R$1.508,82
+                R$15.634,04
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-purple" role="progressbar"
                         style="width: 63%" aria-valuenow="63" aria-valuemin="0"
@@ -208,7 +193,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> IMPORTADO-NG </p>
             </div>
             <div class="col-sm-9">
-                un. R$190,41 - total: R$4.569,84
+                R$15.431,76
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-purple" role="progressbar"
                         style="width: 63%" aria-valuenow="63" aria-valuemin="0"
@@ -236,7 +221,7 @@
                     </div>
 
                     <div class="col-sm-9">
-                        9449
+                        17710
                         <div class="progress mt-1" style="height: 6px;">
                             <div class="progress-bar progress-bar bg-primary" role="progressbar"
                                 style="width: 52%" aria-valuenow="52" aria-valuemin="0"
@@ -251,7 +236,7 @@
                         <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO-LICENCIADO </p>
                     </div>
                     <div class="col-sm-9">
-                        15527
+                        7062
                         <div class="progress mt-1" style="height: 6px;">
                             <div class="progress-bar progress-bar bg-info" role="progressbar"
                                 style="width: 45%" aria-valuenow="45" aria-valuemin="0"
@@ -263,25 +248,10 @@
 
                 <div class="row align-items-center g-0 mt-3">
                     <div class="col-sm-3">
-                        <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-success me-2"></i> IMPORTADO FL PROMOO </p>
-                    </div>
-                    <div class="col-sm-9">
-                        48
-                        <div class="progress mt-1" style="height: 6px;">
-                            <div class="progress-bar progress-bar bg-success" role="progressbar"
-                                style="width: 48%" aria-valuenow="48" aria-valuemin="0"
-                                aria-valuemax="48">
-                            </div>
-                        </div>
-                    </div>
-                </div> <!-- end row-->
-
-                <div class="row align-items-center g-0 mt-3">
-                    <div class="col-sm-3">
                         <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-warning me-2"></i> NACIONAL-LICENCIADO </p>
                     </div>
                     <div class="col-sm-9">
-                        2310
+                        4240
                         <div class="progress mt-1" style="height: 6px;">
                             <div class="progress-bar progress-bar bg-warning" role="progressbar"
                                 style="width: 78%" aria-valuenow="78" aria-valuemin="0"
@@ -296,7 +266,7 @@
                         <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> NACIONAL </p>
                     </div>
                     <div class="col-sm-9">
-                        94
+                        598
                         <div class="progress mt-1" style="height: 6px;">
                             <div class="progress-bar progress-bar bg-purple" role="progressbar"
                                 style="width: 63%" aria-valuenow="63" aria-valuemin="0"
@@ -311,7 +281,7 @@
                         <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> IMPORTADO-NG </p>
                     </div>
                     <div class="col-sm-9">
-                        312
+                        1128
                         <div class="progress mt-1" style="height: 6px;">
                             <div class="progress-bar progress-bar bg-purple" role="progressbar"
                                 style="width: 63%" aria-valuenow="63" aria-valuemin="0"

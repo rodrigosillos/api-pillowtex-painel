@@ -92,6 +92,18 @@
                         @endforeach
                     </tbody>
                 </table>
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Valor Substituição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>R$0,00</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

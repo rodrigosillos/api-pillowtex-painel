@@ -138,6 +138,8 @@ foreach ($debtorSubstituted as $debtor) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute($data);
 
+    print('.');
+
 }
 
 $pdo = null;

@@ -206,11 +206,10 @@ $divisionDb = [
     ],
 ];
 
-$operationTypes = ['E', 'S'];
+//$operationTypes = ['E', 'S'];
+//foreach ($operationTypes as $operationType) {
 
-foreach ($operationTypes as $operationType) {
-
-    $sql = "select operation_code from invoices where operation_type = '".$operationType."'";
+    $sql = "select operation_code from invoices where issue_date between '2021-01-01' and '2021-06-31";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $invoicesAgents = $stmt->fetchAll();
@@ -365,6 +364,6 @@ foreach ($operationTypes as $operationType) {
     
     }
 
-}
+//}
 
 $pdo = null;

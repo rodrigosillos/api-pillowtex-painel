@@ -21,6 +21,8 @@ foreach($operationTypes as $operationType) {
     $resultListaMovimentacao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseListaMovimentacao), true);
     
     foreach ($resultListaMovimentacao['value'] as $valueListaMovimentacao) {
+
+        print(' . ' . "\xA");
     
         $dataConsultaMovimentacao = [
             'tipo_operacao' => $operationType,
@@ -29,7 +31,7 @@ foreach($operationTypes as $operationType) {
             '$format' => 'json',
             '$dateformat' => 'iso',
         ];
-    
+        
         $responseConsultaMovimentacao = CallAPI('GET', 'movimentacao/consulta', $dataConsultaMovimentacao);
         $resultConsultaMovimentacao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaMovimentacao), true);
 
@@ -38,11 +40,9 @@ foreach($operationTypes as $operationType) {
             if($resultConsultaMovimentacao['value'][0]['cliente'] != null && $resultConsultaMovimentacao['value'][0]['cancelada'] == false){
 
                 $invoiceFilial = $resultConsultaMovimentacao['value'][0]['filial'];
-                $invoiceAgentId = $resultConsultaMovimentacao['value'][0]['representante_cliente'];
-
-                if($invoiceAgentId == 219 && $invoiceFilial == 12 || $invoiceAgentId == 219 && $invoiceFilial == 16) {
-                    $countItem++;
-                    print($countItem . ' - ' . $operationType . "\xA");
+                //$invoiceAgentId = $resultConsultaMovimentacao['value'][0]['representante_cliente'];
+                
+                if($invoiceFilial == 12 || $invoiceFilial == 16) {
         
                     $orderId = $resultConsultaMovimentacao['value'][0]['produtos'][0]['pedido'];
                     $orderCode = '';
@@ -79,6 +79,7 @@ foreach($operationTypes as $operationType) {
                     $issueDate = date_format($issueDate, "Y-m-d H:i:s");
                 
                     // join client
+                    /*
                     $dataConsultaCliente = [
                         'cliente' => $resultConsultaMovimentacao['value'][0]['cliente'],
                         '$format' => 'json',
@@ -86,18 +87,21 @@ foreach($operationTypes as $operationType) {
                 
                     $responseConsultaCliente = CallAPI('GET', 'clientes/consulta', $dataConsultaCliente);
                     $resultConsultaCliente = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaCliente), true);
+                    */
                     
                     $clientCode = '';
                     $clientName = '';
                     $clientAddress = '';
-        
+
+                    /*
                     if ($resultConsultaCliente['odata.count'] > 0) {
                         $clientCode = $resultConsultaCliente['value'][0]['cod_cliente'];
                         $clientName = $resultConsultaCliente['value'][0]['geradores'][0]['nome'];
                         $clientAddress = $resultConsultaCliente['value'][0]['geradores'][0]['ufie'];
                     }
+                    */
                 
-                    // join agent
+                    /*
                     $dataConsultaRepresentante = [
                         'representante' => $resultConsultaMovimentacao['value'][0]['representante'],
                         '$format' => 'json',
@@ -105,14 +109,17 @@ foreach($operationTypes as $operationType) {
                 
                     $responseConsultaRepresentante = CallAPI('GET', 'representantes/consulta', $dataConsultaRepresentante);
                     $resultConsultaRepresentante = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaRepresentante), true);
+                    */
                     
                     $agentCode = '';
                     $agentName = '';
+                    /*
         
                     if ($resultConsultaRepresentante['odata.count'] > 0) {
                         $agentCode = $resultConsultaRepresentante['value'][0]['cod_representante'];
                         $agentName = $resultConsultaRepresentante['value'][0]['geradores'][0]['nome'];
                     }
+                    */
                 
                     $data = [
                         'operation_code' => $valueListaMovimentacao['cod_operacao'],
@@ -181,7 +188,10 @@ foreach($operationTypes as $operationType) {
             
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute($data);
-                
+
+                    $countItem++;
+                    print($countItem . ' - ' . $operationType . "\xA");
+
                 }
 
             }

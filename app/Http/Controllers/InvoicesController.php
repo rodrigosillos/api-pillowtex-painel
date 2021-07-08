@@ -48,9 +48,6 @@ class InvoicesController extends Controller
                     'valor_venda' => 0,
                     'valor_comissao' => 0,
                     'valor_faturamento' => 0,
-                    'valor_liquidacao' => 0,
-                    'valor_substituido' => 0,
-                    'valor_substituicao' => 0,
                 ],
             ],
             'data_form' => [
@@ -75,7 +72,6 @@ class InvoicesController extends Controller
         $lastMonth = date("m", strtotime("first day of previous month"));
         $lastDayMonth = date("d", strtotime("last day of previous month"));
 
-        $whereAgent = '';
         $whereSearchAgent = '';
 
         $users = DB::table('users')
@@ -111,9 +107,10 @@ class InvoicesController extends Controller
                 and hidden = 0"
             ));
 
-            $whereAgent = "agent_id = ".$agentId." and ";
+            //$whereAgent = "agent_id = ".$agentId." and ";
         }
 
+        /*
         $invoicesBilling = DB::select(DB::raw("
             select *
             from invoices 
@@ -122,9 +119,11 @@ class InvoicesController extends Controller
                                     from debtors 
                                     where paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."')"
         ));
+        */
 
         //$invoices = array_merge((array) $invoices, (array) $invoicesBilling);
 
+        /*
         $totalCommissionDebtors = DB::select(DB::raw(" 
             select sum(commission_debtors) as commission_debtors 
             from invoices 
@@ -132,7 +131,9 @@ class InvoicesController extends Controller
                                     from debtors 
                                     where paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."')"
         ));
+        */
 
+        /*
         $totalSubstituido = DB::select(DB::raw("
             select sum(amount) as amount 
             from debtors
@@ -144,15 +145,16 @@ class InvoicesController extends Controller
             from debtors
             where low_payment = 1 and paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
         ));
+        */
 
         $commissionResult['data'] = [];
         $commissionResult['agents'] = (new AgentsController)->get('array');
         $commissionResult['totalizador']['valor_venda'] = 0;
         $commissionResult['totalizador']['valor_comissao'] = 0;
         $commissionResult['totalizador']['valor_faturamento'] = 0;
-        $commissionResult['totalizador']['valor_liquidacao'] = $totalCommissionDebtors[0]->commission_debtors;
-        $commissionResult['totalizador']['valor_substituido'] = $totalSubstituido[0]->amount;
-        $commissionResult['totalizador']['valor_substituicao'] = $totalSubstituidor[0]->amount;
+        //$commissionResult['totalizador']['valor_liquidacao'] = $totalCommissionDebtors[0]->commission_debtors;
+        //$commissionResult['totalizador']['valor_substituido'] = $totalSubstituido[0]->amount;
+        //$commissionResult['totalizador']['valor_substituicao'] = $totalSubstituidor[0]->amount;
 
         foreach($invoices as $invoiceKey => $invoice) {
 
@@ -186,6 +188,7 @@ class InvoicesController extends Controller
             $commissionResult['data'][$invoiceKey]['valor_substituido'] = $valorSubstituidoOperacao[0]->valor_substituido;
             */
 
+            /*
             $valorSubstituidorOperacao = DB::select(DB::raw("
                 select sum(amount) as valor_substituidor
                 from debtors
@@ -193,6 +196,7 @@ class InvoicesController extends Controller
             ));
 
             $commissionResult['data'][$invoiceKey]['valor_substituidor'] = $valorSubstituidorOperacao[0]->valor_substituidor;
+            */
             
             if($invoice->operation_type == 'S')
                 $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'success';

@@ -209,7 +209,7 @@ $divisionDb = [
 //$operationTypes = ['E', 'S'];
 //foreach ($operationTypes as $operationType) {
 
-    $sql = "select operation_code from invoices where issue_date between '2021-01-01' and '2021-06-31";
+    $sql = "select operation_code, operation_type from invoices where issue_date between '2021-01-01' and '2021-06-31'";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $invoicesAgents = $stmt->fetchAll();
@@ -219,6 +219,7 @@ $divisionDb = [
         $commissionPercentage = 0;
     
         $operationCode = $invoice__["operation_code"];
+        $operationType = $invoice__["operation_type"];
     
         $sql = "select id from debtors WHERE effected = 0 AND operation_code = :operation_code";
         $stmt = $pdo->prepare($sql);

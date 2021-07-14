@@ -85,7 +85,7 @@ foreach($operationTypes as $operationType) {
                         '$format' => 'json',
                     ];
                 
-                    $responseConsultaCliente = CallAPI('GET', 'clientes/consulta', $dataConsultaCliente);
+                    $responseConsultaCliente = CallAPI('GET', 'clientes/consultasimples', $dataConsultaCliente);
                     $resultConsultaCliente = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaCliente), true);
                     */
                     
@@ -96,8 +96,8 @@ foreach($operationTypes as $operationType) {
                     /*
                     if ($resultConsultaCliente['odata.count'] > 0) {
                         $clientCode = $resultConsultaCliente['value'][0]['cod_cliente'];
-                        $clientName = $resultConsultaCliente['value'][0]['geradores'][0]['nome'];
-                        $clientAddress = $resultConsultaCliente['value'][0]['geradores'][0]['ufie'];
+                        $clientName = $resultConsultaCliente['value'][0]['nome'];
+                        $clientAddress = $resultConsultaCliente['value'][0]['estado'];
                     }
                     */
                 

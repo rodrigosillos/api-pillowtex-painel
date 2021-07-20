@@ -105,7 +105,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>R$0,00</td>
+                            <td>R$ {{ number_format($total_commission, 2, ',', '.') }}</td>
                         </tr>
                     </tbody>
                 </table>

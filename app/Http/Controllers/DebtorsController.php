@@ -25,6 +25,7 @@ class DebtorsController extends Controller
         $userProfileId = Auth::user()->user_profile_id;
 
         $whereAgent = '';
+        $totalCommission = 0;
 
         if($agentSearchAdmin != 'all')
             $whereAgent = "i.agent_id = ".$agentSearchAdmin." and";
@@ -51,6 +52,7 @@ class DebtorsController extends Controller
             $dueDate = date_create($debtor->due_date);
             
             $paidDate = $debtor->paid_date;
+            
             if(!is_null($debtor->paid_date))
                 $paidDate = date_create($debtor->paid_date);
 
@@ -58,6 +60,8 @@ class DebtorsController extends Controller
             $substituted = $debtor->substituted;
             $amount = $debtor->amount;
             $commission = $debtor->commission;
+
+            $totalCommission += $commission;
 
             $resultDebtors['data'][$debtorKey]['cliente'] = Str::limit($client_name, 25, $end='...');
             $resultDebtors['data'][$debtorKey]['lancamento'] = $lancamento;
@@ -79,6 +83,7 @@ class DebtorsController extends Controller
         return view('invoices-debtors', 
         [
             'debtors' => $resultDebtors,
+            'total_commission' => $totalCommission,
         ]);
     }
 

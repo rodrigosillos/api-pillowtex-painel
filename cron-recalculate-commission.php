@@ -2,7 +2,7 @@
 
 include('connection-db.php');
 
-$sql = "select operation_code, client_address, price_list from invoices";
+$sql = "select operation_code, client_address, price_list from invoices where operation_code = '539722'";
 //$sql = "select operation_code, client_address, price_list from invoices where hidden = 0 and issue_date between '2021-06-01' and '2021-06-30'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -29,6 +29,8 @@ foreach ($invoices as $invoice) {
         $divisionCode = $product['division_code'];
         $quantity = $product['quantity'];
         $price = $product['price'];
+        $priceApplied = $product['price_applied'];
+        $priceGross = $product['price_gross'];
         $discount = $product['discount'];
 
         $commissionPercentage = 0;

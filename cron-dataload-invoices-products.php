@@ -3,11 +3,10 @@
 include('call-api.php');
 include('connection-db.php');
 
-$operationTypes = ['E', 'S'];
 $countItem = 0;
 
-$sql = "select operation_code, operation_type, client_address, price_list from invoices where issue_date between '2021-07-01' and '2021-07-08'";
-//$sql = "select operation_code, operation_type, client_address, price_list from invoices where operation_code in ('535691')";
+//$sql = "select operation_code, operation_type, client_address, price_list from invoices where issue_date between '2021-07-01' and '2021-07-08'";
+$sql = "select operation_code, operation_type, client_address, price_list from invoices where operation_code in ('539722')";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoicesAgents = $stmt->fetchAll();
@@ -56,6 +55,8 @@ foreach ($invoicesAgents as $invoice__) {
 
                     $productDiscount = $valueProduct['desconto'];
                     $productPrice = $valueProduct['preco'];
+                    $productApplied = $valueProduct['preco_aplicado'];
+                    $productGross = $valueProduct['preco_bruto'];
                     $productQty = $valueProduct['quantidade'];
     
                     // product
@@ -124,7 +125,7 @@ foreach ($invoicesAgents as $invoice__) {
                     if($tableCode == 214 && $productDiscount > 5)
                         $commissionPercentage = ($commissionPercentage / 2);
                         
-                    $commissionAmount = floor(($productPrice * $productQty) * $commissionPercentage) / 100;
+                    $commissionAmount = floor(($productApplied * $productQty) * $commissionPercentage) / 100;
 
                     if($tableCode == 214 && $productDiscount > 5)
                         $commissionAmount = ($commissionAmount / 2);
@@ -143,7 +144,9 @@ foreach ($invoicesAgents as $invoice__) {
                         'division_code' => $divisionCode,
                         'division_description' => $divisionDescription,
                         'quantity' => $valueProduct['quantidade'],
-                        'price' => $valueProduct['preco'],
+                        'price' => $productPrice,
+                        'price_applied' => $productApplied,
+                        'price_gross' => $productGross,
                         'discount' => $valueProduct['desconto'],
                     ];
             
@@ -160,6 +163,8 @@ foreach ($invoicesAgents as $invoice__) {
                                                         division_description,
                                                         quantity,
                                                         price, 
+                                                        price_applied, 
+                                                        price_gross, 
                                                         discount) VALUES (
                                                                         :operation_code,
                                                                         :document,
@@ -173,6 +178,8 @@ foreach ($invoicesAgents as $invoice__) {
                                                                         :division_description,
                                                                         :quantity,
                                                                         :price,
+                                                                        :price_applied,
+                                                                        :price_gross,
                                                                         :discount)";
             
                     $stmt = $pdo->prepare($sql);

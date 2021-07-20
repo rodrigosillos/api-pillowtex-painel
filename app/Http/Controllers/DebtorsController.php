@@ -32,7 +32,7 @@ class DebtorsController extends Controller
         $lastDayMonth = date("d", strtotime("last day of previous month"));
 
         $debtors = DB::select(DB::raw(" 
-            select i.client_name, d.book_entry, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission
+            select i.client_name, d.book_entry, d.operation_code, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission
             from debtors d 
             inner join invoices i on d.operation_code = i.operation_code
             where ".$whereAgent." d.substituted = 0 and d.low_payment = 0 and d.paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
@@ -42,6 +42,7 @@ class DebtorsController extends Controller
 
             $client_name = $debtor->client_name;
             $lancamento = $debtor->book_entry;
+            $operationCode = $debtor->operation_code;
             $document = $debtor->document;
             $dueDate = date_create($debtor->due_date);
             
@@ -56,6 +57,7 @@ class DebtorsController extends Controller
 
             $resultDebtors['data'][$debtorKey]['cliente'] = Str::limit($client_name, 25, $end='...');
             $resultDebtors['data'][$debtorKey]['lancamento'] = $lancamento;
+            $resultDebtors['data'][$debtorKey]['codigo_operacao'] = $operationCode;
             $resultDebtors['data'][$debtorKey]['documento'] = $document;
             $resultDebtors['data'][$debtorKey]['data_vencimento'] = date_format($dueDate, "d/m/Y");
 

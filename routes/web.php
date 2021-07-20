@@ -31,10 +31,10 @@ Route::get('/faturamento', 'InvoicesController@index');
 Route::post('/consulta-faturamento', 'InvoicesController@get');
 
 //liquidacao
-Route::get('/liquidacao', 'DebtorsController@getLiquidacao');
+Route::get('/liquidacao/{agent?}', 'DebtorsController@getLiquidacao');
 
 //substituicao
-Route::get('/substituicao', 'DebtorsController@getSubstituicao');
+Route::get('/substituicao/{agent?}', 'DebtorsController@getSubstituicao');
 
 //Language Translation
 Route::get('index/{locale}', 'HomeController@lang');

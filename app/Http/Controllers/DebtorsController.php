@@ -14,16 +14,20 @@ class DebtorsController extends Controller
         $this->middleware('auth');
     }
 
-    public function getLiquidacao()
+    public function getLiquidacao(Request $request)
     {
         $resultDebtors = [
             'data' => [],
         ];
 
+        $agentSearchAdmin = $request->agent;
         $agentId = Auth::user()->agent_id;
         $userProfileId = Auth::user()->user_profile_id;
 
         $whereAgent = '';
+
+        if($agentSearchAdmin != 'all')
+            $whereAgent = "i.agent_id = ".$agentSearchAdmin." and";
 
         if($userProfileId == 3)
             $whereAgent = "i.agent_id = ".$agentId." and";
@@ -78,16 +82,20 @@ class DebtorsController extends Controller
         ]);
     }
 
-    public function getSubstituicao()
+    public function getSubstituicao(Request $request)
     {
         $resultDebtors = [
             'data' => [],
         ];
 
+        $agentSearchAdmin = $request->agent;
         $agentId = Auth::user()->agent_id;
         $userProfileId = Auth::user()->user_profile_id;
 
         $whereAgent = '';
+
+        if($agentSearchAdmin != 'all')
+            $whereAgent = "i.agent_id = ".$agentSearchAdmin." and";
 
         if($userProfileId == 3)
             $whereAgent = "i.agent_id = ".$agentId." and";

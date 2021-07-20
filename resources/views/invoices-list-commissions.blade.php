@@ -22,7 +22,7 @@
                 <label class="col-md-2 col-form-label">Representantes</label>
                 <div class="col-md-10">
                     <select name="search_agent" class="form-control">
-                        <option value="todos">SELECIONE ...</option>
+                        <option value="all">SELECIONE ...</option>
                         @foreach($invoices['agents'] as $key => $agent)
                             <option value="{{ $agent['agent_id'] }}" @if ( $data_form['search_agent'] == $agent['agent_id'] ) selected @endif>{{ $agent['name'] }}</option>
                         @endforeach
@@ -62,12 +62,16 @@
             </div>
             <div class="col-md-3">
                 <div>
-                    <a href="{{url('liquidacao')}}" target="_blank">
+                    @if ( Auth::user()->user_profile_id == 3 )
+                        <a href="{{url('liquidacao')}}" target="_blank">
+                    @else
+                        <a href="#" onclick="RedirectURL('liquidacao');return false;">
+                    @endif
                     <button type="button" class="btn btn-primary waves-effect waves-light">
                         Liquidação <i class="uil uil-arrow-right ml-2"></i> 
                     </button>
                     </a>
-                    <a href="{{url('substituicao')}}" target="_blank">
+                    <a href="#" onclick="RedirectURL('substituicao');return false;">
                     <button type="button" class="btn btn-primary waves-effect waves-light">
                         Substituição <i class="uil uil-arrow-right ml-2"></i> 
                     </button>
@@ -197,7 +201,27 @@
     <!-- end row -->
 @endsection
 @section('script')
+
+    <script>
+        function RedirectURL(module)
+        {
+            window.open(createDynamicURL(module), '_blank');
+        }
+
+        function createDynamicURL(module)
+        {
+            //The variables containing the respective IDs
+            var agentID = document.getElementsByName("search_agent")[0].value;
+
+            //Forming the variable to return    
+            URL=module+"/";
+            URL+=agentID;
+
+            return URL;
+        }
+    </script>
     <script src="{{ URL::asset('assets/libs/datatables/datatables.min.js')}}"></script>
     <script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{ URL::asset('assets/js/pages/ecommerce-datatables.init.js')}}"></script>
+
 @endsection

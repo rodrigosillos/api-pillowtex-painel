@@ -2,7 +2,7 @@
 
 include('connection-db.php');
 
-$sql = "select operation_code, client_address, price_list from invoices where operation_code = '539722'";
+$sql = "select operation_code, client_address, price_list from invoices where agent_id = '263'";
 //$sql = "select operation_code, client_address, price_list from invoices where hidden = 0 and issue_date between '2021-06-01' and '2021-06-30'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -59,7 +59,7 @@ foreach ($invoices as $invoice) {
         if($tableCode == 214 && $discount > 5)
             $commissionPercentage = ($commissionPercentage / 2);
             
-        $commissionAmount = floor(($price * $quantity) * $commissionPercentage) / 100;
+        $commissionAmount = floor(($priceApplied * $quantity) * $commissionPercentage) / 100;
     
         if($tableCode == 214 && $discount > 5)
             $commissionAmount = ($commissionAmount / 2);

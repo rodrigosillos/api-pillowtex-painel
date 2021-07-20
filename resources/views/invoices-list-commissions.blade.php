@@ -177,9 +177,9 @@
                     <table class="table mb-0">
                     <thead>
                         <tr>
-                            <th>Valor Venda</th>
+                            <th>Faturamento</th>
+                            <th>Base de Comissão</th>
                             <th>Valor Comissão</th>
-                            <th>Valor Faturamento</th>
                         </tr>
                     </thead>
                     <tbody>

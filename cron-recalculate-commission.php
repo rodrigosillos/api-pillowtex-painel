@@ -18,7 +18,7 @@ foreach ($invoices as $invoice) {
 
     $commissionAmountTotal = 0;
 
-    $sql = "select division_code, quantity, price, discount from invoices_product where operation_code = :operation_code";
+    $sql = "select division_code, quantity, price, price_applied, price_gross, discount from invoices_product where operation_code = :operation_code";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':operation_code', $operationCode, PDO::PARAM_STR);
     $stmt->execute();

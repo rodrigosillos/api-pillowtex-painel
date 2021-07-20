@@ -6,7 +6,7 @@ include('connection-db.php');
 $countItem = 0;
 
 //$sql = "select operation_code, operation_type, client_address, price_list from invoices where issue_date between '2021-07-01' and '2021-07-08'";
-$sql = "select operation_code, operation_type, client_address, price_list from invoices where operation_code in (select operation_code from invoices where agent_id = 263)";
+$sql = "select operation_code, operation_type, client_address, price_list from invoices where agent_id = 263";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoicesAgents = $stmt->fetchAll();

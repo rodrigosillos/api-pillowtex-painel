@@ -3,7 +3,8 @@
 include('call-api.php');
 include('connection-db.php');
 
-$sql = "select distinct(operation_code) as operation_code from debtors where substituted = 1";
+//$sql = "select distinct(operation_code) as operation_code from debtors where substituted = 1";
+$sql = "select operation_code, commission_amount from invoices where issue_date between '2021-07-09' and '2021-07-23'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $debtorSubstituted = $stmt->fetchAll();
@@ -13,24 +14,16 @@ $lastMonth = date("m", strtotime("first day of previous month"));
 foreach ($debtorSubstituted as $debtor) {
 
     $operationCode = $debtor["operation_code"];
+    $commissionAmount = $debtor['commission_amount'];
 
-    $sql = "select book_entry from debtors where operation_code = :operation_code";
+    $sql = "select book_entry from debtors where operation_code = :operation_code and substituted = 1";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':operation_code', $operationCode, PDO::PARAM_STR);
     $stmt->execute();
     $resultbookEntry = $stmt->fetch(\PDO::FETCH_ASSOC);
 
     if ($stmt->rowCount() > 0)
-        $bookEntryOld = $resultbookEntry['book_entry'];    
-
-    $sql = "select commission_amount from invoices where operation_code = :operation_code";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':operation_code', $operationCode, PDO::PARAM_STR);
-    $stmt->execute();
-    $resultInvoice = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-    if ($stmt->rowCount() > 0)
-        $commissionAmount = $resultInvoice['commission_amount'];
+        $bookEntryOld = $resultbookEntry['book_entry'];
 
     $dataSearch = [
         '$format' => 'json',
@@ -138,7 +131,7 @@ foreach ($debtorSubstituted as $debtor) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute($data);
 
-    print('.');
+    print($operationCode . "\xA");
 
 }
 

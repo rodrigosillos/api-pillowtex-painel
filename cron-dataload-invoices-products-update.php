@@ -3,10 +3,11 @@
 include('call-api.php');
 include('connection-db.php');
 
-$countItem = 0;
+//$countItem = 0;
 
 //$sql = "select operation_code, operation_type from invoices where issue_date between '2021-06-01' and '2021-05-08'";
 $sql = "select operation_code, operation_type from invoices where agent_id = '263'";
+//$sql = "select operation_code, operation_type from invoices where operation_code = '539722'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();
@@ -31,22 +32,21 @@ foreach ($invoices as $invoice__) {
         
         $productApplied = $valueProduct['preco_aplicado'];
         $productGross = $valueProduct['preco_bruto'];
+        $productId = $valueProduct['produto'];
 
         $data = [
             'price_applied' => $productApplied,
             'price_gross' => $productGross,
-            'operation_code' => $operationCode,
+            'product_id' => $productId,
         ];
         
-        $sql = "update invoices_product SET price_applied = :price_applied, price_gross = :price_gross where operation_code = :operation_code";
+        $sql = "update invoices_product SET price_applied = :price_applied, price_gross = :price_gross where product_id = :product_id";
         $stmt = $pdo->prepare($sql);
         $stmt->execute($data);
     
-        $countItem++;
-        print($countItem . ' - ' . $operationCode . "\xA");
+        //$countItem++;
+        //print($countItem . ' - ' . $operationCode . "\xA");
     }
-
-
 
 }
 

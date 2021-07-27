@@ -37,14 +37,10 @@
                                 </div>
                             </th>
                             <th>Cliente</th>
-                            <th>Lançamento</th>
-                            <th>Operação</th>
                             <th>N Documento</th>
                             <th>Data de Vencimento</th>
                             <th>Data de Pagamento</th>
-                            <th>Efetuado</th>
-                            <th>Substituido</th>
-                            <th>Valor</th>
+                            <th>Valor do Título</th>
                             <th>Comissão Liquidação</th>
                             <th style="width: 120px;">Ações</th>
                         </tr>
@@ -61,12 +57,6 @@
                             
                             <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#{{ $debtor['cliente'] }}</a> </td>
                             <td>
-                                {{ $debtor['lancamento'] }}
-                            </td>
-                            <td>
-                                {{ $debtor['codigo_operacao'] }}
-                            </td>
-                            <td>
                                 {{ $debtor['documento'] }}
                             </td>
                             <td>
@@ -75,13 +65,6 @@
 
                             <td>
                                 {{ $debtor['data_pagamento'] }}
-                            </td>
-
-                            <td>
-                                {{ $debtor['efetuado'] }}
-                            </td>
-                            <td>
-                                {{ $debtor['substituido'] }}
                             </td>
                             <td>
                                 R$ {{ number_format($debtor['valor_inicial'], 2, ',', '.') }}

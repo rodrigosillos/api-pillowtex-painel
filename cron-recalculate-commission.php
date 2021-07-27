@@ -2,13 +2,16 @@
 
 include('connection-db.php');
 
-$sql = "select operation_code, client_address, price_list from invoices where agent_id = '263'";
+//$sql = "select operation_code, client_address, price_list from invoices where agent_id = '263'";
+$sql = "select operation_code, client_address, price_list from invoices where operation_code = '539353'";
 //$sql = "select operation_code, client_address, price_list from invoices where hidden = 0 and issue_date between '2021-06-01' and '2021-06-30'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();
 
 $countItem = 0;
+
+$lastMonth = date("m", strtotime("first day of previous month"));
 
 foreach ($invoices as $invoice) {
 
@@ -18,7 +21,7 @@ foreach ($invoices as $invoice) {
 
     $commissionAmountTotal = 0;
 
-    $sql = "select division_code, quantity, price, price_applied, price_gross, discount from invoices_product where operation_code = :operation_code";
+    $sql = "select division_code, quantity, price, price_applied, price_gross, discount, product_name, product_code from invoices_product where operation_code = :operation_code";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':operation_code', $operationCode, PDO::PARAM_STR);
     $stmt->execute();
@@ -27,6 +30,8 @@ foreach ($invoices as $invoice) {
     foreach ($products as $product) {
         
         $divisionCode = $product['division_code'];
+        $productName = $product['product_name'];
+        $productCode = $product['product_code'];
         $quantity = $product['quantity'];
         $price = $product['price'];
         $priceApplied = $product['price_applied'];
@@ -58,8 +63,9 @@ foreach ($invoices as $invoice) {
     
         if($tableCode == 214 && $discount > 5)
             $commissionPercentage = ($commissionPercentage / 2);
-            
-        $commissionAmount = floor(($priceApplied * $quantity) * $commissionPercentage) / 100;
+        
+        print('codigo: ' . $productCode . ' - produto: ' . $productName . ' - divisao: ' . $divisionCode . ' - tabela: ' . $tableCode . ' - percentual: ' . $commissionPercentage . "\xA");
+        $commissionAmount = ($priceApplied * $quantity) * $commissionPercentage / 100;
     
         if($tableCode == 214 && $discount > 5)
             $commissionAmount = ($commissionAmount / 2);
@@ -75,8 +81,6 @@ foreach ($invoices as $invoice) {
     $sql = "update invoices SET commission_amount = :commission_amount where operation_code = :operationCode";
     $stmt = $pdo->prepare($sql);
     $stmt->execute($data);
-
-    print('.');
 
 }
 

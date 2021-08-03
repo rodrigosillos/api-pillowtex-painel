@@ -4,7 +4,7 @@ include('call-api.php');
 include('connection-db.php');
 
 //$sql = "select distinct(operation_code) as operation_code from debtors where substituted = 1";
-$sql = "select operation_code, commission_amount from invoices where issue_date between '2021-07-09' and '2021-07-23'";
+$sql = "select operation_code, commission_amount from invoices where issue_date between '2021-07-24' and '2021-07-31'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $debtorSubstituted = $stmt->fetchAll();

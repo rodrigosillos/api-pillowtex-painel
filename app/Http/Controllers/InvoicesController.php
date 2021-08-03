@@ -84,7 +84,7 @@ class InvoicesController extends Controller
             $userProfileId = $users->user_profile_id;
         }
 
-        if($searchAgent != 'todos')
+        if($searchAgent != 'all')
             $whereSearchAgent = "and agent_id = " . $searchAgent;
 
         if($userProfileId == 1) {
@@ -106,55 +106,13 @@ class InvoicesController extends Controller
                 and agent_id = ".$agentId."
                 and hidden = 0"
             ));
-
-            //$whereAgent = "agent_id = ".$agentId." and ";
         }
-
-        /*
-        $invoicesBilling = DB::select(DB::raw("
-            select *
-            from invoices 
-            where " . $whereAgent . "
-            operation_code in (select operation_code 
-                                    from debtors 
-                                    where paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."')"
-        ));
-        */
-
-        //$invoices = array_merge((array) $invoices, (array) $invoicesBilling);
-
-        /*
-        $totalCommissionDebtors = DB::select(DB::raw(" 
-            select sum(commission_debtors) as commission_debtors 
-            from invoices 
-            where " . $whereAgent . "operation_code in (select operation_code 
-                                    from debtors 
-                                    where paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."')"
-        ));
-        */
-
-        /*
-        $totalSubstituido = DB::select(DB::raw("
-            select sum(amount) as amount 
-            from debtors
-            where substituted = 1 and paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
-        ));
-        
-        $totalSubstituidor = DB::select(DB::raw("
-            select sum(amount) as amount
-            from debtors
-            where low_payment = 1 and paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
-        ));
-        */
 
         $commissionResult['data'] = [];
         $commissionResult['agents'] = (new AgentsController)->get('array');
         $commissionResult['totalizador']['valor_venda'] = 0;
         $commissionResult['totalizador']['valor_comissao'] = 0;
         $commissionResult['totalizador']['valor_faturamento'] = 0;
-        //$commissionResult['totalizador']['valor_liquidacao'] = $totalCommissionDebtors[0]->commission_debtors;
-        //$commissionResult['totalizador']['valor_substituido'] = $totalSubstituido[0]->amount;
-        //$commissionResult['totalizador']['valor_substituicao'] = $totalSubstituidor[0]->amount;
 
         foreach($invoices as $invoiceKey => $invoice) {
 
@@ -177,26 +135,6 @@ class InvoicesController extends Controller
             $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'warning';
             $commissionResult['data'][$invoiceKey]['comissao_total'] = $invoice->commission_amount;
             $commissionResult['data'][$invoiceKey]['liquidacao_50'] = $invoice->commission_debtors;
-
-            /*
-            $valorSubstituidoOperacao = DB::select(DB::raw("
-                select sum(amount) as valor_substituido
-                from debtors
-                where operation_code = ".$invoice->operation_code." and substituted = 1 and paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
-            ));
-
-            $commissionResult['data'][$invoiceKey]['valor_substituido'] = $valorSubstituidoOperacao[0]->valor_substituido;
-            */
-
-            /*
-            $valorSubstituidorOperacao = DB::select(DB::raw("
-                select sum(amount) as valor_substituidor
-                from debtors
-                where operation_code = ".$invoice->operation_code." and low_payment = 1 and paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
-            ));
-
-            $commissionResult['data'][$invoiceKey]['valor_substituidor'] = $valorSubstituidorOperacao[0]->valor_substituidor;
-            */
             
             if($invoice->operation_type == 'S')
                 $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'success';

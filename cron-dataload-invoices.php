@@ -11,8 +11,8 @@ $invoiceFilial = 0;
 foreach($operationTypes as $operationType) {
 
     $dataListaMovimentacao = [
-        'datai' => '2021-07-09',
-        'dataf' => '2021-07-23',
+        'datai' => '2021-07-24',
+        'dataf' => '2021-07-31',
         '$format' => 'json',
         'tipo_operacao' => $operationType,
     ];
@@ -134,6 +134,7 @@ foreach($operationTypes as $operationType) {
                         'invoice' => $invoiceNumber,
                         'courtesy' => $resultConsultaMovimentacao['value'][0]['cortesia'],
                         'hidden' => 0,
+                        'amount_withouttax' => $resultConsultaMovimentacao['value'][0]['total'],
                     ];
                 
                     $sql  = "INSERT INTO invoices (
@@ -156,7 +157,8 @@ foreach($operationTypes as $operationType) {
                                                     order_code,
                                                     invoice,
                                                     courtesy,
-                                                    hidden) VALUES (
+                                                    hidden,
+                                                    amount_withouttax) VALUES (
                                                                     :operation_code,
                                                                     :document,
                                                                     :ticket,
@@ -176,7 +178,8 @@ foreach($operationTypes as $operationType) {
                                                                     :order_code,
                                                                     :invoice,
                                                                     :courtesy,
-                                                                    :hidden)";
+                                                                    :hidden,
+                                                                    :amount_withouttax)";
             
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute($data);

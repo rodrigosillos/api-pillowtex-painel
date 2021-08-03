@@ -38,6 +38,7 @@
                             </th>
                             <th>Cliente</th>
                             <th>N Documento</th>
+                            <th>Operação</th>
                             <th>Data de Vencimento</th>
                             <th>Data de Pagamento</th>
                             <th>Valor do Título</th>
@@ -58,6 +59,9 @@
                             <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#{{ $debtor['cliente'] }}</a> </td>
                             <td>
                                 {{ $debtor['documento'] }}
+                            </td>
+                            <td>
+                                {{ $debtor['codigo_operacao'] }}
                             </td>
                             <td>
                                 {{ $debtor['data_vencimento'] }}

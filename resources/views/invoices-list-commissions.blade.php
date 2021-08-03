@@ -75,7 +75,7 @@
                     <button type="button" class="btn btn-primary waves-effect waves-light">
                         Substituição <i class="uil uil-arrow-right ml-2"></i> 
                     </button>
-                    </a>
+                    </a> M S A DOS SANTOS ALIMENTA... 
                 </div>
             </div>
         </div>
@@ -122,7 +122,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="consulta-titulos/{{ $invoice['operacao_codigo'] }}" target="_blank" class="text-dark font-weight-bold">#{{ $invoice['nota_fiscal'] }}</a>
+                                    {{ $invoice['nota_fiscal'] }}
                                 </td>
                                 <td>
                                     {{ $invoice['data_emissao'] }}

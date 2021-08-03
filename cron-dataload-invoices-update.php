@@ -6,15 +6,15 @@ include('connection-db.php');
 $countItem = 0;
 $invoiceFilial = 0;
 
-//$sql = "select operation_code, operation_type from invoices where issue_date between '2021-06-01' and '2021-05-08'";
-$sql = "select operation_code, operation_type from invoices where agent_id = '263'";
+$sql = "select operation_code, operation_type from invoices where issue_date between '2021-07-01' and '2021-07-31'";
+//$sql = "select operation_code, operation_type from invoices where agent_id = '263'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();
 
 foreach ($invoices as $invoice__) {
 
-    $operationCode = $invoice__["operation_code"];
+    $operationCode = $invoice__["operation_code"];  
     $operationType = $invoice__["operation_type"];
 
     $dataConsultaMovimentacao = [

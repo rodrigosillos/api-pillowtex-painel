@@ -75,7 +75,7 @@
                     <button type="button" class="btn btn-primary waves-effect waves-light">
                         Substituição <i class="uil uil-arrow-right ml-2"></i> 
                     </button>
-                    </a> M S A DOS SANTOS ALIMENTA... 
+                    </a>
                 </div>
             </div>
         </div>

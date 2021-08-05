@@ -208,8 +208,8 @@ $divisionDb = [
 
 
 
-$sql = "select operation_code, operation_type from invoices where issue_date between '2021-06-01' and '2021-06-31'";
-//$sql = "select operation_code, operation_type from invoices where operation_code = '1600010597'";
+$sql = "select operation_code, operation_type from invoices where issue_date between '2021-07-29' and '2021-07-31'";
+//$sql = "select operation_code, operation_type from invoices where operation_code = '534463'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoicesAgents = $stmt->fetchAll();

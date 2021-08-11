@@ -3,7 +3,7 @@
 include('connection-db.php');
 
 //$sql = "select operation_code, client_address, price_list from invoices where agent_id = '263'";
-$sql = "select operation_code, client_address, price_list from invoices where operation_code = '546079'";
+$sql = "select operation_code, client_address, price_list from invoices where operation_code in (535816, 535950, 535958, 535985, 536219, 537208, 537280, 538063, 538512, 539171, 539324, 539716, 540454, 540485, 540507, 540631, 540856, 541031, 541698, 541838, 542097)";
 // $sql = "select operation_code, client_address, price_list from invoices where hidden = 0 and issue_date between '2021-07-24' and '2021-07-31'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -64,7 +64,7 @@ foreach ($invoices as $invoice) {
         if($tableCode == 214 && $discount > 5)
             $commissionPercentage = ($commissionPercentage / 2);
         
-        // print('codigo: ' . $productCode . ' - produto: ' . $productName . ' - divisao: ' . $divisionCode . ' - tabela: ' . $tableCode . ' - percentual: ' . $commissionPercentage . "\xA");
+        print('codigo: ' . $productCode . ' - produto: ' . $productName . ' - divisao: ' . $divisionCode . ' - tabela: ' . $tableCode . ' - percentual: ' . $commissionPercentage . "\xA");
         $commissionAmount = ($priceApplied * $quantity) * $commissionPercentage / 100;
     
         if($tableCode == 214 && $discount > 5)

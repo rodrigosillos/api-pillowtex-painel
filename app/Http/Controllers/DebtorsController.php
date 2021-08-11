@@ -28,38 +28,55 @@ class DebtorsController extends Controller
         $totalCommission = 0;
 
         if($agentSearchAdmin != 'all')
-            $whereAgent = "i.agent_id = ".$agentSearchAdmin." and";
+            $whereAgent = "representante = ".$agentSearchAdmin." and";
 
         if($userProfileId == 3)
-            $whereAgent = "i.agent_id = ".$agentId." and";
+            $whereAgent = "representante = ".$agentId." and";
 
         $lastMonth = date("m", strtotime("first day of previous month"));
         $lastDayMonth = date("d", strtotime("last day of previous month"));
+        $currentYear = date("Y"); 
+
+        // $debtors = DB::select(DB::raw(" 
+        //     select i.client_name, d.book_entry, d.operation_code, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission
+        //     from debtors d 
+        //     inner join invoices i on d.operation_code = i.operation_code
+        //     where ".$whereAgent." d.substituted = 0 and d.low_payment = 0 and d.paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
+        // ));
 
         $debtors = DB::select(DB::raw(" 
-            select i.client_name, d.book_entry, d.operation_code, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission
-            from debtors d 
-            inner join invoices i on d.operation_code = i.operation_code
-            where ".$whereAgent." d.substituted = 0 and d.low_payment = 0 and d.paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
+            select 
+                cliente_nome, 
+                numero_lancamento,
+                origem, 
+                numero_documento,
+                data_vencimento, 
+                data_pagamento, 
+                efetuado, 
+                substituido, 
+                valor_inicial, 
+                valor_comissao
+            from lancamentos
+            where ".$whereAgent." substituido = 0 and baixa = 0 and data_pagamento between '".$currentYear."-".$lastMonth."-01' and '".$currentYear."-".$lastMonth."-".$lastDayMonth."'"
         ));
 
         foreach($debtors as $debtorKey => $debtor) {
 
-            $client_name = $debtor->client_name;
-            $lancamento = $debtor->book_entry;
-            $operationCode = $debtor->operation_code;
-            $document = $debtor->document;
-            $dueDate = date_create($debtor->due_date);
+            $client_name = $debtor->cliente_nome;
+            $lancamento = $debtor->numero_lancamento;
+            $operationCode = $debtor->origem;
+            $document = $debtor->numero_documento;
+            $dueDate = date_create($debtor->data_vencimento);
             
-            $paidDate = $debtor->paid_date;
+            $paidDate = $debtor->data_pagamento;
             
-            if(!is_null($debtor->paid_date))
-                $paidDate = date_create($debtor->paid_date);
+            if(!is_null($debtor->data_pagamento))
+                $paidDate = date_create($debtor->data_pagamento);
 
-            $effected = $debtor->effected;
-            $substituted = $debtor->substituted;
-            $amount = $debtor->amount;
-            $commission = $debtor->commission;
+            $effected = $debtor->efetuado;
+            $substituted = $debtor->substituido;
+            $amount = $debtor->valor_inicial;
+            $commission = $debtor->valor_comissao;
 
             $totalCommission += $commission;
 
@@ -70,7 +87,7 @@ class DebtorsController extends Controller
             $resultDebtors['data'][$debtorKey]['data_vencimento'] = date_format($dueDate, "d/m/Y");
 
             $resultDebtors['data'][$debtorKey]['data_pagamento'] = $paidDate;
-            if(!is_null($debtor->paid_date))
+            if(!is_null($debtor->data_pagamento))
                 $resultDebtors['data'][$debtorKey]['data_pagamento'] = date_format($paidDate, "d/m/Y");
 
             $resultDebtors['data'][$debtorKey]['efetuado'] = $effected == 1 ? 'Baixado' : 'Em Aberto';

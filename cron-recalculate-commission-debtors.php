@@ -16,7 +16,7 @@ foreach ($invoices as $invoice__) {
 
     $qtyDebtors = $pdo->query('select count(*) from lancamentos where substituido = 0 and origem = '.$operationCode)->fetchColumn();
 
-    $sql = "select id from lancamentos where substituido = 0 and valor_comissao = 0 and origem = :origem";
+    $sql = "select id from lancamentos where substituido = 0 and origem = :origem";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':origem', $operationCode, PDO::PARAM_STR);
     $stmt->execute();
@@ -31,9 +31,9 @@ foreach ($invoices as $invoice__) {
         if ($invoice__["invoice_type"] == 'ANTECIPADO' || $invoice__["invoice_type"] == 'ANTECIPADO ZC')
             $percentualLiquidacao = 20;
 
-        // $debtorCommission = (($commissionAmount / 2) / $qtyDebtors);
+        print($percentualLiquidacao);
         $debtorCommission = (($percentualLiquidacao / 100) * $commissionAmount / $qtyDebtors);
-        print($debtorCommission . "\xA");
+        // print($debtorCommission . "\xA");
 
         $data = [
             'valor_comissao' => $debtorCommission,

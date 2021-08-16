@@ -28,7 +28,7 @@ foreach ($invoices as $invoice__) {
 
         $debtorId = $debtor__["id"];
 
-        if ($invoice__["invoice_type"] == 'ANTECIPADO')
+        if ($invoice__["invoice_type"] == 'ANTECIPADO' || $invoice__["invoice_type"] == 'ANTECIPADO ZC')
             $percentualLiquidacao = 20;
 
         // $debtorCommission = (($commissionAmount / 2) / $qtyDebtors);

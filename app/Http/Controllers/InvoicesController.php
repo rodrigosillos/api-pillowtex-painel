@@ -143,7 +143,7 @@ class InvoicesController extends Controller
 
             $percentualFaturamento = 50;
 
-            if ($invoice->invoice_type == 'ANTECIPADO')
+            if ($invoice->invoice_type == 'ANTECIPADO' || $invoice->invoice_type == 'ANTECIPADO ZC')
                 $percentualFaturamento = 80;
 
             if (date_format($issueDate, "m") == $lastMonth)

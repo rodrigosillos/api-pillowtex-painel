@@ -4,22 +4,7 @@ include('call-api.php');
 include('connection-db.php');
 
 // $sql = "select operation_code, operation_type, commission_amount from invoices where issue_date between '2021-07-01' and '2021-07-31'";
-$sql = "select operation_code, operation_type, commission_amount from invoices where operation_code in (
-    537525,
-    538260,
-    537274,
-    520861,
-    537273,
-    520745,
-    521303,
-    521348,
-    540702,
-    539209,
-    539453,
-    522061,
-    535893,
-    540363
-)";
+$sql = "select operation_code, operation_type, commission_amount, invoice_type from invoices where operation_code in (543791)";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();
@@ -37,11 +22,17 @@ foreach ($invoices as $invoice__) {
     $stmt->execute();
     $debtors = $stmt->fetchAll();
 
+    $percentualLiquidacao = 50;
+
     foreach ($debtors as $debtor__) {
 
         $debtorId = $debtor__["id"];
+
+        if ($invoice__["invoice_type"] == 'ANTECIPADO')
+            $percentualLiquidacao = 20;
+
         // $debtorCommission = (($commissionAmount / 2) / $qtyDebtors);
-        $debtorCommission = ($commissionAmount / $qtyDebtors);
+        $debtorCommission = (($percentualLiquidacao / 100) * $commissionAmount / $qtyDebtors);
         print($debtorCommission . "\xA");
 
         $data = [

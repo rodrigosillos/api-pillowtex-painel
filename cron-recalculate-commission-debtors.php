@@ -32,7 +32,7 @@ foreach ($invoices as $invoice__) {
         if ($invoice__["invoice_type"] == 'ANTECIPADO' || $invoice__["invoice_type"] == 'ANTECIPADO ZC')
             $percentualLiquidacao = 20;
 
-        print($percentualLiquidacao);
+        print($invoice__["invoice_type"]);
         $debtorCommission = (($percentualLiquidacao / 100) * $commissionAmount / $qtyDebtors);
         // print($debtorCommission . "\xA");
 

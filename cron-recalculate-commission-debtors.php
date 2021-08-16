@@ -6,6 +6,7 @@ include('connection-db.php');
 // $sql = "select operation_code, operation_type, commission_amount from invoices where issue_date between '2021-07-01' and '2021-07-31'";
 // $sql = "select operation_code, operation_type, commission_amount, invoice_type from invoices where operation_code in (543791)";
 $sql = "select operation_code, operation_type, commission_amount, invoice_type from invoices where issue_date between '2021-07-01' and '2021-07-31' and agent_id = '232'";
+$stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();
 

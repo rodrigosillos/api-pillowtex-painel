@@ -29,14 +29,24 @@ foreach ($invoices as $invoice__) {
     $responseConsultaMovimentacao = CallAPI('GET', 'movimentacao/consulta', $dataConsultaMovimentacao);
     $resultConsultaMovimentacao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaMovimentacao), true);
 
-    $paymentCondition = $resultConsultaMovimentacao['value'][0]['condicoes_pgto'];
+    $pedido = $resultConsultaMovimentacao['value'][0]['produtos'][0]['pedido'];
+
+    $dataConsultaPedidoVenda = [
+        'pedidov' => $pedido,
+        '$format' => 'json',
+        '$dateformat' => 'iso',
+    ];
+
+    $responseConsultaPedidoVenda = CallAPI('GET', 'pedido_venda/consulta_simples', $dataConsultaPedidoVenda);
+    $resultConsultaPedidoVenda = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaPedidoVenda), true);
+    $invoiceType = $resultConsultaPedidoVenda['value'][0]['tipo_pedido'];
 
     $data = [
-        'payment_condition' => $paymentCondition,
+        'invoice_type' => $invoiceType,
         'operation_code' => $operationCode,
     ];
     
-    $sql = "update invoices SET payment_condition = :payment_condition where operation_code = :operation_code";
+    $sql = "update invoices SET invoice_type = :invoice_type where operation_code = :operation_code";
     $stmt = $pdo->prepare($sql);
     $stmt->execute($data);
 

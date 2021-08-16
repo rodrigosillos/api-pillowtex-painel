@@ -6,8 +6,9 @@ include('connection-db.php');
 $countItem = 0;
 $invoiceFilial = 0;
 
-$sql = "select operation_code, operation_type from invoices where issue_date between '2021-07-01' and '2021-07-31'";
-//$sql = "select operation_code, operation_type from invoices where agent_id = '263'";
+// $sql = "select operation_code, operation_type from invoices where issue_date between '2021-07-01' and '2021-07-31'";
+// $sql = "select operation_code, operation_type from invoices where agent_id = '263'";
+$sql = "select operation_code, operation_type from invoices where operation_code = '545463'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();
@@ -28,14 +29,14 @@ foreach ($invoices as $invoice__) {
     $responseConsultaMovimentacao = CallAPI('GET', 'movimentacao/consulta', $dataConsultaMovimentacao);
     $resultConsultaMovimentacao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaMovimentacao), true);
 
-    $valorTotal = $resultConsultaMovimentacao['value'][0]['total'];
+    $paymentCondition = $resultConsultaMovimentacao['value'][0]['condicoes_pgto'];
 
     $data = [
-        'amount_withouttax' => $valorTotal,
+        'payment_condition' => $paymentCondition,
         'operation_code' => $operationCode,
     ];
     
-    $sql = "update invoices SET amount_withouttax = :amount_withouttax where operation_code = :operation_code";
+    $sql = "update invoices SET payment_condition = :payment_condition where operation_code = :operation_code";
     $stmt = $pdo->prepare($sql);
     $stmt->execute($data);
 

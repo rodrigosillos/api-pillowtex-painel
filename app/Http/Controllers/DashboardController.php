@@ -46,7 +46,7 @@ class DashboardController extends Controller
             select count(distinct(order_id)) as total_pedidos from invoices_product where discount <> 0"
         ));
 
-        //card5 - devolution
+        // DEVOLUÇÕES POR REPRESENTANTE
         $card5 = DB::select(DB::raw("
             select sum(amount) as total_devolucao from invoices where operation_type = 'E'"
         ));

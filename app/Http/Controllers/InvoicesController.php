@@ -140,8 +140,14 @@ class InvoicesController extends Controller
                 $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'success';
 
             $commissionResult['data'][$invoiceKey]['faturamento_50'] = 0;
+
+            $percentualFaturamento = 50;
+
+            if ($invoice->payment_condition == 336)
+                $percentualFaturamento = 80;
+
             if (date_format($issueDate, "m") == $lastMonth)
-                $commissionResult['data'][$invoiceKey]['faturamento_50'] = $commissionResult['data'][$invoiceKey]['comissao_total'] / 2;
+                $commissionResult['data'][$invoiceKey]['faturamento_50'] = ($percentualFaturamento / 100) * $commissionResult['data'][$invoiceKey]['comissao_total'];
 
             if($invoice->operation_type != 'E') {
                 $commissionResult['totalizador']['valor_comissao'] += $commissionResult['data'][$invoiceKey]['comissao_total'];

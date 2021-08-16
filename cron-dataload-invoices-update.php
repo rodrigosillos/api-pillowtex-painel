@@ -7,8 +7,8 @@ $countItem = 0;
 $invoiceFilial = 0;
 
 // $sql = "select operation_code, operation_type from invoices where issue_date between '2021-07-01' and '2021-07-31'";
-// $sql = "select operation_code, operation_type from invoices where agent_id = '263'";
-$sql = "select operation_code, operation_type from invoices where operation_code = '543791'";
+$sql = "select operation_code, operation_type from invoices where agent_id = '232'";
+// $sql = "select operation_code, operation_type from invoices where operation_code = '543791'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();

@@ -3,26 +3,9 @@
 include('call-api.php');
 include('connection-db.php');
 
-$countItem = 0;
-
-// $sql = "select operation_code, operation_type, client_address, price_list from invoices where issue_date between '2021-07-24' and '2021-07-31'";
 // $sql = "select operation_code, operation_type, client_address, price_list from invoices where agent_id = 263";
-$sql = "select operation_code, operation_type, client_address, price_list from invoices where operation_code in (
-    537525,
-    538260,
-    537274,
-    520861,
-    537273,
-    520745,
-    521303,
-    521348,
-    540702,
-    539209,
-    539453,
-    522061,
-    535893,
-    540363
-)";
+$sql = "select operation_code, operation_type, client_address, price_list from invoices where issue_date between '2021-06-01' and '2021-06-31'";
+
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoicesAgents = $stmt->fetchAll();
@@ -33,6 +16,8 @@ foreach ($invoicesAgents as $invoice__) {
     $operationType = $invoice__["operation_type"];
     $clientAddress = $invoice__["client_address"];
     $tableId = $invoice__["price_list"];
+
+    print('- - - consultando venda: ' . $operationCode . "\xA");
 
     $sql = "select id from invoices_product WHERE operation_code = :operation_code";
     $stmt = $pdo->prepare($sql);
@@ -66,8 +51,7 @@ foreach ($invoicesAgents as $invoice__) {
 
                 foreach($resultConsultaMovimentacao['value'][0]['produtos'] as $valueProduct) {
 
-                    $countItem++;
-                    print($operationCode . "\xA");
+                    print('cadastrando produto: ' . $operationCode . "\xA");
 
                     $productDiscount = $valueProduct['desconto'];
                     $productPrice = $valueProduct['preco'];
@@ -210,7 +194,7 @@ foreach ($invoicesAgents as $invoice__) {
         
                 $sql = "update invoices SET commission_amount = :commission_amount where operation_code = :operation_code";
                 $stmt = $pdo->prepare($sql);
-                $stmt->execute($data);
+                // $stmt->execute($data);
 
             } else {
 

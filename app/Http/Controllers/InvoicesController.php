@@ -40,6 +40,10 @@ class InvoicesController extends Controller
 
     public function index(Request $request)
     {           
+        $previousMonth = date("m", strtotime("first day of previous month"));
+        $previousDayMonth = date("d", strtotime("last day of previous month"));
+        $currentYear = date("Y"); 
+        
         $collection = collect([
             'invoices' => [
                 'data' => [],
@@ -51,8 +55,8 @@ class InvoicesController extends Controller
                 ],
             ],
             'data_form' => [
-                'date_start' => '',
-                'date_end' => '',
+                'date_start' => '01/' . $previousMonth . '/' . $currentYear,
+                'date_end' => $previousDayMonth . '/' . $previousMonth . '/' . $currentYear,
                 'search_agent' => '',
             ]
         ]);

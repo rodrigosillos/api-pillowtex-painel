@@ -181,6 +181,295 @@
 
 </div> <!-- end row-->
 
+<div class="row">
+
+    <div class="col-xl-4">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title mb-4">CIDADES/ESTADOS ATENDIDOS POR REPRESENTANTE</h4>
+
+                <ol class="activity-feed mb-0 ps-2" data-simplebar style="max-height: 255px;">
+                    @foreach($card6 as $agent)
+                    <li class="feed-item">
+                        <div class="feed-item-list">
+                            <p class="text-muted mb-1 font-size-13">{{ $agent->address_city }}</p>
+                            <p class="mt-0 mb-0">{{ $agent->address_state }} <span class="text-primary">+</span></p>
+                        </div>
+                    </li>
+                    @endforeach
+                </ol>
+
+            </div>
+        </div>
+    </div> <!-- end Col -->
+
+    <div class="col-xl-4">
+
+<div class="card">
+    <div class="card-body">
+
+        <h4 class="card-title mb-4">RANKING DE DIVISÕES POR VALOR (R$)</h4>
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO-LICENCIADO </p>
+            </div>
+            <div class="col-sm-9">
+                R$3.476.035,58
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-warning" role="progressbar"
+                        style="width: 78%" aria-valuenow="78" aria-valuemin="0"
+                        aria-valuemax="78">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-primary me-2"></i> IMPORTADO </p>
+            </div>
+
+            <div class="col-sm-9">
+                R$1.892.188,44
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-warning" role="progressbar"
+                        style="width: 78%" aria-valuenow="78" aria-valuemin="0"
+                        aria-valuemax="78">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO-LICENCIADO-FL PROMOO </p>
+            </div>
+            <div class="col-sm-9">
+                R$28.901,38
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-info" role="progressbar"
+                        style="width: 45%" aria-valuenow="45" aria-valuemin="0"
+                        aria-valuemax="45">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO FL PROMOO </p>
+            </div>
+            <div class="col-sm-9">
+                R$50.559,36
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-info" role="progressbar"
+                        style="width: 45%" aria-valuenow="45" aria-valuemin="0"
+                        aria-valuemax="45">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->        
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-warning me-2"></i> NACIONAL-LICENCIADO </p>
+            </div>
+            <div class="col-sm-9">
+                R$1.427.991,24
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-warning" role="progressbar"
+                        style="width: 78%" aria-valuenow="78" aria-valuemin="0"
+                        aria-valuemax="78">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> NACIONAL </p>
+            </div>
+            <div class="col-sm-9">
+                R$31.6818,79
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-purple" role="progressbar"
+                        style="width: 63%" aria-valuenow="63" aria-valuemin="0"
+                        aria-valuemax="63">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> IMPORTADO-NG </p>
+            </div>
+            <div class="col-sm-9">
+                R$116.680,77
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-purple" role="progressbar"
+                        style="width: 63%" aria-valuenow="63" aria-valuemin="0"
+                        aria-valuemax="63">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> LOJAS ZONA CRIATIVA </p>
+            </div>
+            <div class="col-sm-9">
+                R$919,16
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-info" role="progressbar"
+                        style="width: 45%" aria-valuenow="45" aria-valuemin="0"
+                        aria-valuemax="45">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->
+
+    </div> <!-- end card-body-->
+</div> <!-- end card-->
+</div> <!-- end Col -->
+
+<div class="col-xl-4">
+
+<div class="card">
+    <div class="card-body">
+
+        <h4 class="card-title mb-4">QTDE DE PEÇAS VENDIDAS POR DIVISÃO</h4>
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO-LICENCIADO </p>
+            </div>
+            <div class="col-sm-9">
+                72784
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-warning" role="progressbar"
+                        style="width: 78%" aria-valuenow="78" aria-valuemin="0"
+                        aria-valuemax="78">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-primary me-2"></i> IMPORTADO </p>
+            </div>
+
+            <div class="col-sm-9">
+                60215
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-warning" role="progressbar"
+                        style="width: 78%" aria-valuenow="78" aria-valuemin="0"
+                        aria-valuemax="78">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO-LICENCIADO-FL PROMOO </p>
+            </div>
+            <div class="col-sm-9">
+                1199
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-info" role="progressbar"
+                        style="width: 45%" aria-valuenow="45" aria-valuemin="0"
+                        aria-valuemax="45">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO FL PROMOO </p>
+            </div>
+            <div class="col-sm-9">
+                2638
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-info" role="progressbar"
+                        style="width: 45%" aria-valuenow="45" aria-valuemin="0"
+                        aria-valuemax="45">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->        
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-warning me-2"></i> NACIONAL-LICENCIADO </p>
+            </div>
+            <div class="col-sm-9">
+                43030
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-warning" role="progressbar"
+                        style="width: 78%" aria-valuenow="78" aria-valuemin="0"
+                        aria-valuemax="78">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> NACIONAL </p>
+            </div>
+            <div class="col-sm-9">
+                11013
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-purple" role="progressbar"
+                        style="width: 63%" aria-valuenow="63" aria-valuemin="0"
+                        aria-valuemax="63">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> IMPORTADO-NG </p>
+            </div>
+            <div class="col-sm-9">
+                6544
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-purple" role="progressbar"
+                        style="width: 63%" aria-valuenow="63" aria-valuemin="0"
+                        aria-valuemax="63">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->
+
+        <div class="row align-items-center g-0 mt-3">
+            <div class="col-sm-3">
+                <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> LOJAS ZONA CRIATIVA </p>
+            </div>
+            <div class="col-sm-9">
+                34
+                <div class="progress mt-1" style="height: 6px;">
+                    <div class="progress-bar progress-bar bg-info" role="progressbar"
+                        style="width: 45%" aria-valuenow="45" aria-valuemin="0"
+                        aria-valuemax="45">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row-->
+
+    </div> <!-- end card-body-->
+</div> <!-- end card-->
+</div> <!-- end Col -->
+    
+</div> <!-- end row-->
+
 @endsection
 @section('script')
        <!-- apexcharts -->

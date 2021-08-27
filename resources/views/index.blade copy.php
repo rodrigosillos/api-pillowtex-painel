@@ -64,7 +64,7 @@
                                     <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
                                     <td>
                                         <h6 class="font-size-15 mb-1 font-weight-normal">{{ $venda->agent_name }}</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> Brasil</p>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i> São Paulo</p>
                                     </td>
                                     <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R${{ number_format($venda->valor_venda, 2, '.', ',') }}</td>
                                 </tr>

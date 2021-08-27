@@ -1,7 +1,7 @@
 <?php
 
-include('call-api.php');
-include('connection-db.php');
+include('../call-api.php');
+include('../connection-db.php');
 
 $operationTypes = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / Substituição / Liquidição)
 
@@ -11,8 +11,8 @@ $invoiceFilial = 0;
 foreach($operationTypes as $operationType) {
 
     $dataListaMovimentacao = [
-        'datai' => '2021-07-24',
-        'dataf' => '2021-07-31',
+        'datai' => '2021-08-01',
+        'dataf' => '2021-08-24',
         '$format' => 'json',
         'tipo_operacao' => $operationType,
     ];
@@ -135,6 +135,7 @@ foreach($operationTypes as $operationType) {
                         'courtesy' => $resultConsultaMovimentacao['value'][0]['cortesia'],
                         'hidden' => 0,
                         'amount_withouttax' => $resultConsultaMovimentacao['value'][0]['total'],
+                        'payment_condition' => $resultConsultaMovimentacao['value'][0]['condicoes_pgto'],
                     ];
                 
                     $sql  = "INSERT INTO invoices (
@@ -158,7 +159,8 @@ foreach($operationTypes as $operationType) {
                                                     invoice,
                                                     courtesy,
                                                     hidden,
-                                                    amount_withouttax) VALUES (
+                                                    amount_withouttax,
+                                                    payment_condition) VALUES (
                                                                     :operation_code,
                                                                     :document,
                                                                     :ticket,
@@ -179,7 +181,8 @@ foreach($operationTypes as $operationType) {
                                                                     :invoice,
                                                                     :courtesy,
                                                                     :hidden,
-                                                                    :amount_withouttax)";
+                                                                    :amount_withouttax,
+                                                                    :payment_condition)";
             
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute($data);

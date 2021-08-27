@@ -1,10 +1,10 @@
 <?php
 
-include('connection-db.php');
+include('../connection-db.php');
 
 // $sql = "select operation_code, client_address, price_list from invoices where agent_id = '263'";
 // $sql = "select operation_code, client_address, price_list from invoices where operation_code in (535816, 535950, 535958, 535985, 536219, 537208, 537280, 538063, 538512, 539171, 539324, 539716, 540454, 540485, 540507, 540631, 540856, 541031, 541698, 541838, 542097)";
-$sql = "select operation_code, client_address, price_list from invoices where hidden = 0 and issue_date between '2021-01-01' and '2021-07-31'";
+$sql = "select operation_code, client_address, price_list from invoices where hidden = 0 and issue_date between '2021-08-01' and '2021-08-24'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();

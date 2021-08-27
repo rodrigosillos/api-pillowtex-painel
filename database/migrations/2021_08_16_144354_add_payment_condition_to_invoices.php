@@ -14,7 +14,7 @@ class AddPaymentConditionToInvoices extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->smallInteger('payment_condition');
+            $table->integer('payment_condition');
         });
     }
 

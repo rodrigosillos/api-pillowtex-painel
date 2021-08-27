@@ -3,7 +3,7 @@
 include('call-api.php');
 include('connection-db.php');
 
-$stmt = $pdo->prepare("select client_name, operation_code, operation_type, commission_amount from invoices where issue_date between '2021-07-01' and '2021-07-31'");
+$stmt = $pdo->prepare("select client_name, operation_code, operation_type, commission_amount from invoices where issue_date between '2021-08-01' and '2021-08-24'");
 // $stmt = $pdo->prepare("select client_name, operation_code, operation_type, commission_amount from invoices where agent_id in (232, 263, 261)");
 $stmt->execute();
 $movimentacoes = $stmt->fetchAll();

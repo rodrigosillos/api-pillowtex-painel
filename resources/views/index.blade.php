@@ -20,34 +20,10 @@
                                 <tr>
                                     <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
                                     <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">FAMA REPRESENTAO COMERCIAL EIRELI</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>INDAIATUBA</p>
-                                    </td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$51.589,48</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                    <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">ZONA CRIATIVA</h6>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">CAISA GIFT</h6>
                                         <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>SAO PAULO</p>
                                     </td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$39.898,40</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                    <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">GUSTAVO ANDRE GOBBO OBREGON DOS SANTOS</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>São Paulo</p>
-                                    </td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$19.652,39</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                    <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">EDUARDO DE ROSA KRAJUSKINAS REPRES...</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>SAO PAULO</p>
-                                    </td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$17.447,88</td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$84.527,05</td>
                                 </tr>
                                 <tr>
                                     <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
@@ -55,8 +31,32 @@
                                         <h6 class="font-size-15 mb-1 font-weight-normal">ATLANTA RIO TECIDOS E REPRESENTACOES LTDA</h6>
                                         <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>RIO DE JANEIRO</p>
                                     </td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$12.586,27</td>
-                                </tr>                                                                                                                    
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$76.725,11</td>
+                                </tr> 
+                                <tr>
+                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
+                                    <td>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">ZONA CRIATIVA - DANIELA GUIMARES</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>SAO PAULO</p>
+                                    </td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$42.020,50</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
+                                    <td>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">ZONA CRIATIVA</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>SAO PAULO</p>
+                                    </td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$34.576,03</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
+                                    <td>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">LEONARDO FELIPE DOS SANTOS SILVA 40120680831</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>GUARULHOS</p>
+                                    </td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$19.652,39</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div> <!-- enbd table-responsive-->
@@ -77,18 +77,26 @@
                                 <tr>
                                     <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
                                     <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">CAISA GIFT</h6>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">EDUARDO DE ROSA KRAJUSKINAS REPRES...</h6>
                                         <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>SAO PAULO</p>
                                     </td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$976.633,26</td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$1.460.832,82</td>
                                 </tr>
                                 <tr>
                                     <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
                                     <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">CAMENA - REPRESENTACAO COMERCIAL LTDA.</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>CURITIBA</p>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">CAISA GIFT</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>SAO PAULO</p>
                                     </td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$640.710,59</td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$543.458,16</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
+                                    <td>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">ERICO MARCHONI BIANCO</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>SAO PAULO</p>
+                                    </td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$467.293,87</td>
                                 </tr>
                                 <tr>
                                     <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
@@ -96,24 +104,16 @@
                                         <h6 class="font-size-15 mb-1 font-weight-normal">ZONA CRIATIVA</h6>
                                         <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>SAO PAULO</p>
                                     </td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$622.931,64</td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$455.212,69</td>
                                 </tr>
                                 <tr>
                                     <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
                                     <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">HORLEY FONTANELLA E CIA LTDA</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>BALNEARIO CAMBORIU</p>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">CAMENA - REPRESENTACAO COMERCIAL LTDA.</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>CURITIBA</p>
                                     </td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$403.735,61</td>
-                                </tr> 
-                                <tr>
-                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                    <td>
-                                        <h6 class="font-size-15 mb-1 font-weight-normal">FAMA REPRESENTAO COMERCIAL EIRELI</h6>
-                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>INDAIATUBA</p>
-                                    </td>
-                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$347.707,13</td>
-                                </tr>                                                                                                                            
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$312.546,24</td>
+                                </tr>                                                                                                                                                            
                             </tbody>
                         </table>
                     </div> <!-- enbd table-responsive-->
@@ -132,45 +132,45 @@
                         <table class="table table-borderless table-centered table-nowrap">
                             <tbody>
                             <tr>
-                                <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                <td>
-                                    <h6 class="font-size-15 mb-1 font-weight-normal">CAISA GIFT</h6>
-                                    <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>SAO PAULO</p>
-                                </td>
-                                <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$28.000,91</td>
-                            </tr>
-                            <tr>
-                                <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                <td>
-                                    <h6 class="font-size-15 mb-1 font-weight-normal">CAMENA - REPRESENTACAO COMERCIAL LTDA.</h6>
-                                    <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>CURITIBA</p>
-                                </td>
-                                <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$20.833,52</td>
-                            </tr>                            
-                            <tr>
-                                <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                <td>
-                                    <h6 class="font-size-15 mb-1 font-weight-normal">ZONA CRIATIVA</h6>
-                                    <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>SAO PAULO</p>
-                                </td>
-                                <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$18.857,68</td>
-                            </tr>
-                            <tr>
-                                <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                <td>
-                                    <h6 class="font-size-15 mb-1 font-weight-normal">FAMA REPRESENTAO COMERCIAL EIRELI</h6>
-                                    <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>INDAIATUBA</p>
-                                </td>
-                                <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$11.887,68</td>
-                            </tr>
-                            <tr>
-                                <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
-                                <td>
-                                    <h6 class="font-size-15 mb-1 font-weight-normal">HORLEY FONTANELLA E CIA LTDA</h6>
-                                    <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>BALNEARIO CAMBORIU</p>
-                                </td>
-                                <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$11.102,08</td>
-                            </tr>                                                                                                                                                              
+                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
+                                    <td>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">EDUARDO DE ROSA KRAJUSKINAS REPRES...</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>SAO PAULO</p>
+                                    </td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$12.561,02</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
+                                    <td>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">CAISA GIFT</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>SAO PAULO</p>
+                                    </td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$16.325,29</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
+                                    <td>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">ZONA CRIATIVA</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>SAO PAULO</p>
+                                    </td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$15.824,38</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
+                                    <td>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">CAMENA - REPRESENTACAO COMERCIAL LTDA.</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>CURITIBA</p>
+                                    </td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$9.827,71</td>
+                                </tr> 
+                                <tr>
+                                    <td style="width: 20px;"><img src="{{ URL::asset('assets/images/users/avatar-6.jpg')}}" class="avatar-xs rounded-circle " alt="..."></td>
+                                    <td>
+                                        <h6 class="font-size-15 mb-1 font-weight-normal">ERICO MARCHONI BIANCO</h6>
+                                        <p class="text-muted font-size-13 mb-0"><i class="mdi mdi-map-marker"></i>SAO PAULO</p>
+                                    </td>
+                                    <td class="text-muted font-weight-semibold text-right"><i class="icon-xs icon mr-2 text-success" data-feather="trending-up"></i>R$4.538,98</td>
+                                </tr>                                                                                                              
                         </tbody>
                     </table>
                 </div> <!-- enbd table-responsive-->
@@ -216,7 +216,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO-LICENCIADO </p>
             </div>
             <div class="col-sm-9">
-                R$3.476.035,58
+                R$2.273.198,77
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-warning" role="progressbar"
                         style="width: 78%" aria-valuenow="78" aria-valuemin="0"
@@ -232,7 +232,7 @@
             </div>
 
             <div class="col-sm-9">
-                R$1.892.188,44
+                R$872.732,78
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-warning" role="progressbar"
                         style="width: 78%" aria-valuenow="78" aria-valuemin="0"
@@ -247,7 +247,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO-LICENCIADO-FL PROMOO </p>
             </div>
             <div class="col-sm-9">
-                R$28.901,38
+                R$40.654,06
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-info" role="progressbar"
                         style="width: 45%" aria-valuenow="45" aria-valuemin="0"
@@ -262,7 +262,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO FL PROMOO </p>
             </div>
             <div class="col-sm-9">
-                R$50.559,36
+                R$1.043.855,53
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-info" role="progressbar"
                         style="width: 45%" aria-valuenow="45" aria-valuemin="0"
@@ -277,7 +277,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-warning me-2"></i> NACIONAL-LICENCIADO </p>
             </div>
             <div class="col-sm-9">
-                R$1.427.991,24
+                R$1.058.279,28
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-warning" role="progressbar"
                         style="width: 78%" aria-valuenow="78" aria-valuemin="0"
@@ -292,7 +292,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> NACIONAL </p>
             </div>
             <div class="col-sm-9">
-                R$31.6818,79
+                R$1.701.082,39
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-purple" role="progressbar"
                         style="width: 63%" aria-valuenow="63" aria-valuemin="0"
@@ -307,7 +307,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> IMPORTADO-NG </p>
             </div>
             <div class="col-sm-9">
-                R$116.680,77
+                R$105.631,80
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-purple" role="progressbar"
                         style="width: 63%" aria-valuenow="63" aria-valuemin="0"
@@ -317,7 +317,7 @@
             </div>
         </div> <!-- end row-->
 
-        <div class="row align-items-center g-0 mt-3">
+        <!-- <div class="row align-items-center g-0 mt-3">
             <div class="col-sm-3">
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> LOJAS ZONA CRIATIVA </p>
             </div>
@@ -330,7 +330,7 @@
                     </div>
                 </div>
             </div>
-        </div> <!-- end row-->
+        </div> end row -->
 
     </div> <!-- end card-body-->
 </div> <!-- end card-->
@@ -348,7 +348,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO-LICENCIADO </p>
             </div>
             <div class="col-sm-9">
-                72784
+                77916
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-warning" role="progressbar"
                         style="width: 78%" aria-valuenow="78" aria-valuemin="0"
@@ -364,7 +364,7 @@
             </div>
 
             <div class="col-sm-9">
-                60215
+                35024
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-warning" role="progressbar"
                         style="width: 78%" aria-valuenow="78" aria-valuemin="0"
@@ -379,7 +379,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO-LICENCIADO-FL PROMOO </p>
             </div>
             <div class="col-sm-9">
-                1199
+                3359
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-info" role="progressbar"
                         style="width: 45%" aria-valuenow="45" aria-valuemin="0"
@@ -394,7 +394,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-info me-2"></i> IMPORTADO FL PROMOO </p>
             </div>
             <div class="col-sm-9">
-                2638
+                108039
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-info" role="progressbar"
                         style="width: 45%" aria-valuenow="45" aria-valuemin="0"
@@ -409,7 +409,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-warning me-2"></i> NACIONAL-LICENCIADO </p>
             </div>
             <div class="col-sm-9">
-                43030
+                36086
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-warning" role="progressbar"
                         style="width: 78%" aria-valuenow="78" aria-valuemin="0"
@@ -424,7 +424,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> NACIONAL </p>
             </div>
             <div class="col-sm-9">
-                11013
+                68245
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-purple" role="progressbar"
                         style="width: 63%" aria-valuenow="63" aria-valuemin="0"
@@ -439,7 +439,7 @@
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> IMPORTADO-NG </p>
             </div>
             <div class="col-sm-9">
-                6544
+                6489
                 <div class="progress mt-1" style="height: 6px;">
                     <div class="progress-bar progress-bar bg-purple" role="progressbar"
                         style="width: 63%" aria-valuenow="63" aria-valuemin="0"
@@ -449,7 +449,7 @@
             </div>
         </div> <!-- end row-->
 
-        <div class="row align-items-center g-0 mt-3">
+        <!-- <div class="row align-items-center g-0 mt-3">
             <div class="col-sm-3">
                 <p class="text-truncate mt-1 mb-0"><i class="mdi mdi-circle-medium text-purple me-2"></i> LOJAS ZONA CRIATIVA </p>
             </div>
@@ -462,7 +462,7 @@
                     </div>
                 </div>
             </div>
-        </div> <!-- end row-->
+        </div> end row -->
 
     </div> <!-- end card-body-->
 </div> <!-- end card-->

@@ -4,7 +4,7 @@ include('../call-api.php');
 include('../connection-db.php');
 
 // $sql = "select operation_code, operation_type, client_address, price_list from invoices where agent_id = 263";
-$sql = "select operation_code, operation_type, client_address, price_list from invoices where issue_date between '2021-08-01' and '2021-08-24'";
+$sql = "select operation_code, operation_type, client_address, price_list from invoices where issue_date between '2021-08-30' and '2021-08-31'";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -51,7 +51,7 @@ foreach ($invoicesAgents as $invoice__) {
 
                 foreach($resultConsultaMovimentacao['value'][0]['produtos'] as $valueProduct) {
 
-                    print('cadastrando produto: ' . $operationCode . "\xA");
+                    print('cadastrando produto da venda: ' . $operationCode . "\xA");
 
                     $productDiscount = $valueProduct['desconto'];
                     $productPrice = $valueProduct['preco'];

@@ -1,9 +1,9 @@
 <?php
 
-include('call-api.php');
-include('connection-db.php');
+include('../call-api.php');
+include('../connection-db.php');
 
-$sql = "select operation_code, operation_type, commission_amount from invoices where issue_date between '2021-01-01' and '2021-07-31'";
+$sql = "select operation_code, operation_type, commission_amount from invoices where issue_date between '2021-09-01' and '2021-09-30'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoicesAgents = $stmt->fetchAll();

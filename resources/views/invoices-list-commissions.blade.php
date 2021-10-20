@@ -89,7 +89,7 @@
                             <tr class="bg-transparent">
                                 <th style="width: 24px;">
                                     <div class="custom-control custom-checkbox text-center">
-                                        <input type="checkbox" class="custom-control-input" id="invoicecheck">
+                                        <input type="checkbox" class="custom-control-input" id="invoicecheck" onclick="SelectAll()">
                                         <label class="custom-control-label" for="invoicecheck"></label>
                                     </div>
                                 </th>
@@ -219,6 +219,18 @@
 
             return URL;
         }
+        function SelectAll(){  
+            var ele=document.getElementsByName('invoice_check[]');  
+            for(var i=0; i<ele.length; i++){  
+                // if(ele[i].type=='checkbox')  
+                if(ele[i].checked==false) {
+                    ele[i].checked=true;
+                } else {
+                    ele[i].checked=false;
+                }
+                      
+            }  
+        }  
     </script>
     <script src="{{ URL::asset('assets/libs/datatables/datatables.min.js')}}"></script>
     <script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>

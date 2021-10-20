@@ -14,10 +14,11 @@ class AgentsController extends Controller
 
     public function get($output = 'view')
     {
-        $whereAgent = 'where user_profile_id = 3';
+        $whereAgent = 'where user_profile_id = 3 and regiao = 150490655';
         
         if($output == 'array')
-            $whereAgent = 'where agent_id in (select agent_id from invoices group by agent_id)';
+            // $whereAgent = 'where agent_id in (select agent_id from invoices group by agent_id)';
+            $whereAgent = 'where agent_id in (select i.agent_id from invoices i inner join users u on i.agent_id = u.agent_id where u.regiao = 150490655 group by i.agent_id)';
         
         $agents = DB::select(DB::raw("
             select * 

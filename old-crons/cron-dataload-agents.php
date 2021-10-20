@@ -1,7 +1,7 @@
 <?php
 
-include('call-api.php');
-include('connection-db.php');
+include('../call-api.php');
+include('../connection-db.php');
 
 $dataAgent = [
     '$format' => 'json',

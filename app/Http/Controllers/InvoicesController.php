@@ -93,13 +93,23 @@ class InvoicesController extends Controller
 
         if($userProfileId == 1) {
 
+            // $invoices = DB::select(DB::raw("
+            //     select * 
+            //     from invoices
+            //     where issue_date between '".$dateStart."' and '".$dateEnd."'
+            //     " . $whereSearchAgent . "
+            //     and hidden = 0"
+            // ));
+
             $invoices = DB::select(DB::raw("
-                select * 
-                from invoices
-                where issue_date between '".$dateStart."' and '".$dateEnd."'
+                select i.* 
+                from invoices i
+                inner join users u on i.agent_id = u.agent_id
+                where u.regiao = 150490655 and i.issue_date between '".$dateStart."' and '".$dateEnd."'
                 " . $whereSearchAgent . "
-                and hidden = 0"
+                and i.hidden = 0"
             ));
+
 
         } else {
 

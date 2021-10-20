@@ -3,7 +3,7 @@
 include('call-api.php');
 include('connection-db.php');
 
-$stmt = $pdo->prepare("select client_name, operation_code, operation_type, commission_amount from invoices where issue_date between '2021-08-30' and '2021-08-31'");
+$stmt = $pdo->prepare("select client_name, operation_code, operation_type, commission_amount from invoices where issue_date between '2021-09-01' and '2021-09-30'");
 // $stmt = $pdo->prepare("select client_name, operation_code, operation_type, commission_amount from invoices where agent_id in (232, 263, 261)");
 $stmt->execute();
 $movimentacoes = $stmt->fetchAll();
@@ -61,6 +61,8 @@ foreach ($movimentacoes as $movimentacao) {
             if($efetuado == 1 && $substituido == 0)
                 $valorComissao = (($movimentacaoComissao / 2) / $qtdLancamentos);
     
+            $clienteNome = substr($clienteNome, 0, 100);
+
             $data = [
                 'conta' => $jsonConsultaTitulos['value'][0]['conta'],
                 'numero_lancamento' => $jsonConsultaTitulos['value'][0]['lancamento'],

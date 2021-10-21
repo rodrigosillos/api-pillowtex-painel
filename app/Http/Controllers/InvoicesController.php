@@ -89,7 +89,7 @@ class InvoicesController extends Controller
         }
 
         if($searchAgent != 'all')
-            $whereSearchAgent = "and agent_id = " . $searchAgent;
+            $whereSearchAgent = "and i.agent_id = " . $searchAgent;
 
         if($userProfileId == 1) {
 

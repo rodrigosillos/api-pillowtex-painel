@@ -110,7 +110,6 @@ class InvoicesController extends Controller
                 and i.hidden = 0"
             ));
 
-
         } else {
 
             $invoices = DB::select(DB::raw("

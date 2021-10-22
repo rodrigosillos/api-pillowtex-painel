@@ -4,7 +4,7 @@ include('../connection-db.php');
 
 // $sql = "select operation_code, client_address, price_list from invoices where agent_id = '263'";
 // $sql = "select operation_code, client_address, price_list from invoices where operation_code in (535816, 535950, 535958, 535985, 536219, 537208, 537280, 538063, 538512, 539171, 539324, 539716, 540454, 540485, 540507, 540631, 540856, 541031, 541698, 541838, 542097)";
-$sql = "select operation_code, client_address, price_list from invoices where hidden = 0 and issue_date between '2021-09-01' and '2021-09-30'";
+$sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where hidden = 0 and issue_date between '2021-09-01' and '2021-09-30'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();
@@ -18,6 +18,10 @@ foreach ($invoices as $invoice) {
     $operationCode = $invoice['operation_code'];
     $clientAddress = $invoice['client_address'];
     $tableId = $invoice['price_list'];
+    $invoiceType = $invoice['invoice_type'];
+    $issueDate = $invoice['issue_date'];
+
+    $issueDate = date_create($issueDate);
 
     $commissionAmountTotal = 0;
 
@@ -76,12 +80,24 @@ foreach ($invoices as $invoice) {
         $commissionAmountTotal += $commissionAmount;
     }
 
+    $percentualFaturamento = 50;
+    $valorFaturamento = 0;
+
+    if ($invoiceType == 'ANTECIPADO' || $invoiceType == 'ANTECIPADO ZC')
+        $percentualFaturamento = 80;
+
+    if (date_format($issueDate, "m") == $lastMonth)
+        $valorFaturamento = ($percentualFaturamento / 100) * $commissionAmountTotal;
+
+    // print('codigo: ' . $valorFaturamento . "\xA");
+    
     $data = [
         'commission_amount' => $commissionAmountTotal,
+        'valor_faturamento' => $valorFaturamento,
         'operationCode' => $operationCode,
     ];
     
-    $sql = "update invoices SET commission_amount = :commission_amount where operation_code = :operationCode";
+    $sql = "update invoices SET commission_amount = :commission_amount, valor_faturamento = :valor_faturamento where operation_code = :operationCode";
     $stmt = $pdo->prepare($sql);
     $stmt->execute($data);
 

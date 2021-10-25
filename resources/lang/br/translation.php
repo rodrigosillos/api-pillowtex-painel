@@ -153,6 +153,7 @@ return [
   "Liquidacao"=> "Liquidação",
   "Substituicao"=> "Substituição",
   "Substituicao_Titulo"=> "SUBSTITUIÇÃO",
+  "Devolucao"=> "DEVOLUÇÃO",
 ];
 
 ?>

@@ -36,6 +36,10 @@ Route::get('/liquidacao/{agent?}', 'DebtorsController@getLiquidacao');
 //substituicao
 Route::get('/substituicao/{agent?}', 'DebtorsController@getSubstituicao');
 
+//devolucao
+Route::get('/devolucao/{search_agent?}', 'DevolucaoController@getDevolucao');
+Route::post('/consulta-devolucao', 'DevolucaoController@getDevolucao');
+
 //Language Translation
 Route::get('index/{locale}', 'HomeController@lang');
 

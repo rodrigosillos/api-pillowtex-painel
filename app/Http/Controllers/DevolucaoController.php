@@ -2,79 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-use App\Http\Controllers\AgentsController;
-
-use GuzzleHttp\Client;
 use Carbon\Carbon;
 
-use App;
-use PDF;
-
-class InvoicesController extends Controller
+class DevolucaoController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function connection($method, $param)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getDevolucao(Request $request)
     {
-        $client = new Client();
-
-        $user = "pillowtex_adm";
-        $pass = "ABusters#94";
-        $environment = 'http://177.85.33.76:6017/api/millenium/';
-        $type = 'GET';
-
-        $response = $client->request($type, $environment.$method.$param, [
-            'auth' => [$user, $pass]
-        ]);
-
-        return json_decode($response->getBody()->getContents(), true);
-    }
-
-    public function index(Request $request)
-    {           
-        $previousMonth = date("m", strtotime("first day of previous month"));
-        $previousDayMonth = date("d", strtotime("last day of previous month"));
-        $currentYear = date("Y"); 
-        
-        $collection = collect([
-            'invoices' => [
-                'data' => [],
-                'agents' => (new AgentsController)->get('array'),
-                'totalizador' => [
-                    'valor_venda' => 0,
-                    'valor_comissao' => 0,
-                    'valor_faturamento' => 0,
-                ],
-            ],
-            'data_form' => [
-                'date_start' => '01/' . $previousMonth . '/' . $currentYear,
-                'date_end' => $previousDayMonth . '/' . $previousMonth . '/' . $currentYear,
-                'search_agent' => '',
-            ]
-        ]);
-        
-        return view('invoices-list-commissions', $collection);
-    }
-
-    public function get(Request $request)
-    {
-        $dateStart = Carbon::createFromFormat('d/m/Y', $request->dateStart)->format('Y-m-d');
-        $dateEnd = Carbon::createFromFormat('d/m/Y', $request->dateEnd)->format('Y-m-d');
-
-        $dateStartForm = $request->dateStart;
-        $dateEndForm = $request->dateEnd;
-        $searchAgent = $request->search_agent;
-
+        // dd($request);
         $lastMonth = date("m", strtotime("first day of previous month"));
         $lastDayMonth = date("d", strtotime("last day of previous month"));
+        $currentYear = date("Y"); 
+        
+        $dateStart = "01/".$lastMonth."/".$currentYear;
+        $dateEnd = $lastDayMonth."/".$lastMonth."/".$currentYear;
+
+        if(isset($request->dateStart)) {
+            $dateStart = $request->dateStart;
+            $dateEnd = $request->dateEnd;
+        }
+
+        $searchAgent = $request->search_agent;
+
+        $dateStartQuery = Carbon::createFromFormat('d/m/Y', $dateStart)->format('Y-m-d');
+        $dateEndQuery = Carbon::createFromFormat('d/m/Y', $dateEnd)->format('Y-m-d');
+
+        $dateStartForm = $dateStart;
+        $dateEndForm = $dateEnd;
 
         $whereSearchAgent = '';
 
@@ -93,22 +62,14 @@ class InvoicesController extends Controller
 
         if($userProfileId == 1) {
 
-            // $invoices = DB::select(DB::raw("
-            //     select * 
-            //     from invoices
-            //     where issue_date between '".$dateStart."' and '".$dateEnd."'
-            //     " . $whereSearchAgent . "
-            //     and hidden = 0"
-            // ));
-
             $invoices = DB::select(DB::raw("
                 select i.* 
                 from invoices i
                 inner join users u on i.agent_id = u.agent_id
-                where u.regiao = 150490655 and i.issue_date between '".$dateStart."' and '".$dateEnd."'
+                where u.regiao = 150490655 and i.issue_date between '".$dateStartQuery."' and '".$dateEndQuery."'
                 " . $whereSearchAgent . "
-                and i.hidden = 0
-                and i.operation_type = 'S'"
+                and i.hidden = 0 
+                and i.operation_type = 'E'"
             ));
 
         } else {
@@ -116,10 +77,10 @@ class InvoicesController extends Controller
             $invoices = DB::select(DB::raw("
                 select * 
                 from invoices
-                where issue_date between '".$dateStart."' and '".$dateEnd."'
+                where issue_date between '".$dateStartQuery."' and '".$dateEndQuery."'
                 and agent_id = ".$agentId."
                 and hidden = 0
-                and i.operation_type = 'S'"
+                and i.operation_type = 'E'"
             ));
         }
 
@@ -143,7 +104,7 @@ class InvoicesController extends Controller
             $commissionResult['data'][$invoiceKey]['representante_nome'] = Str::limit($invoice->agent_name, 25, $end='...');
             $commissionResult['data'][$invoiceKey]['tabela_preco'] = $invoice->price_list == 216 ? 187 : 214;
             $commissionResult['data'][$invoiceKey]['total'] = $invoice->amount_withouttax;
-            $commissionResult['data'][$invoiceKey]['tipo_operacao'] = $invoice->operation_type == 'E' ? 'Dedução' : 'S';
+            $commissionResult['data'][$invoiceKey]['tipo_operacao'] ='Dedução';
             $commissionResult['data'][$invoiceKey]['nota_fiscal'] = $invoice->invoice;
             $commissionResult['data'][$invoiceKey]['pedido_codigo'] = $invoice->order_code;
             $commissionResult['data'][$invoiceKey]['pedido_tipo'] = $invoice->invoice_type;
@@ -179,7 +140,7 @@ class InvoicesController extends Controller
 
         }
 
-        return view('invoices-list-commissions', 
+        return view('lista-devolucao', 
         [
             'invoices' => $commissionResult,
             'data_form' => [
@@ -188,6 +149,5 @@ class InvoicesController extends Controller
                 'search_agent' => $searchAgent,
             ]
         ]);
-
     }
 }

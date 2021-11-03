@@ -25,9 +25,9 @@ function CallAPI($method, $url, $data = false)
 
     // Optional Authentication:
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    curl_setopt($curl, CURLOPT_USERPWD, "pillowtex_adm:ABusters#94");
+    curl_setopt($curl, CURLOPT_USERPWD, "Pillowtex:P!Ll0w.021!");
 
-    curl_setopt($curl, CURLOPT_URL, 'http://177.85.33.76:6017/api/millenium/' . $url);
+    curl_setopt($curl, CURLOPT_URL, 'http://pillowtex.ip.odhserver.com:6017/api/millenium/' . $url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
     $result = curl_exec($curl);

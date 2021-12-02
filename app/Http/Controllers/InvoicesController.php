@@ -22,21 +22,21 @@ class InvoicesController extends Controller
         $this->middleware('auth');
     }
 
-    public function connection($method, $param)
-    {
-        $client = new Client();
+    // public function connection($method, $param)
+    // {
+    //     $client = new Client();
 
-        $user = "pillowtex_adm";
-        $pass = "ABusters#94";
-        $environment = 'http://177.85.33.76:6017/api/millenium/';
-        $type = 'GET';
+    //     $user = "Pillowtex";
+    //     $pass = "P!Ll0w.021!";
+    //     $environment = 'http://pillowtex.ip.odhserver.com:6017/api/millenium/';
+    //     $type = 'GET';
 
-        $response = $client->request($type, $environment.$method.$param, [
-            'auth' => [$user, $pass]
-        ]);
+    //     $response = $client->request($type, $environment.$method.$param, [
+    //         'auth' => [$user, $pass]
+    //     ]);
 
-        return json_decode($response->getBody()->getContents(), true);
-    }
+    //     return json_decode($response->getBody()->getContents(), true);
+    // }
 
     public function index(Request $request)
     {           
@@ -89,26 +89,19 @@ class InvoicesController extends Controller
         }
 
         if($searchAgent != 'all')
-            $whereSearchAgent = "and i.agent_id = " . $searchAgent;
+            $whereSearchAgent = "and agent_id = " . $searchAgent;
 
         if($userProfileId == 1) {
 
-            // $invoices = DB::select(DB::raw("
-            //     select * 
-            //     from invoices
-            //     where issue_date between '".$dateStart."' and '".$dateEnd."'
-            //     " . $whereSearchAgent . "
-            //     and hidden = 0"
-            // ));
+            // representante_regiao = 150490655 and
 
             $invoices = DB::select(DB::raw("
-                select i.* 
-                from invoices i
-                inner join users u on i.agent_id = u.agent_id
-                where u.regiao = 150490655 and i.issue_date between '".$dateStart."' and '".$dateEnd."'
+                select * 
+                from invoices
+                where issue_date between '".$dateStart."' and '".$dateEnd."'
                 " . $whereSearchAgent . "
-                and i.hidden = 0
-                and i.operation_type = 'S'"
+                and hidden = 0
+                and operation_type = 'S'"
             ));
 
         } else {
@@ -119,7 +112,7 @@ class InvoicesController extends Controller
                 where issue_date between '".$dateStart."' and '".$dateEnd."'
                 and agent_id = ".$agentId."
                 and hidden = 0
-                and i.operation_type = 'S'"
+                and operation_type = 'S'"
             ));
         }
 

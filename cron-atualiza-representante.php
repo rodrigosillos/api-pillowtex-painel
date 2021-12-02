@@ -5,15 +5,14 @@ include('connection-db.php');
 
 //$countItem = 0;
 
-$sql = "select agent_id from invoices i where operation_type = 'S' and hidden = 0 and issue_date between '2021-10-01' and '2021-10-31' group by agent_id";
+$sql = "select agent_id from invoices i where operation_type = 'S' and hidden = 0 and issue_date between '2021-11-01' and '2021-11-30' group by agent_id";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $representantes = $stmt->fetchAll();
 
 foreach ($representantes as $representante__) {
 
-    // $representante_id = $representante__["agent_id"];
-    $representante_id = 3427;
+    $representante_id = $representante__["agent_id"];
 
     $consultaRepresentante = [
         'representante' => $representante_id,
@@ -32,7 +31,7 @@ foreach ($representantes as $representante__) {
             'representante_id' => $representante_id,
         ];
         
-        $sql = "update users SET regiao = :regiao where agent_id = :representante_id";
+        $sql = "update users SET regiao = :regiao where agent_id2 = :representante_id";
         $stmt = $pdo->prepare($sql);
         $stmt->execute($data);
     

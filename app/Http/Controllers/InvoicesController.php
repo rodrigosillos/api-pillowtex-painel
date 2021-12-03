@@ -57,7 +57,7 @@ class InvoicesController extends Controller
             'data_form' => [
                 'date_start' => '01/' . $previousMonth . '/' . $currentYear,
                 'date_end' => $previousDayMonth . '/' . $previousMonth . '/' . $currentYear,
-                'search_agent' => '',
+                'search_agent' => -1,
             ]
         ]);
         

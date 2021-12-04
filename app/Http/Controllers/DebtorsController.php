@@ -26,12 +26,13 @@ class DebtorsController extends Controller
 
         $whereAgent = '';
         $totalCommission = 0;
+        $totalLiquidacao = 0;
 
         if($agentSearchAdmin != 'all')
-            $whereAgent = "representante = ".$agentSearchAdmin." and";
+            $whereAgent = "representante_codigo = ".$agentSearchAdmin." and";
 
         if($userProfileId == 3)
-            $whereAgent = "representante = ".$agentId." and";
+            $whereAgent = "representante_codigo = ".$agentId." and";
 
         $lastMonth = date("m", strtotime("first day of previous month"));
         $lastDayMonth = date("d", strtotime("last day of previous month"));
@@ -79,6 +80,7 @@ class DebtorsController extends Controller
             $commission = $debtor->valor_comissao;
 
             $totalCommission += $commission;
+            $totalLiquidacao += $amount;
 
             $resultDebtors['data'][$debtorKey]['cliente'] = Str::limit($client_name, 25, $end='...');
             $resultDebtors['data'][$debtorKey]['lancamento'] = $lancamento;
@@ -101,6 +103,7 @@ class DebtorsController extends Controller
         [
             'debtors' => $resultDebtors,
             'total_commission' => $totalCommission,
+            'total_liquidacao' => $totalLiquidacao,
         ]);
     }
 

@@ -57,16 +57,18 @@ class DevolucaoController extends Controller
             $userProfileId = $users->user_profile_id;
         }
 
-        if($searchAgent != 'all')
-            $whereSearchAgent = "and i.agent_id = " . $searchAgent;
+        if($searchAgent != -1)
+            $whereSearchAgent = "and i.agent_code = " . $searchAgent;
 
         if($userProfileId == 1) {
+
+            // u.regiao = 150490655 and
 
             $invoices = DB::select(DB::raw("
                 select i.* 
                 from invoices i
                 inner join users u on i.agent_id = u.agent_id
-                where u.regiao = 150490655 and i.issue_date between '".$dateStartQuery."' and '".$dateEndQuery."'
+                where i.issue_date between '".$dateStartQuery."' and '".$dateEndQuery."'
                 " . $whereSearchAgent . "
                 and i.hidden = 0 
                 and i.operation_type = 'E'"

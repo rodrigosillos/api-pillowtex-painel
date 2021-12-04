@@ -87,11 +87,13 @@
                 <table class="table mb-0">
                     <thead>
                         <tr>
-                            <th>Valor Liquidação</th>
+                            <th>Liquidação</th>
+                            <th>Valor Comissão</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <td>R$ {{ number_format($total_liquidacao, 2, ',', '.') }}</td>
                             <td>R$ {{ number_format($total_commission, 2, ',', '.') }}</td>
                         </tr>
                     </tbody>

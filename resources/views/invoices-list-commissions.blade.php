@@ -24,7 +24,7 @@
                     <select name="search_agent" class="form-control">
                         <option value="-1">SELECIONE ...</option>
                         @foreach($invoices['agents'] as $key => $agent)
-                            <option value="{{ $agent['agent_id2'] }}" @if ( $data_form['search_agent'] == $agent['agent_id2'] ) selected @endif>{{ $agent['name'] }}</option>
+                            <option value="{{ $agent['agent_code'] }}" @if ( $data_form['search_agent'] == $agent['agent_code'] ) selected @endif>{{ $agent['name'] }}</option>
                         @endforeach
                     </select>
                 </div>

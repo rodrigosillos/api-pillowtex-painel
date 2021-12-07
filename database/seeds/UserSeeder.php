@@ -51,16 +51,6 @@ class UserSeeder extends Seeder
                 'address_state' => 'SP',
             ],
             [
-                'name' => 'Sulivan Mariotti',
-                'email' => 'sulivan.mariotti@pillowtex.com.br',
-                'email_verified_at' => null,
-                'password' => '$2y$10$6i2mDhx4blyVk7VKpXOSi.JKvUEXQ/7El9jecGEcYXIjOnkQnoKmq',
-                'remember_token' => null,
-                'user_profile_id' => 1,
-                'address_city' => 'SAO PAULO',
-                'address_state' => 'SP',
-            ],
-            [
                 'name' => 'Melissa Gomes',
                 'email' => 'melissa.gomes@zonacriativa.com.br',
                 'email_verified_at' => null,

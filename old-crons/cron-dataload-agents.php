@@ -38,6 +38,7 @@ foreach ($resultAgent['value'] as $valueAgent) {
                 'remember_token' => null,
                 'user_profile_id' => 3,
                 'agent_id' => $valueAgent['representante'],
+                'agent_id2' => $valueAgent['representante'],
                 'agent_code' => $valueAgent['codigo'],
                 'address_city' => $address_city,
                 'address_state' => $address_state,
@@ -51,6 +52,7 @@ foreach ($resultAgent['value'] as $valueAgent) {
                                         remember_token,
                                         user_profile_id, 
                                         agent_id, 
+                                        agent_id2, 
                                         agent_code,
                                         address_city,
                                         address_state) VALUES (
@@ -61,6 +63,7 @@ foreach ($resultAgent['value'] as $valueAgent) {
                                                     :remember_token,
                                                     :user_profile_id,
                                                     :agent_id,
+                                                    :agent_id2,
                                                     :agent_code,
                                                     :address_city,
                                                     :address_state)";

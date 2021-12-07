@@ -24,6 +24,7 @@ Route::get('/representantes', 'AgentsController@get');
 Route::get('/configurar-comissoes', 'SettingsController@index');
 Route::get('/consulta-produtos/{operation_code}', 'InvoiceDetailsController@get');
 Route::post('/export-excel', 'ExcelController@exportExcel')->name('export-excel');
+Route::post('/export-excel-liquidacao', 'ExcelLiquidacaoController@exportExcel')->name('export-excel');
 Route::post('/configurar-comissoes-salvar', 'SettingsController@set');
 
 //faturamento

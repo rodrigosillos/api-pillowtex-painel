@@ -49,7 +49,7 @@ foreach ($invoices as $invoice) {
         if($tableId == 4)
             $tableCode = 214;
     
-        if($tableId == 216)
+        if($tableId == 104)
             $tableCode = 187;
     
         $sql = "select percentage from commission_settings where product_division = :product_division and price_list = :price_list";
@@ -65,7 +65,8 @@ foreach ($invoices as $invoice) {
             $commissionPercentage = $resultSettings['percentage'];
     
         if($tableCode == 187 && $clientAddress != 'SP' && $discount < 5)
-            $commissionPercentage = 4;
+            // $commissionPercentage = 4;
+            $commissionPercentage = 3;
     
         if($tableCode == 214 && $discount > 5)
             $commissionPercentage = ($commissionPercentage / 2);

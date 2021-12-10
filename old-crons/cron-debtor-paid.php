@@ -291,7 +291,7 @@ foreach ($invoicesAgents as $invoice__) {
                 if($tableId == 4)
                     $tableCode = 214;
             
-                if($tableId == 216)
+                if($tableId == 104)
                     $tableCode = 187;
     
                 $divisionKey = searchForId($divisionCode, $tableCode, $divisionDb);
@@ -300,7 +300,8 @@ foreach ($invoicesAgents as $invoice__) {
                     $commissionPercentage = $divisionDb[$divisionKey]['percentage'];
     
                 if($tableCode == 187 && $clientAddress != 'SP' && $productDiscount < 5)
-                    $commissionPercentage = 4;
+                    // $commissionPercentage = 4;
+                    $commissionPercentage = 3;
                 
                 // commission amout
                 $commissionAmount = floor(($productPrice * $productQty) * $commissionPercentage) / 100;

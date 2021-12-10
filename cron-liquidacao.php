@@ -17,7 +17,7 @@ foreach ($movimentacoes as $movimentacao) {
 
     $lancamentosJaExiste = $pdo->query('select id from lancamentos where origem = '.$operacaoCodigo)->fetchColumn();
 
-    if($lancamentosJaExiste == 0) {
+    // if($lancamentosJaExiste == 0) {
 
         $parametros = [
             'tipo_operacao' => $operacaoTipo,
@@ -119,11 +119,11 @@ foreach ($movimentacoes as $movimentacao) {
                                                                         :cliente_nome,
                                                                         :obs)");
     
-            $stmt->execute($data);
+            // $stmt->execute($data);
     
         }
 
-    }
+    // }
 
 }
 

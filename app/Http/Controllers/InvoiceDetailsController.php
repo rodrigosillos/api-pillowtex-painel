@@ -53,7 +53,7 @@ class InvoiceDetailsController extends Controller
         if($tableId == 4)
             $tableCode = 214;
 
-        if($tableId == 216)
+        if($tableId == 104)
             $tableCode = 187;
 
         $commissionPercentage = 8;
@@ -95,7 +95,8 @@ class InvoiceDetailsController extends Controller
 
             if($tableCode == 187) {
                 if($clientAddress != 'SP' && $productDiscount < 5)
-                    $commissionPercentage = 4;
+                    // $commissionPercentage = 4;
+                    $commissionPercentage = 3;
             }
 
             if($invoiceType == 'PEDIDOS ESPECIAIS') {

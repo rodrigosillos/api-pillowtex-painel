@@ -110,7 +110,8 @@
                                 <th>Nome Cliente</th>
                                 <th>Tipo Pedido</th>
                                 <th>Cod Pedido</th>
-                                <th>Valor Total</th>
+                                <th>Valor Total Produto</th>
+                                <!--<th>Valor Produto</th>-->
                                 <th>Valor Comissão</th>
                                 <th>Faturamento</th>
                                 <th>Representante</th>

@@ -42,7 +42,7 @@ class InvoicesController extends Controller
     {           
         $previousMonth = date("m", strtotime("first day of previous month"));
         $previousDayMonth = date("d", strtotime("last day of previous month"));
-        $currentYear = date("Y"); 
+        $currentYear = date("Y", strtotime("-1 year"));
         
         $collection = collect([
             'invoices' => [

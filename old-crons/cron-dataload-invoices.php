@@ -11,8 +11,8 @@ $invoiceFilial = 0;
 foreach($operationTypes as $operationType) {
 
     $dataListaMovimentacao = [
-        'datai' => '2021-11-01',
-        'dataf' => '2021-11-30',
+        'datai' => '2021-12-01',
+        'dataf' => '2021-12-31',
         '$format' => 'json',
         'tipo_operacao' => $operationType,
     ];

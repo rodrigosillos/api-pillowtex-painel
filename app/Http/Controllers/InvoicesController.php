@@ -147,7 +147,7 @@ class InvoicesController extends Controller
             if($invoice->operation_type == 'S')
                 $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'success';
 
-            $commissionResult['data'][$invoiceKey]['fautramento_50'] = 0;
+            $commissionResult['data'][$invoiceKey]['faturamento_50'] = 0;
 
             $percentualFaturamento = 50;
 

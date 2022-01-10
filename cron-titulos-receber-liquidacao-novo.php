@@ -3,82 +3,53 @@
 include('call-api-novo.php');
 include('connection-db.php');
 
-$parametros = [
-    'datai' => '2021-01-01',
-    'dataf' => '2021-12-29',
-    'efetuado' => 'true',
-    'substituido' => 'false',
-    'gerador' => 'text',
-    'representante' => '5',
-    '$format' => 'json',
-    '$dateformat' => 'iso',
-];
+$sql = "select numero_documento from lancamentos where data_emissao between '2021-10-01' and '2021-12-31'"; // where numero_documento = '112895/A'
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$lancamentos = $stmt->fetchAll();
 
-$consultaLancamentos = CallAPI('GET', 'titulos_receber/consultartitulosreceber', $parametros);
-$jsonConsultaLancamentos = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $consultaLancamentos), true);
+foreach ($lancamentos as $lancamento__) {
 
-$qtdLancamentos = $jsonConsultaLancamentos['odata.count'];
-
-foreach ($jsonConsultaLancamentos['value'] as $lancamentoValue) {
-
-    $data = [
-        'conta' => $lancamentoValue['pconta'],
-        'numero_lancamento' => $lancamentoValue['lancamento'],
-        'numero_documento' => $lancamentoValue['n_documento'],
-        'data_emissao' => $lancamentoValue['data_emissao'],
-        'data_vencimento' => $$lancamentoValue['data_vencimento'],
-        'data_pagamento' => $lancamentoValue['data_pagamento'],
-        'efetuado' => $lancamentoValue['efetuado'],
-        'substituido' => false,
-        'valor_inicial' => $lancamentoValue['valor_inicial'],
-        'valor_pago' => is_null($lancamentoValue['valor_pago']) ? 0 : $lancamentoValue['valor_pago'],
-        'valor_comissao' => 0,
-        'filial' => $lancamentoValue['filial'],
-        // 'origem' => $jsonConsultaTitulos['value'][0]['origem'],
-        // 'tipo' => $jsonConsultaTitulos['value'][0]['tipo'],
-        'representante' => $lancamentoValue['filial'],
-        'cliente_nome' => $lancamentoValue['nome_representante_cliente'],
-        'obs' => $lancamentoValue['obs'],
+    $parametros = [
+        'n_documento' => $lancamento__["numero_documento"],
+        '$format' => 'json',
+        '$dateformat' => 'iso',
     ];
 
-    $stmt = $pdo->prepare("INSERT INTO lancamentos (
-                                            conta,
-                                            numero_lancamento,
-                                            numero_documento,
-                                            data_emissao,
-                                            data_vencimento,
-                                            data_pagamento, 
-                                            efetuado, 
-                                            substituido, 
-                                            valor_inicial,
-                                            valor_pago,
-                                            valor_comissao,
-                                            filial,
-                                            origem,
-                                            tipo,
-                                            representante,
-                                            cliente_nome,
-                                            obs) VALUES (
-                                                        :conta,
-                                                        :numero_lancamento,
-                                                        :numero_documento,
-                                                        :data_emissao,
-                                                        :data_vencimento,
-                                                        :data_pagamento,
-                                                        :efetuado,
-                                                        :substituido,
-                                                        :valor_inicial,
-                                                        :valor_pago,
-                                                        :valor_comissao,
-                                                        :filial,
-                                                        :origem,
-                                                        :tipo,
-                                                        :representante,
-                                                        :cliente_nome,
-                                                        :obs)");
+    $consultaLancamentos = CallAPI('GET', 'titulos_receber/consultartitulosreceber', $parametros);
+    $jsonConsultaLancamentos = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $consultaLancamentos), true);
+    
+    if($jsonConsultaLancamentos['odata.count'] <> 0) {
 
-    // $stmt->execute($data);
+        $efetuado = 1;
+
+        if($jsonConsultaLancamentos['value'][0]['efetuado'] == '' || $jsonConsultaLancamentos['value'][0]['efetuado'] == false) {
+            $efetuado = 0;
+        }
+    
+        $dataPagamento = null;
+    
+        if($efetuado == 1){
+            $dataPagamento = date_create($jsonConsultaLancamentos['value'][0]['data_pagamento']);
+            $dataPagamento = date_format($dataPagamento, "Y-m-d H:i:s");
+        }
+    
+        $parametrosUpdate = [
+            'efetuado' => $efetuado,
+            'data_pagamento' => $dataPagamento,
+            'numero_documento' => $lancamento__["numero_documento"],
+        ];
+        
+        $sql = "update lancamentos SET efetuado = :efetuado, data_pagamento = :data_pagamento where numero_documento = :numero_documento";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($parametrosUpdate);
+    
+        print($lancamento__["numero_documento"] . "\xA");
+    } else {
+        print('- - - nao encontrado: ' . $lancamento__["numero_documento"] . "\xA");
+    }
+
 
 }
 
-// $pdo = null;
+$pdo = null;

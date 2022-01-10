@@ -3,8 +3,9 @@
 include('call-api.php');
 include('connection-db.php');
 
-$stmt = $pdo->prepare("select client_name, operation_code, operation_type, commission_amount from invoices where issue_date between '2021-11-01' and '2021-11-30'");
+// $stmt = $pdo->prepare("select client_name, operation_code, operation_type, commission_amount from invoices where issue_date between '2021-12-01' and '2021-12-30'");
 // $stmt = $pdo->prepare("select client_name, operation_code, operation_type, commission_amount from invoices where agent_id in (232, 263, 261)");
+$stmt = $pdo->prepare("select client_name, operation_code, operation_type, commission_amount from invoices where agent_id = 6 and hidden = 0 and issue_date between '2021-12-01' and '2021-12-31'");
 $stmt->execute();
 $movimentacoes = $stmt->fetchAll();
 
@@ -50,16 +51,21 @@ foreach ($movimentacoes as $movimentacao) {
     
             $dataVencimento = date_create($jsonConsultaTitulos['value'][0]['data_vencimento']);
             $dataVencimento = date_format($dataVencimento, "Y-m-d H:i:s");
-    
-            $dataPagamento = date_create($jsonConsultaTitulos['value'][0]['data_pagamento']);
-            $dataPagamento = date_format($dataPagamento, "Y-m-d H:i:s");
+
+            $dataPagamento = null;
+
+            // print($jsonConsultaTitulos['value'][0]['data_pagamento'] . "\xA");
     
             $efetuado = $jsonConsultaTitulos['value'][0]['efetuado'] == false ? 0 : 1;
             $substituido = $jsonConsultaTitulos['value'][0]['substituido'] == false ? 0 : 1;
     
             $valorComissao = 0;
-            if($efetuado == 1 && $substituido == 0)
+            if($efetuado == 1 && $substituido == 0) {
                 $valorComissao = (($movimentacaoComissao / 2) / $qtdLancamentos);
+
+                $dataPagamento = date_create($jsonConsultaTitulos['value'][0]['data_pagamento']);
+                $dataPagamento = date_format($dataPagamento, "Y-m-d H:i:s");
+            }                
     
             $clienteNome = substr($clienteNome, 0, 100);
 

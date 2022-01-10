@@ -30,13 +30,14 @@ class DebtorsController extends Controller
 
         if($agentSearchAdmin != 'all')
             $whereAgent = "representante_codigo = ".$agentSearchAdmin." and";
+            // $whereAgent = "representante_codigo in (139, 6) and";
 
         if($userProfileId == 3)
             $whereAgent = "representante_codigo = ".$agentId." and";
 
         $lastMonth = date("m", strtotime("first day of previous month"));
         $lastDayMonth = date("d", strtotime("last day of previous month"));
-        $currentYear = date("Y"); 
+        $currentYear = date("Y", strtotime("-1 year")); 
 
         // $debtors = DB::select(DB::raw(" 
         //     select i.client_name, d.book_entry, d.operation_code, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission

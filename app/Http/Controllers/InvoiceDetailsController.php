@@ -88,11 +88,6 @@ class InvoiceDetailsController extends Controller
             if(isset($commissionSettings[0]))
                 $commissionPercentage = $commissionSettings[0]->percentage;
 
-            if($tableCode == 214) {
-                if($productDiscount > 5)
-                    $commissionAmount = ($commissionAmount / 2);
-            }
-
             if($tableCode == 187) {
                 if($clientAddress != 'SP' && $productDiscount < 5)
                     // $commissionPercentage = 4;
@@ -107,6 +102,9 @@ class InvoiceDetailsController extends Controller
             
             // commission amout
             $commissionAmount = floor(($productPrice * $productQty) * $commissionPercentage) / 100;
+
+            if($tableCode == 214 && $productDiscount > 5)
+                $commissionAmount = ($commissionAmount / 2);
 
             // product data add
             $commissionResult['produtos'][$invoiceProductKey]['pedido'] = $orderId;

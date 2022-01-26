@@ -21,6 +21,8 @@ foreach ($resultAgent['value'] as $valueAgent) {
 
         if ($stmt->rowCount() == 0) {
 
+            print('cadastrando representante: ' . $valueAgent['e_mail'] . "\xA");
+
             $address_city = $valueAgent['cidade'];
             $address_state = $valueAgent['estado'];
 

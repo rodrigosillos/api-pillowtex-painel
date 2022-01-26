@@ -5,7 +5,7 @@ include('connection-db.php');
 
 //$countItem = 0;
 
-$sql = "select agent_id from invoices i where operation_type = 'S' and hidden = 0 and issue_date between '2021-11-01' and '2021-11-30' group by agent_id";
+$sql = "select agent_id from invoices i where operation_type = 'S' and hidden = 0 and issue_date between '2021-12-01' and '2021-12-30' group by agent_id";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $representantes = $stmt->fetchAll();

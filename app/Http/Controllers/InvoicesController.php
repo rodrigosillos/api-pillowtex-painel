@@ -154,8 +154,8 @@ class InvoicesController extends Controller
             if ($invoice->invoice_type == 'ANTECIPADO' || $invoice->invoice_type == 'ANTECIPADO ZC')
                 $percentualFaturamento = 80;
 
-            if (date_format($issueDate, "m") == $lastMonth)
-                $commissionResult['data'][$invoiceKey]['faturamento_50'] = ($percentualFaturamento / 100) * $commissionResult['data'][$invoiceKey]['comissao_total'];
+            // if (date_format($issueDate, "m") == $lastMonth)
+            $commissionResult['data'][$invoiceKey]['faturamento_50'] = ($percentualFaturamento / 100) * $commissionResult['data'][$invoiceKey]['comissao_total'];
 
             if($invoice->operation_type != 'E') {
                 $commissionResult['totalizador']['valor_comissao'] += $commissionResult['data'][$invoiceKey]['comissao_total'];

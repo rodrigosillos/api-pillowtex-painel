@@ -147,7 +147,7 @@ include('../connection-db.php');
                                                                                 :representante,
                                                                                 :cliente_nome,
                                                                                 :obs)");
-                    // $stmt->execute($data);
+                    $stmt->execute($data);
 
                 }
 

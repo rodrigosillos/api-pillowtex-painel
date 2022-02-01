@@ -4,7 +4,7 @@ include('../connection-db.php');
 
 // $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where agent_id = '263'";
 // $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where operation_code in (5714)";
-$sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where hidden = 0 and issue_date between '2022-01-27' and '2022-01-31'";
+$sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where agent_id = 5 and hidden = 0 and issue_date between '2021-10-01' and '2021-10-31'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();

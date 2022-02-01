@@ -37,7 +37,7 @@ class DebtorsController extends Controller
 
         $lastMonth = date("m", strtotime("first day of previous month"));
         $lastDayMonth = date("d", strtotime("last day of previous month"));
-        $currentYear = date("Y", strtotime("-1 year")); 
+        $currentYear = date("Y"); 
 
         // $debtors = DB::select(DB::raw(" 
         //     select i.client_name, d.book_entry, d.operation_code, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission

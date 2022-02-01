@@ -3,7 +3,7 @@
 // Method: POST, PUT, GET etc
 // Data: array("param" => "value") ==> index.php?param=value
 
-function CallAPI($method, $url, $data = false)
+function CallAPI($method, $url, $server = 'novo', $data = false)
 {
     $curl = curl_init();
 
@@ -27,7 +27,11 @@ function CallAPI($method, $url, $data = false)
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
     curl_setopt($curl, CURLOPT_USERPWD, "Pillowtex:P!Ll0w.021!");
 
-    curl_setopt($curl, CURLOPT_URL, 'http://pillowtex.ip.odhserver.com:6017/api/millenium!pillow/' . $url);
+    $serverFix = '';
+    if($server == 'novo')
+        $serverFix = '!pillow';
+
+    curl_setopt($curl, CURLOPT_URL, 'http://pillowtex.ip.odhserver.com:6017/api/millenium'. $serverFix . '/' . $url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
     $result = curl_exec($curl);

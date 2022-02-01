@@ -125,7 +125,7 @@ foreach ($movimentacoes as $movimentacao) {
                                                                         :cliente_nome,
                                                                         :obs)");
     
-            // $stmt->execute($data);
+            $stmt->execute($data);
     
         }
 

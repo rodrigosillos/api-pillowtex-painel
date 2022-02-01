@@ -4,7 +4,7 @@ include('../call-api.php');
 include('../connection-db.php');
 
 // $sql = "select operation_code, operation_type, client_address, price_list from invoices where agent_id = 263";
-$sql = "select operation_code, operation_type, client_address, price_list from invoices where issue_date between '2021-12-01' and '2021-12-31'";
+$sql = "select operation_code, operation_type, client_address, price_list from invoices where issue_date between '2022-01-27' and '2022-01-31'";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();

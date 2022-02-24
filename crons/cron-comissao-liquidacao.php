@@ -1,10 +1,10 @@
 <?php
 
-include('../call-api.php');
-include('../connection-db.php');
+include('call-api.php');
+include('connection-db.php');
 
 // $sql = "select operation_code, operation_type, commission_amount, invoice_type from invoices where operation_code in (543791)";
-$sql = "select operation_code, operation_type, commission_amount, invoice_type from invoices where agent_id = 5 and issue_date between '2021-10-01' and '2021-10-31'";
+$sql = "select operation_code, operation_type, commission_amount, invoice_type from invoices where agent_id in (select representante from lancamentos where valor_comissao = '0.00' group by representante)";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();

@@ -3,8 +3,8 @@
 include('connection-db.php');
 
 // $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where agent_id = '263'";
-// $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where operation_code in (14887)";
-$sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where hidden = 0 and issue_date between '2022-01-01' and '2022-01-31'";
+// $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where operation_code in (7065)";
+$sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where hidden = 0 and issue_date between '2022-02-16' and '2022-02-20'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();
@@ -69,11 +69,12 @@ foreach ($invoices as $invoice) {
     
         // if($tableCode == 214 && $discount > 5)
         //     $commissionPercentage = ($commissionPercentage / 2);
-        
-        // print('codigo: ' . $productCode . ' - produto: ' . $productName . ' - divisao: ' . $divisionCode . ' - tabela: ' . $tableCode . ' - percentual: ' . $commissionPercentage . "\xA");
-        
 
-        $commissionAmount = ($priceApplied * $quantity) * $commissionPercentage / 100;
+        $priceProduct = $priceApplied == 0 ? $price : $priceApplied;
+
+        $commissionAmount = ($priceProduct * $quantity) * $commissionPercentage / 100;
+
+        print($productCode . ' - ' . $priceProduct . "\xA");
     
         if($tableCode == 214 && $discount > 5)
             $commissionAmount = ($commissionAmount / 2);
@@ -89,16 +90,12 @@ foreach ($invoices as $invoice) {
 
     // if (date_format($issueDate, "m") == $lastMonth)
     $valorFaturamento = ($percentualFaturamento / 100) * $commissionAmountTotal;
-
-    // print('faturamento: ' . $valorFaturamento . "\xA");
     
     $data = [
         'commission_amount' => $commissionAmountTotal,
         'valor_faturamento' => $valorFaturamento,
         'operationCode' => $operationCode,
     ];
-
-    // print_r($data);
     
     $sql = "update invoices set commission_amount = :commission_amount, valor_faturamento = :valor_faturamento where operation_code = :operationCode";
     $stmt = $pdo->prepare($sql);

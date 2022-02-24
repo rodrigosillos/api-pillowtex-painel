@@ -1,10 +1,11 @@
 <?php
 
-include('../call-api.php');
-include('../connection-db.php');
+include('call-api.php');
+include('connection-db.php');
 
 // $sql = "select operation_code, operation_type, client_address, price_list from invoices where agent_id = 263";
-$sql = "select operation_code, operation_type, client_address, price_list from invoices where issue_date between '2022-01-27' and '2022-01-31'";
+$sql = "select operation_code, operation_type, client_address, price_list from invoices where issue_date between '2022-02-16' and '2022-02-20'";
+// $sql = "select operation_code, operation_type, client_address, price_list from invoices where operation_code in ('19219', '19228', '19229', '19239', '19242', '19243', '19262')";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -17,7 +18,7 @@ foreach ($invoicesAgents as $invoice__) {
     $clientAddress = $invoice__["client_address"];
     $tableId = $invoice__["price_list"];
 
-    print('- - - consultando venda: ' . $operationCode . "\xA");
+    // print('- - - consultando venda: ' . $operationCode . "\xA");
 
     $sql = "select id from invoices_product WHERE operation_code = :operation_code";
     $stmt = $pdo->prepare($sql);
@@ -51,7 +52,7 @@ foreach ($invoicesAgents as $invoice__) {
 
                 foreach($resultConsultaMovimentacao['value'][0]['produtos'] as $valueProduct) {
 
-                    print('cadastrando produto da venda: ' . $operationCode . "\xA");
+                    // print('cadastrando produto da venda: ' . $operationCode . "\xA");
 
                     $productDiscount = $valueProduct['desconto'];
                     $productPrice = $valueProduct['preco'];
@@ -64,6 +65,8 @@ foreach ($invoicesAgents as $invoice__) {
                         'produto' => $valueProduct['produto'],
                         '$format' => 'json',
                     ];
+
+                    print('produto ID: ' . $valueProduct['produto'] . "\xA");
             
                     $responseConsultaProdutoCodigo = CallAPI('GET', 'produtos/consultacodigo', $dataConsultaProduto);
                     $resultConsultaProdutoCodigo = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaProdutoCodigo), true);
@@ -89,6 +92,8 @@ foreach ($invoicesAgents as $invoice__) {
                         'divisao' => $divisionId,
                         '$format' => 'json',
                     ];
+
+                    print('divisao ID: ' . $divisionId . "\xA");
             
                     $responseConsultaDivisao = CallAPI('GET', 'divisoes/consulta', $dataConsultaDivisao);
                     $resultConsultaDivisao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $responseConsultaDivisao), true);

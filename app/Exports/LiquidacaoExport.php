@@ -21,7 +21,7 @@ class LiquidacaoExport implements FromCollection, WithHeadings, WithMapping
     */
     public function collection()
     {
-        return Liquidacao::whereIn('origem', $this->invoice_check)->get();
+        return Liquidacao::whereIn('id', $this->invoice_check)->get();
     }
 
     public function headings(): array

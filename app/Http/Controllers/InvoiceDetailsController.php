@@ -121,7 +121,7 @@ class InvoiceDetailsController extends Controller
 
         }
 
-        return view('invoices-detail-commissions', 
+        return view('produtos-lista', 
         [
             'products' => $commissionResult,
         ]);

@@ -1,7 +1,7 @@
 <?php
 
-include('../call-api.php');
-include('../connection-db.php');
+include('call-api.php');
+include('connection-db.php');
 
 $operationTypes = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / Substituição / Liquidição)
 
@@ -11,8 +11,8 @@ $invoiceFilial = 0;
 foreach($operationTypes as $operationType) {
 
     $dataListaMovimentacao = [
-        'datai' => '2022-01-27',
-        'dataf' => '2022-01-31',
+        'datai' => '2022-02-16',
+        'dataf' => '2022-02-20',
         '$format' => 'json',
         'tipo_operacao' => $operationType,
     ];

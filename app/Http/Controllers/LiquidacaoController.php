@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class DebtorsController extends Controller
+class LiquidacaoController extends Controller
 {
     public function __construct()
     {
@@ -48,6 +48,7 @@ class DebtorsController extends Controller
 
         $debtors = DB::select(DB::raw(" 
             select 
+                id,
                 cliente_nome, 
                 numero_lancamento,
                 origem, 
@@ -64,6 +65,7 @@ class DebtorsController extends Controller
 
         foreach($debtors as $debtorKey => $debtor) {
 
+            $tituloID = $debtor->id;
             $client_name = $debtor->cliente_nome;
             $lancamento = $debtor->numero_lancamento;
             $operationCode = $debtor->origem;
@@ -83,6 +85,7 @@ class DebtorsController extends Controller
             $totalCommission += $commission;
             $totalLiquidacao += $amount;
 
+            $resultDebtors['data'][$debtorKey]['id'] = $tituloID;
             $resultDebtors['data'][$debtorKey]['cliente'] = Str::limit($client_name, 25, $end='...');
             $resultDebtors['data'][$debtorKey]['lancamento'] = $lancamento;
             $resultDebtors['data'][$debtorKey]['codigo_operacao'] = $operationCode;

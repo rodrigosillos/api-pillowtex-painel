@@ -25,6 +25,7 @@ Route::get('/configurar-comissoes', 'SettingsController@index');
 Route::get('/consulta-produtos/{operation_code}', 'InvoiceDetailsController@get');
 Route::post('/export-excel', 'ExcelController@exportExcel')->name('export-excel');
 Route::post('/export-excel-liquidacao', 'ExcelLiquidacaoController@exportExcel')->name('export-excel');
+Route::post('/export-excel-produtos', 'ExcelProdutosController@exportExcel')->name('export-excel');
 Route::post('/configurar-comissoes-salvar', 'SettingsController@set');
 
 //faturamento
@@ -32,10 +33,10 @@ Route::get('/faturamento', 'InvoicesController@index');
 Route::post('/consulta-faturamento', 'InvoicesController@get');
 
 //liquidacao
-Route::get('/liquidacao/{agent?}', 'DebtorsController@getLiquidacao');
+Route::get('/liquidacao/{agent?}', 'LiquidacaoController@getLiquidacao');
 
 //substituicao
-Route::get('/substituicao/{agent?}', 'DebtorsController@getSubstituicao');
+Route::get('/substituicao/{agent?}', 'LiquidacaoController@getSubstituicao');
 
 //devolucao
 Route::get('/devolucao/{search_agent?}', 'DevolucaoController@getDevolucao');

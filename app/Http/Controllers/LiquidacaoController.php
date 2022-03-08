@@ -35,7 +35,8 @@ class LiquidacaoController extends Controller
         if($userProfileId == 3)
             $whereAgent = "representante_codigo = ".$agentId." and";
 
-        $lastMonth = date("m", strtotime("first day of previous month"));
+        $lastMonth = 01;
+        // $lastMonth = date("m", strtotime("first day of previous month"));
         $lastDayMonth = date("d", strtotime("last day of previous month"));
         $currentYear = date("Y"); 
 

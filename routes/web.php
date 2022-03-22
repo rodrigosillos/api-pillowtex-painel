@@ -29,8 +29,8 @@ Route::post('/export-excel-produtos', 'ExcelProdutosController@exportExcel')->na
 Route::post('/configurar-comissoes-salvar', 'SettingsController@set');
 
 //faturamento
-Route::get('/faturamento', 'InvoicesController@index');
-Route::post('/consulta-faturamento', 'InvoicesController@get');
+Route::get('/faturamento', 'FaturamentoController@index');
+Route::post('/consulta-faturamento', 'FaturamentoController@get');
 
 //liquidacao
 Route::get('/liquidacao/{agent?}', 'LiquidacaoController@getLiquidacao');

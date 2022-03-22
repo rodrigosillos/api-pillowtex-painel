@@ -20,3 +20,4 @@ erro no metodo (movimentacao/consulta): operacao: 19239
 erro no metodo (movimentacao/consulta): operacao: 19242
 erro no metodo (movimentacao/consulta): operacao: 19243
 erro no metodo (movimentacao/consulta): operacao: 19262
+erro no metodo (movimentacao/consulta): operacao: 62130

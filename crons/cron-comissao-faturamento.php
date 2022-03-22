@@ -3,8 +3,8 @@
 include('connection-db.php');
 
 // $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where agent_id = '263'";
-// $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where operation_code in (7065)";
-$sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where hidden = 0 and issue_date between '2022-02-23' and '2022-02-28'";
+$sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where operation_code in (42045)";
+// $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where hidden = 0 and issue_date between '2022-03-01' and '2022-03-18'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();
@@ -74,7 +74,7 @@ foreach ($invoices as $invoice) {
 
         $commissionAmount = ($priceProduct * $quantity) * $commissionPercentage / 100;
 
-        print($productCode . ' - ' . $priceProduct . "\xA");
+        // print($divisionCode . ' - ' . $tableCode . "\xA");
     
         if($tableCode == 214 && $discount > 5)
             $commissionAmount = ($commissionAmount / 2);

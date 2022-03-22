@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use App;
 use PDF;
 
-class InvoicesController extends Controller
+class FaturamentoController extends Controller
 {
     public function __construct()
     {

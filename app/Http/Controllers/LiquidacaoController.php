@@ -35,9 +35,10 @@ class LiquidacaoController extends Controller
         if($userProfileId == 3)
             $whereAgent = "representante_codigo = ".$agentId." and";
 
-        $lastMonth = 01;
+        $lastMonth = '01';
         // $lastMonth = date("m", strtotime("first day of previous month"));
-        $lastDayMonth = date("d", strtotime("last day of previous month"));
+        // $lastDayMonth = date("d", strtotime("last day of previous month"));
+        $lastDayMonth = '31';
         $currentYear = date("Y"); 
 
         // $debtors = DB::select(DB::raw(" 
@@ -63,6 +64,22 @@ class LiquidacaoController extends Controller
             from lancamentos
             where ".$whereAgent." substituido = 0 and baixa = 0 and data_pagamento between '".$currentYear."-".$lastMonth."-01' and '".$currentYear."-".$lastMonth."-".$lastDayMonth."'"
         ));
+
+        // dd(" 
+        // select 
+        //     id,
+        //     cliente_nome, 
+        //     numero_lancamento,
+        //     origem, 
+        //     numero_documento,
+        //     data_vencimento, 
+        //     data_pagamento, 
+        //     efetuado, 
+        //     substituido, 
+        //     valor_inicial, 
+        //     valor_comissao
+        // from lancamentos
+        // where ".$whereAgent." substituido = 0 and baixa = 0 and data_pagamento between '".$currentYear."-".$lastMonth."-01' and '".$currentYear."-".$lastMonth."-".$lastDayMonth."'");
 
         foreach($debtors as $debtorKey => $debtor) {
 

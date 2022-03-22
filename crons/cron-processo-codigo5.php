@@ -1,6 +1,6 @@
 <?php
 
-include('../connection-db.php');
+include('connection-db.php');
 
 $sql = "select operation_code, document from invoices where invoice = ''";
 $stmt = $pdo->prepare($sql);

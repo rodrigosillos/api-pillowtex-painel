@@ -62,7 +62,7 @@ class FaturamentoController extends Controller
             ]
         ]);
         
-        return view('invoices-list-commissions', $collection);
+        return view('faturamento', $collection);
     }
 
     public function get(Request $request)
@@ -173,7 +173,7 @@ class FaturamentoController extends Controller
 
         }
 
-        return view('invoices-list-commissions', 
+        return view('faturamento', 
         [
             'invoices' => $commissionResult,
             'data_form' => [

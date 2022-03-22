@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
 
-class InvoiceDetailsController extends Controller
+class ProdutosController extends Controller
 {
     public function __construct()
     {
@@ -17,9 +17,10 @@ class InvoiceDetailsController extends Controller
     {
         $client = new Client();
 
-        $user = "pillowtex_adm";
-        $pass = "ABusters#94";
-        $environment = 'http://177.85.33.76:6017/api/millenium/';
+        $user = "Pillowtex";
+        $pass = "P!Ll0w.021!";
+        // $environment = 'http://177.85.33.76:6017/api/millenium/';
+        $environment = 'http://pillowtex.ip.odhserver.com:6017/api/millenium';
         $type = 'GET';
 
         $response = $client->request($type, $environment.$method.$param, [
@@ -60,6 +61,11 @@ class InvoiceDetailsController extends Controller
         $commissionAmount = 0;
         $commissionResult = [
             'produtos' => [],
+            'totalizador' => [
+                'total_pecas' => 0,
+                'valor_comissao' => 0,
+                'valor_total' => 0,
+            ],
         ];
         
         // products
@@ -119,9 +125,13 @@ class InvoiceDetailsController extends Controller
             $commissionResult['produtos'][$invoiceProductKey]['produto_comissao_percentual'] = sprintf("%.2f%%", $commissionPercentage);
             $commissionResult['produtos'][$invoiceProductKey]['produto_divisao'] = $divisionDescription;
 
+            $commissionResult['totalizador']['total_pecas'] += $productQty;
+            $commissionResult['totalizador']['valor_comissao'] += $commissionAmount;
+            $commissionResult['totalizador']['valor_total'] += ($productPrice * $productQty);
+
         }
 
-        return view('produtos-lista', 
+        return view('produtos', 
         [
             'products' => $commissionResult,
         ]);

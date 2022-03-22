@@ -102,6 +102,22 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Total de Peças</th>
+                            <th>Total Comissão</th>
+                            <th>Valor Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ $products['totalizador']['total_pecas'] }}</td>
+                            <td>R${{ number_format($products['totalizador']['valor_comissao'], 2, ',', '.') }}</td>
+                            <td>R${{ number_format($products['totalizador']['valor_total'], 2, ',', '.') }}</td>
+                        </tr>
+                    </tbody>
+                    </table>
                 </div>
             </div>
         </div>

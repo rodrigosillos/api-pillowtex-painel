@@ -10,14 +10,17 @@ include('connection-db.php');
 
 // foreach ($lancamentos as $lancamento__) {
 
-$count = 0;
-
 $parametros = [
     'efetuado' => 'true',
     'substituido' => 'false',
     // 'representante' => 5,
     '$format' => 'json',
     '$dateformat' => 'iso',
+    'tipo' => 'R',
+    'protestado' => 'false',
+    'gerador' => 'C',
+    'dataip' => '2022-02-01',
+    'datafp' => '2022-02-28',
 ];
 
 $consultaLancamentos = CallAPI('GET', 'titulos_receber/consulta_receber_recebidos', 'novo', $parametros);
@@ -27,94 +30,131 @@ if($jsonConsultaLancamentos['odata.count'] > 0) {
 
     foreach ($jsonConsultaLancamentos['value'] as $lancamentoValue) {
 
-        $sql = "select efetuado, data_pagamento from lancamentos where numero_lancamento = :numero_lancamento and numero_documento = :numero_documento";
+        $sql = "select id from titulos_receber where lancamento = :lancamento and n_documento = :n_documento and cod = :cod";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':numero_lancamento', $lancamentoValue['lancamento'], PDO::PARAM_STR);
-        $stmt->bindParam(':numero_documento', $lancamentoValue['n_documento'], PDO::PARAM_STR);
+        $stmt->bindParam(':lancamento', $lancamentoValue['lancamento'], PDO::PARAM_INT);
+        $stmt->bindParam(':n_documento', $lancamentoValue['n_documento'], PDO::PARAM_STR);
+        $stmt->bindParam(':cod', $lancamentoValue['cod'], PDO::PARAM_INT);
         $stmt->execute();
         $lancamento = $stmt->fetch(\PDO::FETCH_ASSOC);
     
         if ($stmt->rowCount() == 0) {
 
-            print($count++ . "\xA");
+            print($lancamentoValue['n_documento'] . "\xA");
             
             $dataEmissao = date_create($lancamentoValue['data_emissao']);
             $dataEmissao = date_format($dataEmissao, "Y-m-d H:i:s");
 
             $dataVencimento = date_create($lancamentoValue['data_vencimento']);
             $dataVencimento = date_format($dataVencimento, "Y-m-d H:i:s");
-
+            doc
             $dataPagamento = date_create($lancamentoValue['data_pagamento']);
             $dataPagamento = date_format($dataPagamento, "Y-m-d H:i:s");
 
-            $efetuado = $lancamentoValue['efetuado'] == false ? 0 : 1;
-            $substituido = $lancamentoValue['substituido'] == false ? 0 : 1;
-
-            $devolucao = 0;
-            $movimentacaoComissao = 0;
-            $clienteNome = '';
-            $representanteCodigo = 0;
-            $valorComissao = 0;
-
             $data = [
-                'conta' => is_null($lancamentoValue['pconta']) ? '' : $lancamentoValue['pconta'],
-                'numero_lancamento' => $lancamentoValue['lancamento'],
-                'numero_documento' => $lancamentoValue['n_documento'],
+                'lancamento' => $lancamentoValue['lancamento'],
+                'n_documento' => $lancamentoValue['n_documento'],
                 'data_emissao' => $dataEmissao,
                 'data_vencimento' => $dataVencimento,
                 'data_pagamento' => $dataPagamento,
-                'efetuado' => $efetuado,
-                'substituido' => $substituido,
                 'valor_inicial' => $lancamentoValue['valor_inicial'],
-                'valor_pago' => is_null($lancamentoValue['valor_pago']) ? 0 : $lancamentoValue['valor_pago'],
-                'valor_comissao' => $valorComissao,
+                'acres_decres' => $lancamentoValue['acres_decres'],
+                'valor_pago' => $lancamentoValue['valor_pago'],
+                'obs' => $lancamentoValue['obs'],
                 'filial' => $lancamentoValue['filial'],
+                'pconta' => $lancamentoValue['pconta'],
+                'efetuado' => $lancamentoValue['efetuado'] == false ? 0 : 1,
+                'cod' => $lancamentoValue['cod'],
+                'banco_titulo' => $lancamentoValue['banco_titulo'],
+                'agencia' => $lancamentoValue['agencia'],
+                'c_c' => $lancamentoValue['c_c'],
+                'prorrogado' => $lancamentoValue['prorrogado'] == false ? 0 : 1,
+                'devolvido' => $lancamentoValue['devolvido'] == false ? 0 : 1,
+                'cartorio' => $lancamentoValue['cartorio'] == false ? 0 : 1,
+                'protesto' => $lancamentoValue['protesto'] == false ? 0 : 1,
+                'tit_banco' => $lancamentoValue['tit_banco'],
+                'carteira' => $lancamentoValue['carteira'],
+                'desc_tipo_pgto' => $lancamentoValue['desc_tipo_pgto'],
+                'desc_pconta' => $lancamentoValue['desc_pconta'],
+                'desc_gerador' => $lancamentoValue['desc_gerador'],
+                'banco' => $lancamentoValue['banco'],
+                'gerador' => $lancamentoValue['gerador'],
+                'substituido' => $lancamentoValue['substituido'] == false ? 0 : 1,
                 'origem' => $lancamentoValue['origem'],
                 'tipo' => $lancamentoValue['tipo'],
+                'representante_pedido' => $lancamentoValue['representante_pedido'],
                 'representante' => $lancamentoValue['representante'],
-                'representante_codigo' => $representanteCodigo,
-                'cliente_nome' => $clienteNome,
-                'obs' => $lancamentoValue['obs'],
-                'devolucao' => $devolucao,
+                'representante_cliente' => $lancamentoValue['representante_cliente'],
+                'representante_movimento' => $lancamentoValue['representante_movimento'],
             ];
             
-            $stmt = $pdo->prepare("INSERT INTO lancamentos (conta,
-                                                            numero_lancamento,
-                                                            numero_documento,
-                                                            data_emissao,
-                                                            data_vencimento,
-                                                            data_pagamento, 
-                                                            efetuado, 
-                                                            substituido, 
-                                                            valor_inicial,
-                                                            valor_pago,
-                                                            valor_comissao,
-                                                            filial,
-                                                            origem,
-                                                            tipo,
-                                                            representante,
-                                                            representante_codigo,
-                                                            cliente_nome,
-                                                            obs,
-                                                            devolucao) VALUES (:conta,
-                                                                                :numero_lancamento,
-                                                                                :numero_documento,
-                                                                                :data_emissao,
-                                                                                :data_vencimento,
-                                                                                :data_pagamento,
-                                                                                :efetuado,
-                                                                                :substituido,
-                                                                                :valor_inicial,
-                                                                                :valor_pago,
-                                                                                :valor_comissao,
-                                                                                :filial,
-                                                                                :origem,
-                                                                                :tipo,
-                                                                                :representante,
-                                                                                :representante_codigo,
-                                                                                :cliente_nome,
-                                                                                :obs,
-                                                                                :devolucao)");
+            $stmt = $pdo->prepare("INSERT INTO titulos_receber (lancamento,
+                                                                n_documento,
+                                                                data_emissao,
+                                                                data_vencimento,
+                                                                data_pagamento,
+                                                                valor_inicial,
+                                                                acres_decres,
+                                                                valor_pago,
+                                                                obs,
+                                                                filial,
+                                                                pconta,
+                                                                efetuado,
+                                                                cod,
+                                                                banco_titulo,
+                                                                agencia,
+                                                                c_c,
+                                                                prorrogado,
+                                                                devolvido,
+                                                                cartorio,
+                                                                protesto,
+                                                                tit_banco,
+                                                                carteira,
+                                                                desc_tipo_pgto,
+                                                                desc_pconta,
+                                                                desc_gerador,
+                                                                banco,
+                                                                gerador,
+                                                                substituido,
+                                                                origem,
+                                                                tipo,
+                                                                representante_pedido,
+                                                                representante,
+                                                                representante_cliente,
+                                                                representante_movimento) VALUES (:lancamento,
+                                                                                                :n_documento,
+                                                                                                :data_emissao,
+                                                                                                :data_vencimento,
+                                                                                                :data_pagamento,
+                                                                                                :valor_inicial,
+                                                                                                :acres_decres,
+                                                                                                :valor_pago,
+                                                                                                :obs,
+                                                                                                :filial,
+                                                                                                :pconta,
+                                                                                                :efetuado,
+                                                                                                :cod,
+                                                                                                :banco_titulo,
+                                                                                                :agencia,
+                                                                                                :c_c,
+                                                                                                :prorrogado,
+                                                                                                :devolvido,
+                                                                                                :cartorio,
+                                                                                                :protesto,
+                                                                                                :tit_banco,
+                                                                                                :carteira,
+                                                                                                :desc_tipo_pgto,
+                                                                                                :desc_pconta,
+                                                                                                :desc_gerador,
+                                                                                                :banco,
+                                                                                                :gerador,
+                                                                                                :substituido,
+                                                                                                :origem,
+                                                                                                :tipo,
+                                                                                                :representante_pedido,
+                                                                                                :representante,
+                                                                                                :representante_cliente,
+                                                                                                :representante_movimento)");
             $stmt->execute($data);
 
         }

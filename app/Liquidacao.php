@@ -9,6 +9,6 @@ class Liquidacao extends Model
 {
     use HasFactory;
 
-    protected $table = 'lancamentos';
+    protected $table = 'titulos_receber';
     protected $guarded = array();
 }

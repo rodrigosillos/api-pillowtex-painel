@@ -29,64 +29,40 @@ class LiquidacaoController extends Controller
         $totalLiquidacao = 0;
 
         if($agentSearchAdmin != 'all')
-            $whereAgent = "representante_codigo = ".$agentSearchAdmin." and";
-            // $whereAgent = "representante_codigo in (139, 6) and";
+            $whereAgent = "representante_pedido like '%".$agentSearchAdmin."%' and";
 
         if($userProfileId == 3)
-            $whereAgent = "representante_codigo = ".$agentId." and";
+            $whereAgent = "representante_pedido like '%".$agentId."%' and";
 
         $lastMonth = date("m", strtotime("first day of previous month"));
-        // $lastDayMonth = date("d", strtotime("last day of previous month"));
-        $lastDayMonth = '31';
+        $lastDayMonth = date("d", strtotime("last day of previous month"));
+        // $lastDayMonth = '31';
         $currentYear = date("Y"); 
-
-        // $debtors = DB::select(DB::raw(" 
-        //     select i.client_name, d.book_entry, d.operation_code, d.document, d.due_date, d.paid_date, d.effected, d.substituted, d.amount, d.commission
-        //     from debtors d 
-        //     inner join invoices i on d.operation_code = i.operation_code
-        //     where ".$whereAgent." d.substituted = 0 and d.low_payment = 0 and d.paid_date between '2021-".$lastMonth."-01' and '2021-".$lastMonth."-".$lastDayMonth."'"
-        // ));
 
         $debtors = DB::select(DB::raw(" 
             select 
                 id,
                 cliente_nome, 
-                numero_lancamento,
+                lancamento,
                 origem, 
-                numero_documento,
+                n_documento,
                 data_vencimento, 
                 data_pagamento, 
                 efetuado, 
                 substituido, 
                 valor_inicial, 
                 valor_comissao
-            from lancamentos
+            from titulos_receber
             where ".$whereAgent." substituido = 0 and baixa = 0 and data_pagamento between '".$currentYear."-".$lastMonth."-01' and '".$currentYear."-".$lastMonth."-".$lastDayMonth."'"
         ));
-
-        // dd(" 
-        // select 
-        //     id,
-        //     cliente_nome, 
-        //     numero_lancamento,
-        //     origem, 
-        //     numero_documento,
-        //     data_vencimento, 
-        //     data_pagamento, 
-        //     efetuado, 
-        //     substituido, 
-        //     valor_inicial, 
-        //     valor_comissao
-        // from lancamentos
-        // where ".$whereAgent." substituido = 0 and baixa = 0 and data_pagamento between '".$currentYear."-".$lastMonth."-01' and '".$currentYear."-".$lastMonth."-".$lastDayMonth."'");
 
         foreach($debtors as $debtorKey => $debtor) {
 
             $tituloID = $debtor->id;
             $client_name = $debtor->cliente_nome;
-            $lancamento = $debtor->numero_lancamento;
+            $lancamento = $debtor->lancamento;
             $operationCode = $debtor->origem;
-            $document = $debtor->numero_documento;
+            $document = $debtor->n_documento;
             $dueDate = date_create($debtor->data_vencimento);
             
             $paidDate = $debtor->data_pagamento;

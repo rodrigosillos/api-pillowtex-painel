@@ -44,7 +44,7 @@ class LiquidacaoExport implements FromCollection, WithHeadings, WithMapping
         
         return [
             $liquidacao->cliente_nome,
-            $liquidacao->numero_documento,
+            $liquidacao->n_documento,
             $liquidacao->origem,
             date_format($dataVencimento, "d/m/Y"),
             date_format($dataPagamento, "d/m/Y"),

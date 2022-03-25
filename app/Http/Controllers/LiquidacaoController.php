@@ -96,7 +96,7 @@ class LiquidacaoController extends Controller
 
         }
 
-        return view('invoices-debtors', 
+        return view('liquidacao', 
         [
             'debtors' => $resultDebtors,
             'total_commission' => $totalCommission,

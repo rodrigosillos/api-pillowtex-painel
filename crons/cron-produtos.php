@@ -4,8 +4,8 @@ include('call-api.php');
 include('connection-db.php');
 
 // $sql = "select operation_code, operation_type, client_address, price_list from invoices where agent_id = 263";
-// $sql = "select operation_code, operation_type, client_address, price_list from invoices where issue_date between '2022-03-01' and '2022-03-18'";
-$sql = "select operation_code, operation_type, client_address, price_list from invoices where operation_code in ('62130')";
+$sql = "select operation_code, operation_type, client_address, price_list from invoices where issue_date between '2022-03-19' and '2022-03-21'";
+// $sql = "select operation_code, operation_type, client_address, price_list from invoices where operation_code in ('62130')";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();

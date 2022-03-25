@@ -3,8 +3,8 @@
 include('connection-db.php');
 
 // $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where agent_id = '263'";
-$sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where operation_code in (42045)";
-// $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where hidden = 0 and issue_date between '2022-03-01' and '2022-03-18'";
+// $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where operation_code in (42045)";
+$sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where hidden = 0 and issue_date between '2022-03-19' and '2022-03-21'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();

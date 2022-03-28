@@ -75,6 +75,7 @@ class ProdutosController extends Controller
 
         foreach($invoiceProducts as $invoiceProductKey => $invoiceProduct) {
 
+            $id = $invoiceProduct->id;
             $orderId = $invoiceProduct->order_id;
             $productInvoice = $invoiceProduct->invoice;
             $productId = $invoiceProduct->product_id;
@@ -113,6 +114,7 @@ class ProdutosController extends Controller
                 $commissionAmount = ($commissionAmount / 2);
 
             // product data add
+            $commissionResult['produtos'][$invoiceProductKey]['id'] = $id;
             $commissionResult['produtos'][$invoiceProductKey]['pedido'] = $orderId;
             $commissionResult['produtos'][$invoiceProductKey]['nota'] = $productInvoice;
             $commissionResult['produtos'][$invoiceProductKey]['produto'] = $productId;

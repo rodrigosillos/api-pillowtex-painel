@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Liquidacao;
-use App\Exports\LiquidacaoExport;
+use App\Models\Produtos;
+use App\Exports\ProdutosExport;
 use Illuminate\Http\Request;
 
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,6 +16,6 @@ class ExcelProdutosController extends Controller
     */
     public function exportExcel(Request $request) 
     {
-        return Excel::download(new LiquidacaoExport($request->invoice_check), 'liquidacao.xls');
+        return Excel::download(new ProdutosExport($request->invoice_check), 'relatorio-produtos.xls');
     }
 }

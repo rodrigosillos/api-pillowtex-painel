@@ -21,7 +21,7 @@
             <div class="col-md-4">
                 <div>
                     <!-- <button type="button" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-printer mr-1"></i> Imprimir</button> -->
-                    <button type="button" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-file-excel-outline mr-1"></i> Exportar</button>
+                    <button type="submit" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-file-excel-outline mr-1"></i> Exportar</button>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                             <tr>
                                 <td>
                                     <div class="custom-control custom-checkbox text-center">
-                                        <input type="checkbox" class="custom-control-input" id="invoicecheck{{ $key }}" name="invoice_check[]" value="{{ $product['produto_codigo'] }}">
+                                        <input type="checkbox" class="custom-control-input" id="invoicecheck{{ $key }}" name="invoice_check[]" value="{{ $product['id'] }}">
                                         <label class="custom-control-label" for="invoicecheck{{ $key }}"></label>
                                     </div>
                                 </td>

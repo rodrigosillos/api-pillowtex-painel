@@ -34,10 +34,11 @@ class LiquidacaoController extends Controller
         if($userProfileId == 3)
             $whereAgent = "representante_pedido like '%".$agentId."%' and";
 
-        $lastMonth = date("m", strtotime("first day of previous month"));
-        $lastDayMonth = date("d", strtotime("last day of previous month"));
-        // $lastDayMonth = '31';
-        $currentYear = date("Y"); 
+        $lastMonth = 01;
+        // $lastMonth = date("m", strtotime("first day of previous month"));
+        // $lastDayMonth = date("d", strtotime("last day of previous month"));
+        $lastDayMonth = '31';
+        $currentYear = date("Y");
 
         $debtors = DB::select(DB::raw(" 
             select 

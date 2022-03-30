@@ -20,6 +20,8 @@ foreach ($resultAgent['value'] as $valueAgent) {
             'representante' => $valueAgent['representante'],
             'email' => $valueAgent['e_mail'],
         ];
+
+        print($valueAgent['e_mail'] . ' - ' . $valueAgent['representante'] . "\xA");
         
         $sql = "update users SET agent_id2 = :representante where email = :email";
         $stmt = $pdo->prepare($sql);

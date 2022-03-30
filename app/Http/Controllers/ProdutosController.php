@@ -101,7 +101,7 @@ class ProdutosController extends Controller
                     $commissionPercentage = 3;
             }
 
-            if($invoiceType == 'PEDIDOS ESPECIAIS') {
+            if($invoiceType == 'ZC PEDIDO ESPECIAL') {
                 $dataConsultaMovimentacao = '?tipo_operacao='.$operationType.'&cod_operacao='.$operationCode.'&ujuros=false&$format=json&$dateformat=iso';
                 $resultConsultaMovimentacao = $this->connection('movimentacao/consulta', $dataConsultaMovimentacao);
                 $commissionPercentage = $resultConsultaMovimentacao['value'][0]['comissao_r'];

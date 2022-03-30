@@ -103,7 +103,7 @@ class ProdutosController extends Controller
 
             if($invoiceType == 'ZC PEDIDO ESPECIAL') {
                 $dataConsultaMovimentacao = '?tipo_operacao='.$operationType.'&cod_operacao='.$operationCode.'&ujuros=false&$format=json&$dateformat=iso';
-                $resultConsultaMovimentacao = $this->connection('movimentacao/consulta', $dataConsultaMovimentacao);
+                $resultConsultaMovimentacao = $this->connection('/movimentacao/consulta', $dataConsultaMovimentacao);
                 $commissionPercentage = $resultConsultaMovimentacao['value'][0]['comissao_r'];
             }
             

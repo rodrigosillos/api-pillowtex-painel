@@ -1,21 +1,22 @@
 <?php
 
+include('call-api.php');
 include('connection-db.php');
 
 // $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where agent_id = '263'";
 // $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where operation_code in (42045)";
-$sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where hidden = 0 and issue_date between '2022-03-22' and '2022-03-25'";
+// $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where hidden = 0 and issue_date between '2022-03-22' and '2022-03-25'";
+$sql = "select operation_code, operation_type, client_address, price_list, invoice_type, issue_date from invoices where invoice_type = 'ZC PEDIDO ESPECIAL'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();
-
-$countItem = 0;
 
 $lastMonth = date("m", strtotime("first day of previous month"));
 
 foreach ($invoices as $invoice) {
 
     $operationCode = $invoice['operation_code'];
+    $operationType = $invoice['operation_type'];
     $clientAddress = $invoice['client_address'];
     $tableId = $invoice['price_list'];
     $invoiceType = $invoice['invoice_type'];
@@ -66,15 +67,25 @@ foreach ($invoices as $invoice) {
     
         if($tableCode == 187 && $clientAddress != 'SP' && $discount < 5)
             $commissionPercentage = 3;
-    
-        // if($tableCode == 214 && $discount > 5)
-        //     $commissionPercentage = ($commissionPercentage / 2);
 
+        if($invoiceType == 'ZC PEDIDO ESPECIAL') {
+
+            $params = [
+                'tipo_operacao' => $operationType,
+                'cod_operacao' => $operationCode,
+                'ujuros' => 'false',
+                '$format' => 'json',
+            ];
+            
+            $movimentacaoBody = CallAPI('GET', 'movimentacao/consulta', $params);
+            $movimentacaoJson = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $movimentacaoBody), true);
+            $commissionPercentage = $movimentacaoJson['value'][0]['comissao_r'];
+    
+        }
+        
         $priceProduct = $priceApplied == 0 ? $price : $priceApplied;
 
         $commissionAmount = ($priceProduct * $quantity) * $commissionPercentage / 100;
-
-        // print($divisionCode . ' - ' . $tableCode . "\xA");
     
         if($tableCode == 214 && $discount > 5)
             $commissionAmount = ($commissionAmount / 2);

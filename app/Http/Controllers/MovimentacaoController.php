@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use App;
 use PDF;
 
-class FaturamentoController extends Controller
+class MovimentacaoController extends Controller
 {
     public function __construct()
     {
@@ -74,7 +74,7 @@ class FaturamentoController extends Controller
         }
 
         if($searchAgent != -1)
-            $whereSearchAgent = "and agent_code = " . $searchAgent;
+            $whereSearchAgent = "and representante_cod = " . $searchAgent . " or representante_cliente_cod = " . $searchAgent;
 
         if($userProfileId == 1) {
 
@@ -82,22 +82,22 @@ class FaturamentoController extends Controller
 
             $invoices = DB::select(DB::raw("
                 select * 
-                from invoices
-                where issue_date between '".$dateStart."' and '".$dateEnd."'
+                from movimentacao
+                where data_emissao between '".$dateStart."' and '".$dateEnd."'
                 " . $whereSearchAgent . "
-                and hidden = 0
-                and operation_type = 'S'"
+                and oculto = 0
+                and tipo_operacao = 'S'"
             ));
 
         } else {
 
             $invoices = DB::select(DB::raw("
                 select * 
-                from invoices
-                where issue_date between '".$dateStart."' and '".$dateEnd."'
-                and agent_id = ".$agentId."
-                and hidden = 0
-                and operation_type = 'S'"
+                from movimentacao
+                where data_emissao between '".$dateStart."' and '".$dateEnd."'
+                and representante = ".$agentId."
+                and oculto = 0
+                and tipo_operacao = 'S'"
             ));
         }
 
@@ -109,40 +109,43 @@ class FaturamentoController extends Controller
 
         foreach($invoices as $invoiceKey => $invoice) {
 
-            $issueDate = date_create($invoice->issue_date);
+            $issueDate = date_create($invoice->data_emissao);
 
-            $commissionResult['data'][$invoiceKey]['operacao_codigo'] = $invoice->operation_code;
-            $commissionResult['data'][$invoiceKey]['romaneio'] = $invoice->document;
+            $commissionResult['data'][$invoiceKey]['operacao_codigo'] = $invoice->cod_operacao;
+            $commissionResult['data'][$invoiceKey]['romaneio'] = $invoice->romaneio;
             $commissionResult['data'][$invoiceKey]['ticket'] = $invoice->ticket;
             $commissionResult['data'][$invoiceKey]['data_emissao'] = date_format($issueDate, "d/m/Y");
-            $commissionResult['data'][$invoiceKey]['cliente_codigo'] = $invoice->client_code;
-            $commissionResult['data'][$invoiceKey]['cliente_nome'] = Str::limit($invoice->client_name, 25, $end='...');
-            $commissionResult['data'][$invoiceKey]['cliente_estado'] = $invoice->client_address;
-            $commissionResult['data'][$invoiceKey]['representante_nome'] = Str::limit($invoice->agent_name, 25, $end='...');
-            $commissionResult['data'][$invoiceKey]['tabela_preco'] = $invoice->price_list == 104 ? 187 : 214;
-            $commissionResult['data'][$invoiceKey]['total'] = $invoice->amount_withouttax;
-            $commissionResult['data'][$invoiceKey]['tipo_operacao'] = $invoice->operation_type == 'E' ? 'Dedução' : 'S';
-            $commissionResult['data'][$invoiceKey]['nota_fiscal'] = $invoice->invoice;
-            $commissionResult['data'][$invoiceKey]['pedido_codigo'] = $invoice->order_code;
-            $commissionResult['data'][$invoiceKey]['pedido_tipo'] = $invoice->invoice_type;
+            $commissionResult['data'][$invoiceKey]['cliente_codigo'] = $invoice->cliente_codigo;
+            $commissionResult['data'][$invoiceKey]['cliente_nome'] = Str::limit($invoice->cliente_nome, 25, $end='...');
+            $commissionResult['data'][$invoiceKey]['cliente_estado'] = $invoice->cliente_estado;
+            $commissionResult['data'][$invoiceKey]['representante_nome'] = Str::limit($invoice->representante_nome, 25, $end='...');
+            $commissionResult['data'][$invoiceKey]['representante_cliente_nome'] = Str::limit($invoice->representante_cliente_nome, 25, $end='...');
+            $commissionResult['data'][$invoiceKey]['tabela_preco'] = $invoice->tabela == 104 ? 187 : 214;
+            $commissionResult['data'][$invoiceKey]['total'] = $invoice->total;
+            $commissionResult['data'][$invoiceKey]['tipo_operacao'] = $invoice->tipo_operacao == 'E' ? 'Dedução' : 'S';
+            $commissionResult['data'][$invoiceKey]['nota_fiscal'] = $invoice->notas;
+            $commissionResult['data'][$invoiceKey]['pedido_codigo'] = $invoice->cod_pedidov;
+            $commissionResult['data'][$invoiceKey]['pedido_tipo'] = $invoice->tipo_pedido;
             $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'warning';
-            $commissionResult['data'][$invoiceKey]['comissao_total'] = $invoice->commission_amount;
-            $commissionResult['data'][$invoiceKey]['liquidacao_50'] = $invoice->commission_debtors;
+            $commissionResult['data'][$invoiceKey]['comissao_total'] = $invoice->valor_comissao;
+            $commissionResult['data'][$invoiceKey]['valor_comissao_representante'] = $invoice->valor_comissao_representante;
+            $commissionResult['data'][$invoiceKey]['valor_comissao_representante_cliente'] = $invoice->valor_comissao_representante_cliente;
+            $commissionResult['data'][$invoiceKey]['valor_faturamento_representante'] = $invoice->valor_comissao_representante_cliente;
+            $commissionResult['data'][$invoiceKey]['valor_faturamento_representante_cliente'] = $invoice->valor_comissao_representante_cliente;
             
-            if($invoice->operation_type == 'S')
+            if($invoice->tipo_operacao == 'S')
                 $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'success';
 
             $commissionResult['data'][$invoiceKey]['faturamento_50'] = 0;
 
             $percentualFaturamento = 50;
 
-            if ($invoice->invoice_type == 'ANTECIPADO' || $invoice->invoice_type == 'ANTECIPADO ZC')
+            if ($invoice->tipo_pedido == 'ANTECIPADO' || $invoice->tipo_pedido == 'ANTECIPADO ZC')
                 $percentualFaturamento = 80;
 
-            // if (date_format($issueDate, "m") == $lastMonth)
             $commissionResult['data'][$invoiceKey]['faturamento_50'] = ($percentualFaturamento / 100) * $commissionResult['data'][$invoiceKey]['comissao_total'];
 
-            if($invoice->operation_type != 'E') {
+            if($invoice->tipo_pedido != 'E') {
                 $commissionResult['totalizador']['valor_comissao'] += $commissionResult['data'][$invoiceKey]['comissao_total'];
                 $commissionResult['totalizador']['valor_venda'] += $commissionResult['data'][$invoiceKey]['total'];
                 $commissionResult['totalizador']['valor_faturamento'] += $commissionResult['data'][$invoiceKey]['faturamento_50'];
@@ -150,8 +153,8 @@ class FaturamentoController extends Controller
 
             $commissionPercentageAverage = 0;
 
-            if ($invoice->amount != 0)
-                $commissionPercentageAverage = sprintf("%.2f%%", $commissionResult['data'][$invoiceKey]['comissao_total'] / $invoice->amount);
+            if ($invoice->valor_final != 0)
+                $commissionPercentageAverage = sprintf("%.2f%%", $commissionResult['data'][$invoiceKey]['comissao_total'] / $invoice->valor_final);
     
             $commissionResult['data'][$invoiceKey]['media_base_comissao'] = $commissionPercentageAverage;
 

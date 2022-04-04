@@ -23,15 +23,18 @@ foreach ($resultInvoices as $invoice__) {
     if ($stmt3->rowCount() > 0)
         $invoiceNumber = $resultTicket['invoice'];
 
-    $data = [
-        'invoice_number' => $invoiceNumber,
-        'operationCode' => $operationCode,
-    ];
-
     if(!empty($invoiceNumber)) {
+
+        print($invoiceNumber . "\xA");
+
+        $data = [
+            'invoice_number' => $invoiceNumber,
+            'operationCode' => $operationCode,
+        ];
+
         $sql2 = "update invoices SET invoice = :invoice_number where operation_code = :operationCode";
         $stmt2 = $pdo->prepare($sql2);
-        $stmt2->execute($data);
+        // $stmt2->execute($data);
     }
 
 }

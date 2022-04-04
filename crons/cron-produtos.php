@@ -4,7 +4,8 @@ include('call-api.php');
 include('connection-db.php');
 
 // $sql = "select operation_code, operation_type, client_address, price_list from invoices where agent_id = 263";
-$sql = "select operation_code, operation_type, client_address, price_list from invoices where issue_date between '2022-03-22' and '2022-03-25'";
+$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela from movimentacao where data_emissao between '2022-02-01' and '2022-02-28'";
+// $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela from movimentacao where cod_operacao = 41500";
 // $sql = "select operation_code, operation_type, client_address, price_list from invoices where operation_code in ('62130')";
 
 $stmt = $pdo->prepare($sql);
@@ -13,10 +14,10 @@ $invoicesAgents = $stmt->fetchAll();
 
 foreach ($invoicesAgents as $invoice__) {
     
-    $operationCode = $invoice__["operation_code"];
-    $operationType = $invoice__["operation_type"];
-    $clientAddress = $invoice__["client_address"];
-    $tableId = $invoice__["price_list"];
+    $operationCode = $invoice__["cod_operacao"];
+    $operationType = $invoice__["tipo_operacao"];
+    $clientAddress = $invoice__["cliente_estado"];
+    $tableId = $invoice__["tabela"];
 
     // print('- - - consultando venda: ' . $operationCode . "\xA");
 
@@ -125,7 +126,6 @@ foreach ($invoicesAgents as $invoice__) {
                         $commissionPercentage = $resultSettings['percentage'];
 
                     if($tableCode == 187 && $clientAddress != 'SP' && $productDiscount < 5)
-                        // $commissionPercentage = 4;
                         $commissionPercentage = 3;
 
                     if($tableCode == 214 && $productDiscount > 5)

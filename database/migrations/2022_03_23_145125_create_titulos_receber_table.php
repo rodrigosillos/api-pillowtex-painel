@@ -29,7 +29,7 @@ class CreateTitulosReceberTable extends Migration
             $table->string('pconta', 60)->nullable();
             $table->boolean('efetuado')->default(0);
             $table->integer('cod');
-            $table->string('banco_titulo', 30)->nullable();
+            $table->string('banco_titulo', 50)->nullable();
             $table->string('agencia', 7)->nullable();
             $table->string('c_c', 30)->nullable();
             $table->boolean('prorrogado')->default(0);
@@ -53,6 +53,8 @@ class CreateTitulosReceberTable extends Migration
             $table->string('representante_movimento', 200)->nullable();
             $table->string('cliente_nome', 100)->nullable();
             $table->float('valor_comissao', 8, 2)->default(0.00);
+            $table->float('valor_comissao_representante_cliente', 8, 2)->default(0.00);
+            $table->float('valor_comissao_representante_pedido', 8, 2)->default(0.00);
             $table->timestamps();
         });
     }

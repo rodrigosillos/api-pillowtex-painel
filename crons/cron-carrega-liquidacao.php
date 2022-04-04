@@ -12,8 +12,8 @@ $parametros = [
     'tipo' => 'R',
     'protestado' => 'false',
     'gerador' => 'C',
-    'dataip' => '2022-01-01',
-    'datafp' => '2022-03-28',
+    'dataip' => '2022-03-01',
+    'datafp' => '2022-03-31',
 ];
 
 $consultaLancamentos = CallAPI('GET', 'titulos_receber/consulta_receber_recebidos', 'novo', $parametros);
@@ -162,7 +162,7 @@ if($jsonConsultaLancamentos['odata.count'] > 0) {
                                                                                     :representante_cliente,
                                                                                     :representante_movimento,
                                                                                     :cliente_nome)");
-            // $stmt->execute($data);
+            $stmt->execute($data);
 
         }
 

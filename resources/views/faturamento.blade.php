@@ -106,15 +106,20 @@
                                 </th>
                                 <th>Nota Fiscal</th>
                                 <th>Emissão</th>
-                                <th>Cód. Cliente</th>
+                                <th>Cliente</th>
                                 <th>Nome Cliente</th>
                                 <th>Tipo Pedido</th>
-                                <th>Cod Pedido</th>
+                                <th>Pedido</th>
                                 <th>Valor Total Produto</th>
                                 <!--<th>Valor Produto</th>-->
                                 <th>Valor Comissão</th>
+                                <th>Comissão Rep Pedido</th>
+                                <th>Comissão Rep Cliente</th>
                                 <th>Faturamento</th>
-                                <th>Representante</th>
+                                <th>Faturamento Rep Pedido</th>
+                                <th>Faturamento Rep Cliente</th>
+                                <th>Representante Pedido</th>
+                                <th>Representante Ciente</th>
                                 <th>Tipo</th>
                                 <th>Tabela Preço</th>
                                 <th>Documento</th>
@@ -158,10 +163,25 @@
                                 @if ($invoice['tipo_operacao_cor'] == 'warning') - @endif R${{ number_format($invoice['comissao_total'], 2, ',', '.') }}
                                 </td>
                                 <td>
+                                @if ($invoice['tipo_operacao_cor'] == 'warning') - @endif R${{ number_format($invoice['valor_comissao_representante'], 2, ',', '.') }}
+                                </td>
+                                <td>
+                                @if ($invoice['tipo_operacao_cor'] == 'warning') - @endif R${{ number_format($invoice['valor_comissao_representante_cliente'], 2, ',', '.') }}
+                                </td>
+                                <td>
                                     R${{ number_format($invoice['faturamento_50'], 2, ',', '.') }}
                                 </td>
                                 <td>
+                                    R${{ number_format($invoice['valor_faturamento_representante'], 2, ',', '.') }}
+                                </td>
+                                <td>
+                                    R${{ number_format($invoice['valor_faturamento_representante_cliente'], 2, ',', '.') }}
+                                </td>
+                                <td>
                                     {{ $invoice['representante_nome'] }}
+                                </td>
+                                <td>
+                                    {{ $invoice['representante_cliente_nome'] }}
                                 </td>
                                 <td>
                                     <div class="badge badge-soft-{{ $invoice['tipo_operacao_cor'] }} font-size-12">{{ $invoice['tipo_operacao'] }}</div>

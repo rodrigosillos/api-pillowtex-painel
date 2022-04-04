@@ -5,7 +5,7 @@ include('connection-db.php');
 
 // $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where agent_id = '263'";
 // $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where operation_code in (42045)";
-$sql = "select operation_code, operation_type, client_address, price_list, invoice_type, issue_date from invoices where hidden = 0 and issue_date between '2022-03-22' and '2022-03-25'";
+$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, tipo_pedido, data_emissao, comissao_r, representante, representante_cliente from movimentacao where data_emissao between '2022-02-01' and '2022-02-31'";
 // $sql = "select operation_code, operation_type, client_address, price_list, invoice_type, issue_date from invoices where invoice_type = 'ZC PEDIDO ESPECIAL'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -15,12 +15,15 @@ $lastMonth = date("m", strtotime("first day of previous month"));
 
 foreach ($invoices as $invoice) {
 
-    $operationCode = $invoice['operation_code'];
-    $operationType = $invoice['operation_type'];
-    $clientAddress = $invoice['client_address'];
-    $tableId = $invoice['price_list'];
-    $invoiceType = $invoice['invoice_type'];
-    $issueDate = $invoice['issue_date'];
+    $operationCode = $invoice['cod_operacao'];
+    $operationType = $invoice['tipo_operacao'];
+    $clientAddress = $invoice['cliente_estado'];
+    $tableId = $invoice['tabela'];
+    $invoiceType = $invoice['tipo_pedido'];
+    $issueDate = $invoice['data_emissao'];
+    $comissaoR = $invoice['comissao_r'];
+    $representante = $invoice['representante'];
+    $representanteCliente = $invoice['representante_cliente'];
 
     $issueDate = date_create($issueDate);
 
@@ -68,20 +71,8 @@ foreach ($invoices as $invoice) {
         if($tableCode == 187 && $clientAddress != 'SP' && $discount < 5)
             $commissionPercentage = 3;
 
-        if($invoiceType == 'ZC PEDIDO ESPECIAL') {
-
-            $params = [
-                'tipo_operacao' => $operationType,
-                'cod_operacao' => $operationCode,
-                'ujuros' => 'false',
-                '$format' => 'json',
-            ];
-            
-            $movimentacaoBody = CallAPI('GET', 'movimentacao/consulta', $params);
-            $movimentacaoJson = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $movimentacaoBody), true);
-            $commissionPercentage = $movimentacaoJson['value'][0]['comissao_r'];
-    
-        }
+        if ($invoiceType == 'ZC PEDIDO ESPECIAL')
+            $commissionPercentage = $comissaoR;
         
         $priceProduct = $priceApplied == 0 ? $price : $priceApplied;
 
@@ -99,16 +90,54 @@ foreach ($invoices as $invoice) {
     if ($invoiceType == 'ANTECIPADO' || $invoiceType == 'ANTECIPADO ZC')
         $percentualFaturamento = 80;
 
-    // if (date_format($issueDate, "m") == $lastMonth)
     $valorFaturamento = ($percentualFaturamento / 100) * $commissionAmountTotal;
-    
+
     $data = [
-        'commission_amount' => $commissionAmountTotal,
+        'valor_comissao' => $commissionAmountTotal,
         'valor_faturamento' => $valorFaturamento,
-        'operationCode' => $operationCode,
+        'cod_operacao' => $operationCode,
     ];
     
-    $sql = "update invoices set commission_amount = :commission_amount, valor_faturamento = :valor_faturamento where operation_code = :operationCode";
+    $sql = "update movimentacao set 
+                                valor_comissao = :valor_comissao,
+                                valor_faturamento = :valor_faturamento
+            where cod_operacao = :cod_operacao";
+
+    // divisao de comissao
+
+    if ($invoiceType == 'ZC FEIRA' || $invoiceType == 'ZC FUTURO') {
+
+        if ($representante <> $representanteCliente) {
+
+            $valorComissaoDividida = ($commissionAmountTotal / 2);
+            $valorFaturamentoDividido = ($valorFaturamento / 2);
+
+            $data = [
+                'valor_comissao' => $commissionAmountTotal,
+                'valor_comissao_representante' => $valorComissaoDividida,
+                'valor_comissao_representante_cliente' => $valorComissaoDividida,
+                'valor_faturamento' => $valorFaturamento,
+                'valor_faturamento_representante' => $valorFaturamentoDividido,
+                'valor_faturamento_representante_cliente' => $valorFaturamentoDividido,
+                'cod_operacao' => $operationCode,
+            ];
+            
+            $sql = "update movimentacao set 
+                                        valor_comissao = :valor_comissao,
+                                        valor_comissao_representante = :valor_comissao_representante,
+                                        valor_comissao_representante_cliente = :valor_comissao_representante_cliente,
+                                        valor_faturamento = :valor_faturamento,
+                                        valor_faturamento_representante = :valor_faturamento_representante,
+                                        valor_faturamento_representante_cliente = :valor_faturamento_representante_cliente
+                    where cod_operacao = :cod_operacao";
+
+        }
+    }
+
+    print_r($data);
+
+    // fim divisao comissao
+
     $stmt = $pdo->prepare($sql);
     $stmt->execute($data);
 

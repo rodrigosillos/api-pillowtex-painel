@@ -51,7 +51,7 @@
     <br/>
     <br/>
 
-    <form action="{{url('export-excel')}}" method="post">
+    <form action="{{url('export-excel-faturamento')}}" method="post">
         {{ csrf_field() }}
         <div class="row">
             <div class="col-md-3">
@@ -119,7 +119,7 @@
                                 <th>Faturamento Rep Pedido</th>
                                 <th>Faturamento Rep Cliente</th>
                                 <th>Representante Pedido</th>
-                                <th>Representante Ciente</th>
+                                <th>Representante Cliente</th>
                                 <th>Tipo</th>
                                 <th>Tabela Preço</th>
                                 <th>Documento</th>

@@ -73,8 +73,12 @@ class MovimentacaoController extends Controller
             $userProfileId = $users->user_profile_id;
         }
 
-        if($searchAgent != -1)
-            $whereSearchAgent = "and representante_cod = " . $searchAgent . " or representante_cliente_cod = " . $searchAgent;
+        $query = " data_emissao between '" . $dateStart . "' and '" . $dateEnd . "' and oculto = 0 and tipo_operacao = 'S'";
+
+        if($searchAgent != "todos") {
+            $query  = " data_emissao between '" . $dateStart . "' and '" . $dateEnd . "' and representante_cod = " . $searchAgent . " and oculto = 0 and tipo_operacao = 'S'";
+            $query .= " or data_emissao between '" . $dateStart . "' and '" . $dateEnd . "' and representante_cliente_cod = " . $searchAgent . " and oculto = 0 and tipo_operacao = 'S'";
+        }
 
         if($userProfileId == 1) {
 
@@ -83,10 +87,7 @@ class MovimentacaoController extends Controller
             $invoices = DB::select(DB::raw("
                 select * 
                 from movimentacao
-                where data_emissao between '".$dateStart."' and '".$dateEnd."'
-                " . $whereSearchAgent . "
-                and oculto = 0
-                and tipo_operacao = 'S'"
+                where" . $query
             ));
 
         } else {

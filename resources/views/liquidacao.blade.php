@@ -44,8 +44,10 @@
                                 <th>Movimento</th>
                                 <th>Data de Vencimento</th>
                                 <th>Data de Pagamento</th>
-                                <th>Valor do Título</th>
+                                <th>Valor Título</th>
                                 <th>Comissão Liquidação</th>
+                                <th>Comissão Rep Pedido</th>
+                                <th>Comissão Rep Cliente</th>
                                 <th style="width: 120px;">Ações</th>
                             </tr>
                         </thead>
@@ -78,7 +80,13 @@
                                 </td>
                                 <td>
                                     R$ {{ number_format($debtor['comissao'], 2, ',', '.') }}
-                                </td>                             
+                                </td>
+                                <td>
+                                    R$ {{ number_format($debtor['comissao'], 2, ',', '.') }}
+                                </td>
+                                <td>
+                                    R$ {{ number_format($debtor['comissao'], 2, ',', '.') }}
+                                </td>                        
                                 <td>
                                 <a href="javascript:void(0);" class="px-3 text-primary" data-toggle="tooltip" data-placement="top" title="Editar"><i class="uil uil-pen font-size-18"></i></a>
                                 </td>

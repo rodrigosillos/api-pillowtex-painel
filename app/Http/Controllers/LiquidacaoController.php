@@ -20,25 +20,29 @@ class LiquidacaoController extends Controller
             'data' => [],
         ];
 
-        $agentSearchAdmin = $request->agent;
-        $agentId = Auth::user()->agent_id;
+        $representanteSelecionado = $request->agent;
+        $representanteLogado = Auth::user()->agent_id;
         $userProfileId = Auth::user()->user_profile_id;
 
-        $whereAgent = '';
+        $whereRepresentante = '';
         $totalCommission = 0;
         $totalLiquidacao = 0;
 
-        if($agentSearchAdmin != 'all')
-            $whereAgent = "representante_pedido like '%".$agentSearchAdmin."%' and";
+        // Visualização Admin
+        if($representanteSelecionado != 'todos')
+            $whereRepresentante = "representante_pedido like '%".$representanteSelecionado."%' and";
+            // $whereRepresentante = "representante_pedido like '%".$representanteSelecionado."%' or representante_cliente like '%".$representanteSelecionado."%' and";
 
+        // Visualização Representante
         if($userProfileId == 3)
-            $whereAgent = "representante_pedido like '%".$agentId."%' and";
-
-        $lastMonth = 01;
-        // $lastMonth = date("m", strtotime("first day of previous month"));
-        // $lastDayMonth = date("d", strtotime("last day of previous month"));
-        $lastDayMonth = '31';
-        $currentYear = date("Y");
+            $whereRepresentante = "representante_pedido like '%".$representanteLogado."%' and";
+            // $whereRepresentante = "representante_pedido like '%".$representanteLogado."%' or representante_cliente like '%".$representanteLogado."%' and";
+        
+        // $mesAnterior = 01;
+        // $ultimoDiaMes = '31';
+        $mesAnterior = date("m", strtotime("first day of previous month"));
+        $ultimoDiaMes = date("d", strtotime("last day of previous month"));
+        $ano = date("Y");
 
         $debtors = DB::select(DB::raw(" 
             select 
@@ -52,9 +56,11 @@ class LiquidacaoController extends Controller
                 efetuado, 
                 substituido, 
                 valor_inicial, 
-                valor_comissao
+                valor_comissao,
+                valor_comissao_representante_pedido,
+                valor_comissao_representante_cliente
             from titulos_receber
-            where ".$whereAgent." substituido = 0 and baixa = 0 and data_pagamento between '".$currentYear."-".$lastMonth."-01' and '".$currentYear."-".$lastMonth."-".$lastDayMonth."'"
+            where ".$whereRepresentante." substituido = 0 and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."'"
         ));
 
         foreach($debtors as $debtorKey => $debtor) {
@@ -75,6 +81,8 @@ class LiquidacaoController extends Controller
             $substituted = $debtor->substituido;
             $amount = $debtor->valor_inicial;
             $commission = $debtor->valor_comissao;
+            $comissaoRepPedido = $debtor->valor_comissao_representante_pedido;
+            $comissaoRepCliente = $debtor->valor_comissao_representante_cliente;
 
             $totalCommission += $commission;
             $totalLiquidacao += $amount;
@@ -94,6 +102,8 @@ class LiquidacaoController extends Controller
             $resultDebtors['data'][$debtorKey]['substituido'] = $substituted == 1 ? 'Substituído' : 'Não Substituído';
             $resultDebtors['data'][$debtorKey]['valor_inicial'] = $amount;
             $resultDebtors['data'][$debtorKey]['comissao'] = $commission;
+            $resultDebtors['data'][$debtorKey]['comissao_representante_pedido'] = $comissaoRepPedido;
+            $resultDebtors['data'][$debtorKey]['comissao_representante_cliente'] = $comissaoRepCliente;
 
         }
 

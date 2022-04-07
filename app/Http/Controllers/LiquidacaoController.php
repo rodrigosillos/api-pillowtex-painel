@@ -20,7 +20,7 @@ class LiquidacaoController extends Controller
             'data' => [],
         ];
 
-        $representanteSelecionado = $request->agent;
+        $representanteCodSelecionado = $request->agent;
         $representanteLogado = Auth::user()->agent_id;
         $userProfileId = Auth::user()->user_profile_id;
 
@@ -29,9 +29,13 @@ class LiquidacaoController extends Controller
         $totalLiquidacao = 0;
 
         // Visualização Admin
-        if($representanteSelecionado != 'todos')
-            $whereRepresentante = "representante_pedido like '%".$representanteSelecionado."%' and";
-            // $whereRepresentante = "representante_pedido like '%".$representanteSelecionado."%' or representante_cliente like '%".$representanteSelecionado."%' and";
+        if($representanteCodSelecionado != 'todos') {
+
+            $queryRep = DB::select(DB::raw("select name from users where agent_code = '". $representanteCodSelecionado ."'"));
+            $representanteSelecionado = $representanteCodSelecionado . ' - ' . $queryRep[0]->name;
+            $whereRepresentante = "representante_pedido = '".$representanteSelecionado."' and";
+
+        }
 
         // Visualização Representante
         if($userProfileId == 3)

@@ -15,7 +15,7 @@ class LiquidacaoController extends Controller
     }
 
     public function getLiquidacao(Request $request)
-    {
+    { 
         $resultDebtors = [
             'data' => [],
         ];
@@ -117,6 +117,7 @@ class LiquidacaoController extends Controller
             'total_commission' => $totalCommission,
             'total_liquidacao' => $totalLiquidacao,
             'representante_liquidacao' => $representanteSelecionado,
+            'mes_nome' => strftime('%B'),
         ]);
     }
 

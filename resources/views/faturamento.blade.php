@@ -72,7 +72,7 @@
                     </button>
                     </a>
                     <a href="#" onclick="RedirectURL('substituicao');return false;">
-                    <button type="button" class="btn btn-primary waves-effect waves-light">
+                    <button disabled type="button" class="btn btn-primary waves-effect waves-light">
                         Substituição <i class="uil uil-arrow-right ml-2"></i> 
                     </button>
                     </a>
@@ -83,7 +83,7 @@
                     @else
                         <a href="#" onclick="RedirectURL('devolucao');return false;">
                     @endif
-                    <button type="button" class="btn btn-primary waves-effect waves-light">
+                    <button disabled type="button" class="btn btn-primary waves-effect waves-light">
                         Devolução <i class="uil uil-arrow-right ml-2"></i> 
                     </button>
                     </a>

@@ -11,7 +11,7 @@
 @section('content')
 @component('common-components.breadcrumb')
     @slot('pagetitle') COMISSÕES @endslot
-    @slot('title') LIQUIDAÇÃO  - {{ $representante_liquidacao }} @endslot
+    @slot('title') LIQUIDAÇÃO  - {{ $representante_liquidacao }} / {{ $mes_nome }} @endslot
 @endcomponent
  
 

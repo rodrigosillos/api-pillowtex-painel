@@ -2,7 +2,7 @@
 
 include('connection-db.php');
 
-$sql = "select cod_operacao, romaneio, ticket, notas, tipo_pedido, evento from movimentacao where data_emissao between '2022-01-01' and '2022-03-31'";
+$sql = "select cod_operacao, romaneio, ticket, notas, tipo_pedido, evento from movimentacao where notas = ''";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $movimentacoes = $stmt->fetchAll();

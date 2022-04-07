@@ -13,7 +13,7 @@ $parametros = [
     'protestado' => 'false',
     'gerador' => 'C',
     'dataip' => '2022-01-01',
-    'datafp' => '2022-02-28',
+    'datafp' => '2022-03-31',
 ];
 
 $consultaLancamentos = CallAPI('GET', 'titulos_receber/consulta_receber_recebidos', 'novo', $parametros);

@@ -2,7 +2,8 @@
 
 include('connection-db.php');
 
-$sql = "select n_documento, origem from titulos_receber where representante_movimento is null"; // data_pagamento between '2022-01-01' and '2022-01-31'
+$sql = "select n_documento, origem from titulos_receber where representante_pedido is null";
+// $sql = "select n_documento, origem from titulos_receber where n_documento = '111535/E'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $titulosReceber = $stmt->fetchAll();
@@ -22,12 +23,6 @@ foreach ($titulosReceber as $titulo) {
     $stmt->bindParam(':numero_documento', $numeroDocumento, PDO::PARAM_STR);
     $stmt->execute();
     $tituloBaseAntiga = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-    // if ($stmt->rowCount() == 0)
-    //     print($contador++ . ' --- n_documento: ' . $numeroDocumento . ' não encontrado na base antiga' . "\xA");
-
-    // if ($stmt->rowCount() > 0)
-        // print($contador++ . ' --- n_documento: ' . $numeroDocumento . ' encontrado na base antiga --- origem: ' . $tituloBaseAntiga['origem'] . "\xA");
 
         // $sql = "select representante, representante_cod, representante_nome, cliente_nome from movimentacao where cod_operacao = :origem";
         $sql = "select agent_id, agent_code, agent_name, client_name from invoices where operation_code = :origem";
@@ -54,16 +49,16 @@ foreach ($titulosReceber as $titulo) {
 
             $data = [
                 'cliente_nome' => $clienteNome,
-                'representante_movimento' => $representanteID,
-                'representante_pedido' => $representanteID,
+                'representante_movimento' => $representante,
+                'representante_pedido' => $representante,
                 'n_documento' => $numeroDocumento,
             ];
 
-            // print_r($data);
+            print_r($data);
 
             $sql = "update titulos_receber set cliente_nome = :cliente_nome, representante_movimento = :representante_movimento, representante_pedido = :representante_pedido where n_documento = :n_documento";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute($data);
+            // $stmt->execute($data);
         }
 
     // }

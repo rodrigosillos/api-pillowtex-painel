@@ -116,6 +116,7 @@ class LiquidacaoController extends Controller
             'debtors' => $resultDebtors,
             'total_commission' => $totalCommission,
             'total_liquidacao' => $totalLiquidacao,
+            'representante_liquidacao' => $representanteSelecionado,
         ]);
     }
 

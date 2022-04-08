@@ -84,16 +84,12 @@ foreach($tiposOperacao as $tipoOperacao) {
                 $codPedidoV = '';
                 $notas = '';
                 $tipoPedido = '';
-                // $cliente = '';
-                // $nomeCliente = '';
     
                 if($jsonConsultaPedidoVenda['odata.count'] > 0) {
     
                     $codPedidoV = $jsonConsultaPedidoVenda['value'][0]['cod_pedidov'];
                     $notas = $jsonConsultaPedidoVenda['value'][0]['notas'];
                     $tipoPedido = $jsonConsultaPedidoVenda['value'][0]['tipo_pedido'];
-                    // $cliente = $jsonConsultaPedidoVenda['value'][0]['cliente'];
-                    // $nomeCliente = $jsonConsultaPedidoVenda['value'][0]['nome_cliente'];
                 
                 }
     

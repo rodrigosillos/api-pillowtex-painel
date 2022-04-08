@@ -3,10 +3,9 @@
 include('call-api.php');
 include('connection-db.php');
 
-// $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where agent_id = '263'";
-// $sql = "select operation_code, client_address, price_list, invoice_type, issue_date from invoices where operation_code in (42045)";
-$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, tipo_pedido, data_emissao, comissao_r, representante, representante_cliente from movimentacao where data_emissao between '2022-02-01' and '2022-02-31'";
-// $sql = "select operation_code, operation_type, client_address, price_list, invoice_type, issue_date from invoices where invoice_type = 'ZC PEDIDO ESPECIAL'";
+$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, tipo_pedido, data_emissao, comissao_r, representante, representante_cliente from movimentacao where data_emissao between '2022-01-01' and '2022-03-31'";
+// $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, tipo_pedido, data_emissao, comissao_r, representante, representante_cliente from movimentacao where cod_operacao = 41574";
+
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();
@@ -114,8 +113,8 @@ foreach ($invoices as $invoice) {
 
             $data = [
                 'valor_comissao' => $commissionAmountTotal,
-                'valor_comissao_representante' => $valorComissaoDividida,
-                'valor_comissao_representante_cliente' => $valorComissaoDividida,
+                'valor_comissao_representante' => ($valorComissaoDividida / 2),
+                'valor_comissao_representante_cliente' => ($valorComissaoDividida / 2),
                 'valor_faturamento' => $valorFaturamento,
                 'valor_faturamento_representante' => $valorFaturamentoDividido,
                 'valor_faturamento_representante_cliente' => $valorFaturamentoDividido,

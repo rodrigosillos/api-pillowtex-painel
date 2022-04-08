@@ -2,7 +2,7 @@
 
 include('connection-db.php');
 
-$sql = "select cod_operacao, romaneio, ticket, notas, tipo_pedido, evento from movimentacao where notas = ''";
+$sql = "select cod_operacao, romaneio, ticket, notas, tipo_pedido, evento from movimentacao where notas is null";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $movimentacoes = $stmt->fetchAll();
@@ -23,7 +23,7 @@ foreach ($movimentacoes as $movimentacao) {
     $movimentacaoCodigo5 = $stmt->fetch(\PDO::FETCH_ASSOC);
 
     if ($stmt->rowCount() > 0)
-        print('tipo pedido: ' . $tipoPedido . ' -------- tipo de pedido sem nota: ' . $movimentacaoCodigo5['tipo_pedido'] . "\xA");
+        print('tipo de pedido com nota: ' . $tipoPedido . ' -------- tipo de pedido sem nota: ' . $movimentacaoCodigo5['tipo_pedido'] . "\xA");
 
 }
 

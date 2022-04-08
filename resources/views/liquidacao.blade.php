@@ -44,7 +44,9 @@
                                 <th>Movimento</th>
                                 <th>Data de Vencimento</th>
                                 <th>Data de Pagamento</th>
-                                <th>Valor Título</th>
+                                <th>Valor Inicial</th>
+                                <th>Acres/Decres</th>
+                                <th>Valor Pago</th>
                                 <th>Comissão Liquidação</th>
                                 <th>Comissão Rep Pedido</th>
                                 <th>Comissão Rep Cliente</th>
@@ -71,13 +73,18 @@
                                 <td>
                                     {{ $debtor['data_vencimento'] }}
                                 </td>
-
                                 <td>
                                     {{ $debtor['data_pagamento'] }}
                                 </td>
                                 <td>
                                     R$ {{ number_format($debtor['valor_inicial'], 2, ',', '.') }}
                                 </td>
+                                <td>
+                                    R$ {{ number_format($debtor['acres_decres'], 2, ',', '.') }}
+                                </td> 
+                                <td>
+                                    R$ {{ number_format($debtor['valor_pago'], 2, ',', '.') }}
+                                </td>                                
                                 <td>
                                     R$ {{ number_format($debtor['comissao'], 2, ',', '.') }}
                                 </td>

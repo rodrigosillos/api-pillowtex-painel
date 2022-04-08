@@ -59,12 +59,14 @@ class LiquidacaoController extends Controller
                 data_pagamento, 
                 efetuado, 
                 substituido, 
-                valor_inicial, 
+                valor_inicial,
+                acres_decres,
+                valor_pago, 
                 valor_comissao,
                 valor_comissao_representante_pedido,
                 valor_comissao_representante_cliente
             from titulos_receber
-            where ".$whereRepresentante." substituido = 0 and baixa = 0 and obs != 'MERCHANT' and desc_tipo_pgto != 'MERCHANT' and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."'"
+            where ".$whereRepresentante." substituido = 0 and baixa = 0 and valor_pago <> 0 and obs != 'MERCHANT' and desc_tipo_pgto != 'MERCHANT' and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."'"
         ));
 
         foreach($debtors as $debtorKey => $debtor) {
@@ -84,6 +86,8 @@ class LiquidacaoController extends Controller
             $effected = $debtor->efetuado;
             $substituted = $debtor->substituido;
             $amount = $debtor->valor_inicial;
+            $acres_decres = $debtor->acres_decres;
+            $valor_pago = $debtor->valor_pago;
             $commission = $debtor->valor_comissao;
             $comissaoRepPedido = $debtor->valor_comissao_representante_pedido;
             $comissaoRepCliente = $debtor->valor_comissao_representante_cliente;
@@ -105,6 +109,8 @@ class LiquidacaoController extends Controller
             $resultDebtors['data'][$debtorKey]['efetuado'] = $effected == 1 ? 'Baixado' : 'Em Aberto';
             $resultDebtors['data'][$debtorKey]['substituido'] = $substituted == 1 ? 'Substituído' : 'Não Substituído';
             $resultDebtors['data'][$debtorKey]['valor_inicial'] = $amount;
+            $resultDebtors['data'][$debtorKey]['acres_decres'] = $acres_decres;
+            $resultDebtors['data'][$debtorKey]['valor_pago'] = $valor_pago;
             $resultDebtors['data'][$debtorKey]['comissao'] = $commission;
             $resultDebtors['data'][$debtorKey]['comissao_representante_pedido'] = $comissaoRepPedido;
             $resultDebtors['data'][$debtorKey]['comissao_representante_cliente'] = $comissaoRepCliente;

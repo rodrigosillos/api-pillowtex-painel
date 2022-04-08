@@ -64,7 +64,7 @@ class LiquidacaoController extends Controller
                 valor_comissao_representante_pedido,
                 valor_comissao_representante_cliente
             from titulos_receber
-            where ".$whereRepresentante." substituido = 0 and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."'"
+            where ".$whereRepresentante." substituido = 0 and baixa = 0 and obs != 'MERCHANT' and desc_tipo_pgto != 'MERCHANT' and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."'"
         ));
 
         foreach($debtors as $debtorKey => $debtor) {

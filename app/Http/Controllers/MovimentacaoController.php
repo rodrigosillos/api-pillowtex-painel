@@ -82,8 +82,6 @@ class MovimentacaoController extends Controller
 
         if($userProfileId == 1) {
 
-            // representante_regiao = 150490655 and
-
             $invoices = DB::select(DB::raw("
                 select * 
                 from movimentacao
@@ -112,6 +110,21 @@ class MovimentacaoController extends Controller
 
             $issueDate = date_create($invoice->data_emissao);
 
+            $valorComissaoRep = $invoice->valor_comissao;
+            $valorFaturamentoRep = $invoice->valor_faturamento;
+
+            if($invoice->tipo_pedido == 'ZC FEIRA' || $invoice->tipo_pedido == 'ZC FUTURO') {
+
+                $valorComissaoRep = $invoice->valor_comissao_representante;
+                $valorFaturamentoRep = $invoice->valor_faturamento_representante;
+    
+                if($invoice->representante_cliente_cod == $searchAgent) {
+                    $valorComissaoRep = $invoice->valor_comissao_representante_cliente;
+                    $valorFaturamentoRep = $invoice->valor_faturamento_representante_cliente;
+                }  
+
+            }              
+
             $commissionResult['data'][$invoiceKey]['operacao_codigo'] = $invoice->cod_operacao;
             $commissionResult['data'][$invoiceKey]['romaneio'] = $invoice->romaneio;
             $commissionResult['data'][$invoiceKey]['ticket'] = $invoice->ticket;
@@ -128,23 +141,24 @@ class MovimentacaoController extends Controller
             $commissionResult['data'][$invoiceKey]['pedido_codigo'] = $invoice->cod_pedidov;
             $commissionResult['data'][$invoiceKey]['pedido_tipo'] = $invoice->tipo_pedido;
             $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'warning';
-            $commissionResult['data'][$invoiceKey]['comissao_total'] = $invoice->valor_comissao;
+            $commissionResult['data'][$invoiceKey]['comissao_total'] = $valorComissaoRep;
             $commissionResult['data'][$invoiceKey]['valor_comissao_representante'] = $invoice->valor_comissao_representante;
             $commissionResult['data'][$invoiceKey]['valor_comissao_representante_cliente'] = $invoice->valor_comissao_representante_cliente;
-            $commissionResult['data'][$invoiceKey]['valor_faturamento_representante'] = $invoice->valor_comissao_representante_cliente;
-            $commissionResult['data'][$invoiceKey]['valor_faturamento_representante_cliente'] = $invoice->valor_comissao_representante_cliente;
+            $commissionResult['data'][$invoiceKey]['valor_faturamento_representante'] = $invoice->valor_faturamento_representante;
+            $commissionResult['data'][$invoiceKey]['valor_faturamento_representante_cliente'] = $invoice->valor_faturamento_representante_cliente;
             
             if($invoice->tipo_operacao == 'S')
                 $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'success';
 
-            $commissionResult['data'][$invoiceKey]['faturamento_50'] = 0;
+            // $commissionResult['data'][$invoiceKey]['faturamento_50'] = 0;
 
-            $percentualFaturamento = 50;
+            // $percentualFaturamento = 50;
 
-            if ($invoice->tipo_pedido == 'ANTECIPADO' || $invoice->tipo_pedido == 'ANTECIPADO ZC')
-                $percentualFaturamento = 80;
+            // if ($invoice->tipo_pedido == 'ANTECIPADO' || $invoice->tipo_pedido == 'ANTECIPADO ZC')
+            //     $percentualFaturamento = 80;
 
-            $commissionResult['data'][$invoiceKey]['faturamento_50'] = ($percentualFaturamento / 100) * $commissionResult['data'][$invoiceKey]['comissao_total'];
+            // $commissionResult['data'][$invoiceKey]['faturamento_50'] = ($percentualFaturamento / 100) * $commissionResult['data'][$invoiceKey]['comissao_total'];
+            $commissionResult['data'][$invoiceKey]['faturamento_50'] = $valorFaturamentoRep;
 
             if($invoice->tipo_pedido != 'E') {
                 $commissionResult['totalizador']['valor_comissao'] += $commissionResult['data'][$invoiceKey]['comissao_total'];

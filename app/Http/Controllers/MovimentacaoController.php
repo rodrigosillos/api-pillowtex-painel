@@ -154,14 +154,6 @@ class MovimentacaoController extends Controller
             if($invoice->tipo_operacao == 'S')
                 $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'success';
 
-            // $commissionResult['data'][$invoiceKey]['faturamento_50'] = 0;
-
-            // $percentualFaturamento = 50;
-
-            // if ($invoice->tipo_pedido == 'ANTECIPADO' || $invoice->tipo_pedido == 'ANTECIPADO ZC')
-            //     $percentualFaturamento = 80;
-
-            // $commissionResult['data'][$invoiceKey]['faturamento_50'] = ($percentualFaturamento / 100) * $commissionResult['data'][$invoiceKey]['comissao_total'];
             $commissionResult['data'][$invoiceKey]['faturamento_50'] = $valorFaturamentoRep;
 
             if($invoice->tipo_pedido != 'E') {

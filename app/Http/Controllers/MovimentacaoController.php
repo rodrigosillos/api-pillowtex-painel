@@ -115,13 +115,17 @@ class MovimentacaoController extends Controller
 
             if($invoice->tipo_pedido == 'ZC FEIRA' || $invoice->tipo_pedido == 'ZC FUTURO') {
 
-                $valorComissaoRep = $invoice->valor_comissao_representante;
-                $valorFaturamentoRep = $invoice->valor_faturamento_representante;
-    
-                if($invoice->representante_cliente_cod == $searchAgent) {
-                    $valorComissaoRep = $invoice->valor_comissao_representante_cliente;
-                    $valorFaturamentoRep = $invoice->valor_faturamento_representante_cliente;
-                }  
+                if ($invoice->representante <> $invoice->representante_cliente) {
+
+                    $valorComissaoRep = $invoice->valor_comissao_representante;
+                    $valorFaturamentoRep = $invoice->valor_faturamento_representante;
+        
+                    if($invoice->representante_cliente_cod == $searchAgent) {
+                        $valorComissaoRep = $invoice->valor_comissao_representante_cliente;
+                        $valorFaturamentoRep = $invoice->valor_faturamento_representante_cliente;
+                    }  
+
+                }
 
             }              
 

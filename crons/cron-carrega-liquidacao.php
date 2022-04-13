@@ -4,16 +4,15 @@ include('call-api-novo.php');
 include('connection-db.php');
 
 $parametros = [
-    'efetuado' => 'true',
+    'efetuado' => 'false',
     'substituido' => 'false',
-    // 'representante' => 5,
     '$format' => 'json',
     '$dateformat' => 'iso',
     'tipo' => 'R',
     'protestado' => 'false',
     'gerador' => 'C',
-    'dataip' => '2022-01-01',
-    'datafp' => '2022-03-31',
+    'datai' => '2022-01-01',
+    'dataf' => '2023-05-31',
 ];
 
 $consultaLancamentos = CallAPI('GET', 'titulos_receber/consulta_receber_recebidos', 'novo', $parametros);
@@ -63,12 +62,12 @@ if($jsonConsultaLancamentos['odata.count'] > 0) {
                 'data_pagamento' => $dataPagamento,
                 'valor_inicial' => $lancamentoValue['valor_inicial'],
                 'acres_decres' => $lancamentoValue['acres_decres'],
-                'valor_pago' => $lancamentoValue['valor_pago'],
-                'obs' => $lancamentoValue['obs'],
+                'valor_pago' => $lancamentoValue['valor_pago'] == null ? 0 : $lancamentoValue['valor_pago'],
+                'obs' => $lancamentoValue['obs'] == null ? '' : $lancamentoValue['obs'],
                 'filial' => $lancamentoValue['filial'],
                 'pconta' => $lancamentoValue['pconta'],
                 'efetuado' => $lancamentoValue['efetuado'] == false ? 0 : 1,
-                'cod' => $lancamentoValue['cod'],
+                'cod' => $lancamentoValue['cod'] == null ? 0 : $lancamentoValue['cod'],
                 'banco_titulo' => $lancamentoValue['banco_titulo'],
                 'agencia' => $lancamentoValue['agencia'],
                 'c_c' => $lancamentoValue['c_c'],

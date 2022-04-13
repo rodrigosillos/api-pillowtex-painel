@@ -48,6 +48,8 @@ class LiquidacaoController extends Controller
         $ultimoDiaMes = date("d", strtotime("last day of previous month"));
         $ano = date("Y");
 
+        // dd($whereRepresentante);
+
         $debtors = DB::select(DB::raw(" 
             select 
                 id,

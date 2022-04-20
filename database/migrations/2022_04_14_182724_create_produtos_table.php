@@ -21,7 +21,7 @@ class CreateProdutosTable extends Migration
             $table->string('descricao1', 100);
             $table->integer('divisao');
             $table->integer('cod_divisao');
-            $table->integer('descricao_divisao');
+            $table->string('descricao_divisao', 50);
             $table->integer('cor');
             $table->integer('estampa');
             $table->string('tamanho', 5);
@@ -35,7 +35,7 @@ class CreateProdutosTable extends Migration
             $table->float('desconto', 8, 2)->default(0.00);
             $table->float('preco_bruto', 8, 2)->default(0.00);
             $table->float('valor_comissao', 8, 2)->default(0.00);
-            $table->float('porcentagem_comissao', 8, 2)->default(0.00);
+            $table->float('percentual_comissao', 8, 2)->default(0.00);
             $table->timestamps();
         });
     }

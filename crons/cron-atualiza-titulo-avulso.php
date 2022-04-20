@@ -2,7 +2,8 @@
 
 include('connection-db.php');
 
-$sql = "select n_documento, origem from titulos_receber where representante_pedido is null";
+$sql = "select id, n_documento from titulos_receber where origem is null";
+// $sql = "select n_documento, origem from titulos_receber where representante_pedido is null";
 // $sql = "select n_documento, origem from titulos_receber where n_documento = '111535/E'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -12,8 +13,8 @@ $contador = 1;
 
 foreach ($titulosReceber as $titulo) {
 
+    $tituloID = $titulo["id"];
     $numeroDocumento = $titulo["n_documento"];
-    $origem = $titulo["origem"];
 
     // if(!empty($origem))
     //     print($contador++ . ' - ' . $origem . "\xA");
@@ -24,42 +25,61 @@ foreach ($titulosReceber as $titulo) {
     $stmt->execute();
     $tituloBaseAntiga = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        // $sql = "select representante, representante_cod, representante_nome, cliente_nome from movimentacao where cod_operacao = :origem";
-        $sql = "select agent_id, agent_code, agent_name, client_name from invoices where operation_code = :origem";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':origem', $tituloBaseAntiga['origem'], PDO::PARAM_STR);
-        $stmt->execute();
-        $movimentacao = $stmt->fetch(\PDO::FETCH_ASSOC);
+    if(isset($tituloBaseAntiga['origem'])) {
+        $data = [
+            'origem' => $tituloBaseAntiga['origem'],
+            'id' => $tituloID,
+        ];
     
-        if ($stmt->rowCount() > 0) {
+        print_r($data);
+    
+        $sql = "update titulos_receber set origem = :origem where id = :id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($data);
+    }
 
-            // $representanteID = $movimentacao['representante'];
-            // $representanteCodigo = $movimentacao['representante_cod'];
-            // $representanteNome = $movimentacao['representante_nome'];
-            // $clienteNome = $movimentacao['cliente_nome'];
+        // $sql = "select representante, representante_cod, representante_nome, cliente_nome from movimentacao where cod_operacao = :origem";
+        // $sql = "select agent_id, agent_code, agent_name, client_name from invoices where operation_code = :origem";
+        // $stmt = $pdo->prepare($sql);
+        // $stmt->bindParam(':origem', $tituloBaseAntiga['origem'], PDO::PARAM_STR);
+        // $stmt->execute();
+        // $movimentacao = $stmt->fetch(\PDO::FETCH_ASSOC);
+    
+        // if ($stmt->rowCount() > 0) {
 
-            $representanteID = $movimentacao['agent_id'];
-            $representanteCodigo = $movimentacao['agent_code'];
-            $representanteNome = $movimentacao['agent_name'];
-            $clienteNome = $movimentacao['client_name'];
+        //     // $representanteID = $movimentacao['representante'];
+        //     // $representanteCodigo = $movimentacao['representante_cod'];
+        //     // $representanteNome = $movimentacao['representante_nome'];
+        //     // $clienteNome = $movimentacao['cliente_nome'];
 
-            // print($contador++ . ' --- cliente: ' . $clienteNome . "\xA");
+        //     $representanteID = $movimentacao['agent_id'];
+        //     $representanteCodigo = $movimentacao['agent_code'];
+        //     $representanteNome = $movimentacao['agent_name'];
+        //     $clienteNome = $movimentacao['client_name'];
 
-            $representante = $representanteCodigo . ' - ' . $representanteNome;
+        //     // print($contador++ . ' --- cliente: ' . $clienteNome . "\xA");
 
-            $data = [
-                'cliente_nome' => $clienteNome,
-                'representante_movimento' => $representante,
-                'representante_pedido' => $representante,
-                'n_documento' => $numeroDocumento,
-            ];
+        //     // $representante = $representanteCodigo . ' - ' . $representanteNome;
 
-            print_r($data);
+        //     // $data = [
+        //     //     'cliente_nome' => $clienteNome,
+        //     //     'representante_movimento' => $representante,
+        //     //     'representante_pedido' => $representante,
+        //     //     'n_documento' => $numeroDocumento,
+        //     // ];
 
-            $sql = "update titulos_receber set cliente_nome = :cliente_nome, representante_movimento = :representante_movimento, representante_pedido = :representante_pedido where n_documento = :n_documento";
-            $stmt = $pdo->prepare($sql);
-            // $stmt->execute($data);
-        }
+        //     $data = [
+        //         'origem' => $origem,
+        //         'n_documento' => $numeroDocumento,
+        //     ];
+
+        //     print_r($data);
+
+        //     // $sql = "update titulos_receber set cliente_nome = :cliente_nome, representante_movimento = :representante_movimento, representante_pedido = :representante_pedido where n_documento = :n_documento";
+        //     $sql = "update titulos_receber set origem = :origem where n_documento = :n_documento";
+        //     $stmt = $pdo->prepare($sql);
+        //     // $stmt->execute($data);
+        // }
 
     // }
 

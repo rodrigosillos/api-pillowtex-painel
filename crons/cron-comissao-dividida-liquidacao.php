@@ -41,7 +41,7 @@ foreach ($titulosReceber as $tituloReceber) {
                 print('n parcelas: ' . $numeroParcelas . ' - valor comissão: ' . $valorComissao . ' - comissão título: ' . ($valorComissao/$numeroParcelas) .  "\xA");
 
                 $data = [
-                    'valor_comissao' => ( $valorComissao / $numeroParcelas ),
+                    'valor_comissao' => ( ( $valorComissao / 2 ) / $numeroParcelas ),
                     'id' => $tituloID,
                 ];
             

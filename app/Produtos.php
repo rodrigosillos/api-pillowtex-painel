@@ -9,6 +9,6 @@ class Produtos extends Model
 {
     use HasFactory;
 
-    protected $table = 'invoices_product';
+    protected $table = 'produtos';
     protected $guarded = array();
 }

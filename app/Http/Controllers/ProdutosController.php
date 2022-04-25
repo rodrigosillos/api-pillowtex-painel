@@ -13,53 +13,21 @@ class ProdutosController extends Controller
         $this->middleware('auth');
     }
 
-    public function connection($method, $param)
-    {
-        $client = new Client();
-
-        $user = "Pillowtex";
-        $pass = "P!Ll0w.021!";
-        // $environment = 'http://177.85.33.76:6017/api/millenium/';
-        $environment = 'http://pillowtex.ip.odhserver.com:6017/api/millenium';
-        $type = 'GET';
-
-        $response = $client->request($type, $environment.$method.$param, [
-            'auth' => [$user, $pass]
-        ]);
-
-        return json_decode($response->getBody()->getContents(), true);
-    }
-
     public function get(Request $request)
     {
-        $operationCode = $request->operation_code;
+        $codOperacao = $request->cod_operacao;
         
-        // invoice
-        $invoice = DB::table('invoices')
-        ->select(['price_list', 'client_address', 'invoice_type', 'operation_type'])
-        ->where('operation_code', $operationCode)
+        $movimentacao = DB::table('movimentacao')
+        ->select(['tabela', 'cliente_estado', 'tipo_pedido', 'tipo_operacao'])
+        ->where('cod_operacao', $codOperacao)
         ->first();
 
-        // commission
-        $tableId = $invoice->price_list;
-        $clientAddress = $invoice->client_address;
-        $invoiceType = $invoice->invoice_type;
-        $operationType = $invoice->operation_type;
-        
-        if($clientAddress == null)
-            $clientAddress = 'SP';
+        $tabela = $movimentacao->tabela;
+        $clienteEstado = $movimentacao->cliente_estado;
+        $tipoPedido = $movimentacao->tipo_pedido;
+        $tipoOperacao = $movimentacao->tipo_operacao;
 
-        $tableCode = 214;
-
-        if($tableId == 4)
-            $tableCode = 214;
-
-        if($tableId == 104)
-            $tableCode = 187;
-
-        $commissionPercentage = 8;
-        $commissionAmount = 0;
-        $commissionResult = [
+        $produtoData = [
             'produtos' => [],
             'totalizador' => [
                 'total_pecas' => 0,
@@ -68,74 +36,34 @@ class ProdutosController extends Controller
             ],
         ];
         
-        // products
-        $invoiceProducts = DB::table('invoices_product')
-        ->where('operation_code', $operationCode)
+        $produtos = DB::table('produtos')
+        ->where('cod_operacao', $codOperacao)
         ->get();
 
-        foreach($invoiceProducts as $invoiceProductKey => $invoiceProduct) {
+        foreach($produtos as $produtoChave => $produtoAtrib) {
 
-            $id = $invoiceProduct->id;
-            $orderId = $invoiceProduct->order_id;
-            $productInvoice = $invoiceProduct->invoice;
-            $productId = $invoiceProduct->product_id;
-            $productCode = $invoiceProduct->product_code;
-            $productName = $invoiceProduct->product_name;
-            $productQty = $invoiceProduct->quantity;
-            $productDiscount = $invoiceProduct->discount;
-            $productPrice = $invoiceProduct->price;
-            $divisionCode = $invoiceProduct->division_code;
-            $divisionDescription = $invoiceProduct->division_description;
+            $produtoData['produtos'][$produtoChave]['id'] = $produtoAtrib->id;
+            $produtoData['produtos'][$produtoChave]['pedido'] = $produtoAtrib->pedido;
+            $produtoData['produtos'][$produtoChave]['nota'] = $produtoAtrib->nota;
+            $produtoData['produtos'][$produtoChave]['produto'] = $produtoAtrib->produto;
+            $produtoData['produtos'][$produtoChave]['produto_codigo'] = $produtoAtrib->cod_produto;
+            $produtoData['produtos'][$produtoChave]['produto_nome'] = $produtoAtrib->descricao1;
+            $produtoData['produtos'][$produtoChave]['quantidade'] = $produtoAtrib->quantidade;
+            $produtoData['produtos'][$produtoChave]['preco'] = $produtoAtrib->preco;
+            $produtoData['produtos'][$produtoChave]['desconto'] = $produtoAtrib->desconto;
+            $produtoData['produtos'][$produtoChave]['produto_comissao'] = $produtoAtrib->valor_comissao;
+            $produtoData['produtos'][$produtoChave]['produto_comissao_percentual'] = sprintf("%.2f%%", $produtoAtrib->percentual_comissao);
+            $produtoData['produtos'][$produtoChave]['produto_divisao'] = $produtoAtrib->descricao_divisao;
 
-            $commissionSettings = DB::table('commission_settings')
-            ->where('product_division', $divisionCode)
-            ->where('price_list', $tableCode)
-            ->get();
-
-            if(isset($commissionSettings[0]))
-                $commissionPercentage = $commissionSettings[0]->percentage;
-
-            if($tableCode == 187) {
-                if($clientAddress != 'SP' && $productDiscount < 5)
-                    // $commissionPercentage = 4;
-                    $commissionPercentage = 3;
-            }
-
-            if($invoiceType == 'ZC PEDIDO ESPECIAL') {
-                $dataConsultaMovimentacao = '?tipo_operacao='.$operationType.'&cod_operacao='.$operationCode.'&ujuros=false&$format=json&$dateformat=iso';
-                $resultConsultaMovimentacao = $this->connection('/movimentacao/consulta', $dataConsultaMovimentacao);
-                $commissionPercentage = $resultConsultaMovimentacao['value'][0]['comissao_r'];
-            }
-            
-            // commission amout
-            $commissionAmount = floor(($productPrice * $productQty) * $commissionPercentage) / 100;
-
-            if($tableCode == 214 && $productDiscount > 5)
-                $commissionAmount = ($commissionAmount / 2);
-
-            // product data add
-            $commissionResult['produtos'][$invoiceProductKey]['id'] = $id;
-            $commissionResult['produtos'][$invoiceProductKey]['pedido'] = $orderId;
-            $commissionResult['produtos'][$invoiceProductKey]['nota'] = $productInvoice;
-            $commissionResult['produtos'][$invoiceProductKey]['produto'] = $productId;
-            $commissionResult['produtos'][$invoiceProductKey]['produto_codigo'] = $productCode;
-            $commissionResult['produtos'][$invoiceProductKey]['produto_nome'] = $productName;
-            $commissionResult['produtos'][$invoiceProductKey]['quantidade'] = $productQty;
-            $commissionResult['produtos'][$invoiceProductKey]['preco'] = $productPrice;
-            $commissionResult['produtos'][$invoiceProductKey]['desconto'] = $productDiscount;
-            $commissionResult['produtos'][$invoiceProductKey]['produto_comissao'] = $commissionAmount;
-            $commissionResult['produtos'][$invoiceProductKey]['produto_comissao_percentual'] = sprintf("%.2f%%", $commissionPercentage);
-            $commissionResult['produtos'][$invoiceProductKey]['produto_divisao'] = $divisionDescription;
-
-            $commissionResult['totalizador']['total_pecas'] += $productQty;
-            $commissionResult['totalizador']['valor_comissao'] += $commissionAmount;
-            $commissionResult['totalizador']['valor_total'] += ($productPrice * $productQty);
+            $produtoData['totalizador']['total_pecas'] += $produtoAtrib->quantidade;
+            $produtoData['totalizador']['valor_comissao'] += $produtoAtrib->valor_comissao;
+            $produtoData['totalizador']['valor_total'] += ($produtoAtrib->preco * $produtoAtrib->quantidade);
 
         }
 
         return view('produtos', 
         [
-            'products' => $commissionResult,
+            'data' => $produtoData,
         ]);
     }
 

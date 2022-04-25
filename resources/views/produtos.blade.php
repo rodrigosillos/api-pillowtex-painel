@@ -54,45 +54,45 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($products['produtos'] as $key => $product)
+                            @foreach($data['produtos'] as $key => $value)
                             <tr>
                                 <td>
                                     <div class="custom-control custom-checkbox text-center">
-                                        <input type="checkbox" class="custom-control-input" id="invoicecheck{{ $key }}" name="invoice_check[]" value="{{ $product['id'] }}">
+                                        <input type="checkbox" class="custom-control-input" id="invoicecheck{{ $key }}" name="invoice_check[]" value="{{ $value['id'] }}">
                                         <label class="custom-control-label" for="invoicecheck{{ $key }}"></label>
                                     </div>
                                 </td>
                                 
-                                <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#{{ $product['pedido'] }}</a> </td>
+                                <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#{{ $value['pedido'] }}</a> </td>
                                 <td>
-                                    {{ $product['nota'] }}
+                                    {{ $value['nota'] }}
                                 </td>
                                 <td>
-                                    {{ $product['produto_codigo'] }}
+                                    {{ $value['produto_codigo'] }}
                                 </td>
                                 <td>
-                                    {{ $product['produto_nome'] }}
+                                    {{ $value['produto_nome'] }}
                                 </td>
                                 <td>
-                                    {{ $product['quantidade'] }}
+                                    {{ $value['quantidade'] }}
                                 </td>
                                 <td>
-                                    {{ $product['produto_divisao'] }}
+                                    {{ $value['produto_divisao'] }}
                                 </td>
                                 <td>
-                                    {{ $product['desconto'] }}%
+                                    {{ $value['desconto'] }}%
                                 </td>
                                 <td>
-                                    R${{ number_format($product['preco'], 2, ',', '.') }}
+                                    R${{ number_format($value['preco'], 2, ',', '.') }}
                                 </td>
                                 <td>
-                                    R${{ number_format($product['preco'] * $product['quantidade'], 2, ',', '.') }}
+                                    R${{ number_format($value['preco'] * $value['quantidade'], 2, ',', '.') }}
                                 </td>
                                 <td>
-                                    <div class="badge badge-soft-success font-size-12">{{ $product['produto_comissao_percentual'] }}</div>
+                                    <div class="badge badge-soft-success font-size-12">{{ $value['produto_comissao_percentual'] }}</div>
                                 </td>
                                 <td>
-                                    R${{ number_format($product['produto_comissao'], 2, ',', '.') }}
+                                    R${{ number_format($value['produto_comissao'], 2, ',', '.') }}
                                 </td>
                                 
                                 <td>
@@ -112,9 +112,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{ $products['totalizador']['total_pecas'] }}</td>
-                            <td>R${{ number_format($products['totalizador']['valor_comissao'], 2, ',', '.') }}</td>
-                            <td>R${{ number_format($products['totalizador']['valor_total'], 2, ',', '.') }}</td>
+                            <td>{{ $data['totalizador']['total_pecas'] }}</td>
+                            <td>R${{ number_format($data['totalizador']['valor_comissao'], 2, ',', '.') }}</td>
+                            <td>R${{ number_format($data['totalizador']['valor_total'], 2, ',', '.') }}</td>
                         </tr>
                     </tbody>
                     </table>

@@ -22,7 +22,7 @@ Route::get('/index', 'DashboardController@index');
 
 Route::get('/representantes', 'AgentsController@get');
 Route::get('/configurar-comissoes', 'SettingsController@index');
-Route::get('/consulta-produtos/{operation_code}', 'ProdutosController@get');
+Route::get('/consulta-produtos/{cod_operacao}', 'ProdutosController@get');
 Route::post('/export-excel-faturamento', 'ExcelMovimentacaoController@exportExcel')->name('export-excel');
 Route::post('/export-excel-liquidacao', 'ExcelLiquidacaoController@exportExcel')->name('export-excel');
 Route::post('/export-excel-produtos', 'ExcelProdutosController@exportExcel')->name('export-excel');

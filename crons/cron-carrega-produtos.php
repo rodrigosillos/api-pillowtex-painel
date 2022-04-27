@@ -3,7 +3,7 @@
 include('call-api.php');
 include('connection-db.php');
 
-$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela from movimentacao where data_emissao between '2022-03-01' and '2022-03-31'";
+$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela from movimentacao where data_emissao between '2022-04-01' and '2022-04-24'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $movimentacoes = $stmt->fetchAll();
@@ -79,13 +79,15 @@ foreach ($movimentacoes as $movimentacao) {
                 $bodyConsultaDivisao = CallAPI('GET', 'divisoes/consulta', $paramsConsultaDivisao);
                 $jsonConsultaDivisao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $bodyConsultaDivisao), true);
         
-                $codDivisao = 000;
+                $codDivisao = '';
                 $descricaoDivisao = '';
                 
                 if(isset($jsonConsultaDivisao['value'])) {
                     $codDivisao = $jsonConsultaDivisao['value'][0]['cod_divisao'];
                     $descricaoDivisao = $jsonConsultaDivisao['value'][0]['descricao'];
                 }
+
+                // print('divisao: ' . $divisao . ' - cod_divisao: ' . $codDivisao . "\xA");
 
                 // fim divisao
 
@@ -99,15 +101,27 @@ foreach ($movimentacoes as $movimentacao) {
                 if($tabela == 104)
                     $tabela = 187;
                 
-                $sql = "select percentage from commission_settings WHERE product_division = :product_division AND price_list = :price_list";
+                $percentualCalculo = 0;
+
+                $sql = "select percentual_comissao from percentual_comissao where cod_divisao = :cod_divisao and tabela = :tabela";
                 $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':product_division', $codDivisao, PDO::PARAM_STR);
-                $stmt->bindParam(':price_list', $tabela, PDO::PARAM_STR);
+                $stmt->bindParam(':cod_divisao', $codDivisao, PDO::PARAM_STR);
+                $stmt->bindParam(':tabela', $tabela, PDO::PARAM_STR);
                 $stmt->execute();
-                $configComissao = $stmt->fetch(\PDO::FETCH_ASSOC);
+                $configPercentualComissao = $stmt->fetch(\PDO::FETCH_ASSOC);
 
                 if ($stmt->rowCount() > 0)
-                    $percentualCalculo = $configComissao['percentage'];
+                    $percentualCalculo = $configPercentualComissao['percentual_comissao'];
+
+                // $sql = "select percentage from commission_settings WHERE product_division = :product_division AND price_list = :price_list";
+                // $stmt = $pdo->prepare($sql);
+                // $stmt->bindParam(':product_division', $codDivisao, PDO::PARAM_STR);
+                // $stmt->bindParam(':price_list', $tabela, PDO::PARAM_STR);
+                // $stmt->execute();
+                // $configComissao = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+                // if ($stmt->rowCount() > 0)
+                //     $percentualCalculo = $configComissao['percentage'];                    
 
                 if($tabela == 187 && $clienteEstado != 'SP' && $jsonProduto['desconto'] < 5)
                     $percentualCalculo = 3;

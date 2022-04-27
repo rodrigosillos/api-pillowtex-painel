@@ -3,14 +3,14 @@
 include('call-api.php');
 include('connection-db.php');
 
-// $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, tipo_pedido, data_emissao, comissao_r, representante, representante_cliente from movimentacao where data_emissao between '2022-01-01' and '2022-03-31'";
-$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, tipo_pedido, data_emissao, comissao_r, representante, representante_cliente from movimentacao where cod_operacao = 42095";
+$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, tipo_pedido, data_emissao, comissao_r, representante, representante_cliente from movimentacao where data_emissao between '2022-04-01' and '2022-04-31'";
+// $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, tipo_pedido, data_emissao, comissao_r, representante, representante_cliente from movimentacao where cod_operacao = 65600";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $invoices = $stmt->fetchAll();
 
-$lastMonth = date("m", strtotime("first day of previous month"));
+// $lastMonth = date("m", strtotime("first day of previous month"));
 
 foreach ($invoices as $invoice) {
 
@@ -28,44 +28,56 @@ foreach ($invoices as $invoice) {
 
     $commissionAmountTotal = 0;
 
-    $sql = "select division_code, quantity, price, price_applied, price_gross, discount, product_name, product_code from invoices_product where operation_code = :operation_code";
+    $sql = "select cod_divisao, quantidade, preco, preco_aplicado, preco_bruto, desconto, descricao1, cod_produto from produtos where cod_operacao = :cod_operacao";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':operation_code', $operationCode, PDO::PARAM_STR);
+    $stmt->bindParam(':cod_operacao', $operationCode, PDO::PARAM_STR);
     $stmt->execute();
     $products = $stmt->fetchAll();
+
+    // $sql = "select division_code, quantity, price, price_applied, price_gross, discount, product_name, product_code from invoices_product where operation_code = :operation_code";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->bindParam(':operation_code', $operationCode, PDO::PARAM_STR);
+    // $stmt->execute();
+    // $products = $stmt->fetchAll();
     
     foreach ($products as $product) {
         
-        $divisionCode = $product['division_code'];
-        $productName = $product['product_name'];
-        $productCode = $product['product_code'];
-        $quantity = $product['quantity'];
-        $price = $product['price'];
-        $priceApplied = $product['price_applied'];
-        $discount = $product['discount'];
+        $divisionCode = $product['cod_divisao'];
+        $productName = $product['descricao1'];
+        $productCode = $product['cod_produto'];
+        $quantity = $product['quantidade'];
+        $price = $product['preco'];
+        $priceApplied = $product['preco_aplicado'];
+        $discount = $product['desconto'];
         
         if($clientAddress == null)
             $clientAddress = 'SP';
     
         $tableCode = 214;
-
-        if($tableId == 4)
-            $tableCode = 214;
     
         if($tableId == 104)
             $tableCode = 187;
     
-        $sql = "select percentage from commission_settings where product_division = :product_division and price_list = :price_list";
+        $sql = "select percentual_comissao from percentual_comissao where cod_divisao = :cod_divisao and tabela = :tabela";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':product_division', $divisionCode, PDO::PARAM_STR);
-        $stmt->bindParam(':price_list', $tableCode, PDO::PARAM_STR);
+        $stmt->bindParam(':cod_divisao', $divisionCode, PDO::PARAM_STR);
+        $stmt->bindParam(':tabela', $tableCode, PDO::PARAM_STR);
         $stmt->execute();
         $resultSettings = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        // $sql = "select percentage from commission_settings where product_division = :product_division and price_list = :price_list";
+        // $stmt = $pdo->prepare($sql);
+        // $stmt->bindParam(':product_division', $divisionCode, PDO::PARAM_STR);
+        // $stmt->bindParam(':price_list', $tableCode, PDO::PARAM_STR);
+        // $stmt->execute();
+        // $resultSettings = $stmt->fetch(\PDO::FETCH_ASSOC);
     
         $commissionPercentage = 0;
 
         if ($stmt->rowCount() > 0)
-            $commissionPercentage = $resultSettings['percentage'];
+            $commissionPercentage = $resultSettings['percentual_comissao'];
+
+        print($tableCode . ' - ' . $divisionCode . ' - ' . $commissionPercentage . "\xA");
     
         if($tableCode == 187 && $clientAddress != 'SP' && $discount < 5)
             $commissionPercentage = 3;

@@ -14,7 +14,7 @@
     @slot('title') FATURAMENTO @endslot
 @endcomponent
 
-    <form action="{{url('consulta-faturamento')}}" method="post">
+    <form id="frmFaturamento" action="{{url('consulta-faturamento')}}" method="post">
         {{ csrf_field() }}
         <div class="row">
             @if ( Auth::user()->user_profile_id <> 3 )
@@ -51,7 +51,7 @@
     <br/>
     <br/>
 
-    <form action="{{url('export-excel-faturamento')}}" method="post">
+    <form id="frmExcelFaturamento" action="{{url('export-excel-faturamento')}}" method="post">
         {{ csrf_field() }}
         <div class="row">
             <div class="col-md-3">

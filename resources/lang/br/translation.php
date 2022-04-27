@@ -154,6 +154,9 @@ return [
   "Substituicao"=> "Substituição",
   "Substituicao_Titulo"=> "SUBSTITUIÇÃO",
   "Devolucao"=> "DEVOLUÇÃO",
+  "Percentual_Comissao"=> "Percentual de Comissão",
+  "Tipos_Pedido"=> "Tipos de Pedido",
+  "Tipos_Pgto"=> "Tipos de Pagamento",
 ];
 
 ?>

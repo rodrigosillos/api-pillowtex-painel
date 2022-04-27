@@ -20,7 +20,7 @@ class CreateProdutosTable extends Migration
             $table->string('cod_produto', 60);
             $table->string('descricao1', 100);
             $table->integer('divisao');
-            $table->integer('cod_divisao');
+            $table->string('cod_divisao', 10);
             $table->string('descricao_divisao', 50);
             $table->integer('cor');
             $table->integer('estampa');

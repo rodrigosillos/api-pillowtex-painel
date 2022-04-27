@@ -22,11 +22,18 @@ Route::get('/index', 'DashboardController@index');
 
 Route::get('/representantes', 'AgentsController@get');
 Route::get('/configurar-comissoes', 'SettingsController@index');
+Route::get('/percentual-comissao', 'PercentualComissaoController@index');
+Route::get('/tipos-pedido', 'TiposPedidoController@index');
+Route::get('/tipos-pgto', 'TiposPgtoController@index');
 Route::get('/consulta-produtos/{cod_operacao}', 'ProdutosController@get');
+
 Route::post('/export-excel-faturamento', 'ExcelMovimentacaoController@exportExcel')->name('export-excel');
 Route::post('/export-excel-liquidacao', 'ExcelLiquidacaoController@exportExcel')->name('export-excel');
 Route::post('/export-excel-produtos', 'ExcelProdutosController@exportExcel')->name('export-excel');
 Route::post('/configurar-comissoes-salvar', 'SettingsController@set');
+Route::post('/percentual-comissao-salvar', 'PercentualComissaoController@salvar');
+Route::post('/tipos-pedido-salvar', 'TiposPedidoController@salvar');
+Route::post('/tipos-pgto-salvar', 'TiposPgtoController@salvar');
 
 //faturamento
 Route::get('/faturamento', 'MovimentacaoController@index');

@@ -69,15 +69,12 @@
                         <li><a href="/substituicao">@lang('translation.Substituicao')</a></li>
                         -->
                         <li><a href="/representantes">@lang('translation.Agents')</a>
-                        <li><a href="/configurar-comissoes">@lang('translation.Settings')</a>
-                            <!--
+                        <li><a href="/percentual-comissao">@lang('translation.Settings')</a>
                             <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="javascript: void(0);">@lang('translation.Tables')</a></li>
-                                <li><a href="javascript: void(0);">@lang('translation.Discounts')</a></li>
-                                <li><a href="javascript: void(0);">@lang('translation.Commission_Percentage')</a></li>
-                                <li><a href="javascript: void(0);">@lang('translation.States')</a></li>
+                                <li><a href="/percentual-comissao">@lang('translation.Percentual_Comissao')</a></li>
+                                <li><a href="/tipos-pedido">@lang('translation.Tipos_Pedido')</a></li>
+                                <li><a href="/tipos-pgto">@lang('translation.Tipos_Pgto')</a></li>
                             </ul>
-                            -->
                         </li>
                     </ul>
                 </li>

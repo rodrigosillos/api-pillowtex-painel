@@ -74,6 +74,7 @@
                                 <li><a href="/percentual-comissao">@lang('translation.Percentual_Comissao')</a></li>
                                 <li><a href="/tipos-pedido">@lang('translation.Tipos_Pedido')</a></li>
                                 <li><a href="/tipos-pgto">@lang('translation.Tipos_Pgto')</a></li>
+                                <li><a href="#">@lang('translation.Divisao_Comissao')</a></li>
                             </ul>
                         </li>
                     </ul>

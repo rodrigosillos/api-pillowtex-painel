@@ -1,6 +1,6 @@
 @extends('layouts.master-icon-sidebar')
 @section('title')
-@lang('translation.Form_Repeater')
+@lang('translation.Tipos_Pgto')
 @endsection
 @section('css')
     <!-- plugin css -->
@@ -10,14 +10,14 @@
 @section('content')
 @component('common-components.breadcrumb')
     @slot('pagetitle') Configurações @endslot
-    @slot('title') Comissão @endslot
+    @slot('title') CONFIGURAÇÕES @endslot
 @endcomponent
 
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4">Configurar Tipos de Pagamento</h4>
+                    <h4 class="card-title mb-4">REMOVER TIPO DE PAGAMENTO DO CÁLCULO DE COMISSÃO</h4>
                     <form class="repeater" action="{{url('tipos-pgto-salvar')}}" method="post">
                         {{ csrf_field() }}
                         

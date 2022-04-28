@@ -157,6 +157,7 @@ return [
   "Percentual_Comissao"=> "Percentual de Comissão",
   "Tipos_Pedido"=> "Tipos de Pedido",
   "Tipos_Pgto"=> "Tipos de Pagamento",
+  "Divisao_Comissao"=> "Divisão de Comissão",
 ];
 
 ?>

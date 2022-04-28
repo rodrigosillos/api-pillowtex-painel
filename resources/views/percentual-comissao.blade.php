@@ -1,6 +1,6 @@
 @extends('layouts.master-icon-sidebar')
 @section('title')
-@lang('translation.Form_Repeater')
+@lang('translation.Percentual_Comissao')
 @endsection
 @section('css')
     <!-- plugin css -->
@@ -10,14 +10,14 @@
 @section('content')
 @component('common-components.breadcrumb')
     @slot('pagetitle') Configurações @endslot
-    @slot('title') Comissão @endslot
+    @slot('title') CONFIGURAÇÕES @endslot
 @endcomponent
 
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4">Configurar Percentual de Commissão</h4>
+                    <h4 class="card-title mb-4">PERCENTUAL DE COMISSÃO POR PRODUTO</h4>
                     <form class="repeater" action="{{url('percentual-comissao-salvar')}}" method="post">
                         {{ csrf_field() }}
                         
@@ -52,7 +52,7 @@
                             </div>
                             @endforeach
                         </div>
-                        <input data-repeater-create type="button" class="btn btn-success mt-3 mt-lg-0" value="Adicionar +"/>
+                        <!-- <input data-repeater-create type="button" class="btn btn-success mt-3 mt-lg-0" value="Adicionar +"/> -->
                         <input type="submit" class="btn btn-success mt-3 mt-lg-0" value="Salvar"/>
 
                     </form>

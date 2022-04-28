@@ -76,8 +76,6 @@ foreach ($invoices as $invoice) {
 
         if ($stmt->rowCount() > 0)
             $commissionPercentage = $resultSettings['percentual_comissao'];
-
-        print($tableCode . ' - ' . $divisionCode . ' - ' . $commissionPercentage . "\xA");
     
         if($tableCode == 187 && $clientAddress != 'SP' && $discount < 5)
             $commissionPercentage = 3;
@@ -150,7 +148,7 @@ foreach ($invoices as $invoice) {
     // fim divisao comissao
 
     $stmt = $pdo->prepare($sql);
-    // $stmt->execute($data);
+    $stmt->execute($data);
 
 }
 

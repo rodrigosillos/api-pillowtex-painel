@@ -34,15 +34,11 @@ class TiposPgtoController extends Controller
 
         foreach($data as $item) {
 
-            // if(!empty($percentual['cod_divisao']) && !empty($percentual['tabela'])) {
-
-                DB::table('tipos_pgto')->insert([
-                    'tipo_pgto' => $item['tipo_pgto'],
-                    'descricao' => $item['descricao'],
-                    'oculto' => $item['oculto'],
-                ]);
-
-            // }
+            DB::table('tipos_pgto')->insert([
+                'tipo_pgto' => $item['tipo_pgto'],
+                'descricao' => $item['descricao'],
+                'oculto' => isset($item['oculto'][0]) ? $item['oculto'][0] : 0,
+            ]);
         }
 
         return redirect()->action([TiposPgtoController::class, 'index']);

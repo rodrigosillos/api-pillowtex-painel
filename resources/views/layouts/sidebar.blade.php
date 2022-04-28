@@ -69,7 +69,7 @@
                         <li><a href="/substituicao">@lang('translation.Substituicao')</a></li>
                         -->
                         <li><a href="/representantes">@lang('translation.Agents')</a>
-                        <li><a href="/percentual-comissao">@lang('translation.Settings')</a>
+                        <li><a href="#">@lang('translation.Settings')</a>
                             <ul class="sub-menu" aria-expanded="true">
                                 <li><a href="/percentual-comissao">@lang('translation.Percentual_Comissao')</a></li>
                                 <li><a href="/tipos-pedido">@lang('translation.Tipos_Pedido')</a></li>

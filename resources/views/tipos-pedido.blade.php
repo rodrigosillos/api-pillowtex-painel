@@ -17,7 +17,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4">REMOVER TIPO DE PEDIDO DO CÁLUCLO DE COMISSÃO</h4>
+                    <h4 class="card-title mb-4">REMOVER TIPO DE PEDIDO DO CÁLCULO DE COMISSÃO</h4>
                     <form class="repeater" action="{{url('tipos-pedido-salvar')}}" method="post">
                         {{ csrf_field() }}
                         
@@ -28,18 +28,18 @@
                                 <input type="hidden" id="tipo_pedido_{{ $key }}" name="tipo_pedido" value="{{ $value['tipo_pedido'] }}"/>
                                 
                                 <div class="form-group col-lg-2">
-                                    <label for="descricao_{{ $key }}">Tipo de Pedido</label>
-                                    <input type="text" id="descricao_{{ $key }}" name="descricao" class="form-control" value="{{ $value['descricao'] }}"/>
+                                    <!-- <label for="descricao_{{ $key }}">Tipo de Pedido</label> -->
+                                    <input type="text" id="descricao_{{ $key }}" name="descricao" readonly class="form-control" value="{{ $value['descricao'] }}"/>
                                 </div>
 
-                                <div class="form-group col-lg-2">
-                                    <label for="oculto_{{ $key }}">Ocultar?</label>
-                                    <input type="text" id="oculto_{{ $key }}" name="oculto" class="form-control" value="{{ $value['oculto'] }}"/>
+                                <div class="col-lg-2 text-center form-check mb-3">
+                                    <!-- <label for="ocultar_{{ $key }}">Ocultar</label> -->
+                                    <input type="checkbox" class="form-check-input" id="oculto_{{ $key }}" name="oculto" value="1" @if($value["oculto"] == 1) checked @endif/>
                                 </div>
                                 
-                                <div class="col-lg-2 align-self-center">
+                                <!-- <div class="col-lg-2 align-self-center">
                                     <input data-repeater-delete type="button" class="btn btn-primary btn-block" value="Apagar"/>
-                                </div>
+                                </div> -->
                                 
                             </div>
                             @endforeach

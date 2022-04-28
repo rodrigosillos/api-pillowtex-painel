@@ -4,15 +4,15 @@ include('call-api-novo.php');
 include('connection-db.php');
 
 $parametros = [
-    'efetuado' => 'false',
+    'efetuado' => 'true',
     'substituido' => 'false',
     '$format' => 'json',
     '$dateformat' => 'iso',
     'tipo' => 'R',
     'protestado' => 'false',
     'gerador' => 'C',
-    'datai' => '2022-01-01',
-    'dataf' => '2023-05-31',
+    'dataip' => '2022-04-01',
+    'datafp' => '2022-04-30',
 ];
 
 $consultaLancamentos = CallAPI('GET', 'titulos_receber/consulta_receber_recebidos', 'novo', $parametros);
@@ -21,6 +21,9 @@ $jsonConsultaLancamentos = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', ''
 if($jsonConsultaLancamentos['odata.count'] > 0) {
 
     foreach ($jsonConsultaLancamentos['value'] as $lancamentoValue) {
+
+        $dataPagamento = date_create($lancamentoValue['data_pagamento']);
+        $dataPagamento = date_format($dataPagamento, "Y-m-d H:i:s");
 
         $sql = "select origem from titulos_receber where lancamento = :lancamento and n_documento = :n_documento and cod = :cod";
         $stmt = $pdo->prepare($sql);
@@ -49,14 +52,12 @@ if($jsonConsultaLancamentos['odata.count'] > 0) {
             $dataVencimento = date_create($lancamentoValue['data_vencimento']);
             $dataVencimento = date_format($dataVencimento, "Y-m-d H:i:s");
 
-            $dataPagamento = date_create($lancamentoValue['data_pagamento']);
-            $dataPagamento = date_format($dataPagamento, "Y-m-d H:i:s");
-
             print($lancamentoValue['n_documento'] . "\xA");
 
             $data = [
                 'lancamento' => $lancamentoValue['lancamento'],
                 'n_documento' => $lancamentoValue['n_documento'],
+                'tipo_pagto' => $lancamentoValue['tipo_pagto'],
                 'data_emissao' => $dataEmissao,
                 'data_vencimento' => $dataVencimento,
                 'data_pagamento' => $dataPagamento,
@@ -94,6 +95,7 @@ if($jsonConsultaLancamentos['odata.count'] > 0) {
             
             $stmt = $pdo->prepare("INSERT INTO titulos_receber (lancamento,
                                                                 n_documento,
+                                                                tipo_pagto,
                                                                 data_emissao,
                                                                 data_vencimento,
                                                                 data_pagamento,
@@ -128,6 +130,7 @@ if($jsonConsultaLancamentos['odata.count'] > 0) {
                                                                 representante_movimento,
                                                                 cliente_nome) VALUES (:lancamento,
                                                                                     :n_documento,
+                                                                                    :tipo_pagto,
                                                                                     :data_emissao,
                                                                                     :data_vencimento,
                                                                                     :data_pagamento,
@@ -161,6 +164,28 @@ if($jsonConsultaLancamentos['odata.count'] > 0) {
                                                                                     :representante_cliente,
                                                                                     :representante_movimento,
                                                                                     :cliente_nome)");
+            $stmt->execute($data);
+
+        } else {
+
+            $data = [
+                'efetuado' => $lancamentoValue['efetuado'] == false ? 0 : 1,
+                'data_pagamento' => $dataPagamento,
+                'valor_pago' => $lancamentoValue['valor_pago'] == null ? 0 : $lancamentoValue['valor_pago'],
+                'tipo_pagto' => $lancamentoValue['tipo_pagto'],
+                'lancamento' => $lancamentoValue['lancamento'],
+                'n_documento' => $lancamentoValue['n_documento'],
+                'cod' => $lancamentoValue['cod'] == null ? 0 : $lancamentoValue['cod'],
+            ];
+
+            print_r($data);
+
+            $sql = "update titulos_receber SET efetuado = :efetuado,
+                                                data_pagamento = :data_pagamento,
+                                                valor_pago = :valor_pago,
+                                                tipo_pagto = :tipo_pagto
+                                                where lancamento = :lancamento and n_documento = :n_documento and cod = :cod limit 1";
+            $stmt = $pdo->prepare($sql);
             $stmt->execute($data);
 
         }

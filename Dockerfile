@@ -12,7 +12,7 @@ RUN apt update && apt install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
-    zip \
+    php-zip \
     unzip
 
 # Clear cache

@@ -87,6 +87,9 @@ foreach ($movimentacoes as $movimentacao) {
                     $descricaoDivisao = $jsonConsultaDivisao['value'][0]['descricao'];
                 }
 
+                if(is_null($codDivisao))
+                    $codDivisao = '';
+
                 // print('divisao: ' . $divisao . ' - cod_divisao: ' . $codDivisao . "\xA");
 
                 // fim divisao

@@ -1,20 +1,20 @@
 @extends('layouts.master-without-nav')
 @section('title')
-Login
+Login - Painel de Comissão
 @endsection
 @section('content')
-<div class="home-btn d-none d-sm-block">
-    <a href="{{url('index')}}" class="text-dark"><i class="mdi mdi-home-variant h2"></i></a>
-</div>
+<!-- <div class="home-btn d-none d-sm-block">
+    <a href="javascript:;" class="text-dark"><i class="mdi mdi-home-variant h2"></i></a>
+</div> -->
 <div class="account-pages my-5 pt-sm-5">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="text-center">
-                    <a href="{{url('index')}}" class="mb-5 d-block auth-logo">
+                    <!-- <a href="{{url('index')}}" class="mb-5 d-block auth-logo">
                         <img src="{{ URL::asset('assets/images/logo-dark.png')}}" alt="" height="22" class="logo logo-dark">
                         <img src="{{ URL::asset('assets/images/logo-light.png')}}" alt="" height="22" class="logo logo-light">
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </div>
@@ -23,15 +23,15 @@ Login
                 <div class="card">
                     <div class="card-body p-4">
                         <div class="text-center mt-2">
-                            <h5 class="text-primary">Bem vindo de volta !</h5>
-                            <p class="text-muted">Faça login para acessar o Painel.</p>
+                            <h5 class="text-primary">Bem vindo !</h5>
+                            <p class="text-muted">Faça login para acessar o Painel de Comissão.</p>
                         </div>
                         <div class="p-2 mt-4">
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
 
                                 <div class="form-group">
-                                    <label for="email">{{ __('Endereço de E-Mail') }}</label>
+                                    <label for="email">{{ __('Endereço de E-mail') }}</label>
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Enter Email address">
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -67,14 +67,14 @@ Login
 
 
                                 <div class="mt-4 text-center">
-                                    <p class="mb-0">Não tem conta? <a href="{{url('register')}}" class="font-weight-medium text-primary"> Inscreva-se agora </a> </p>
+                                    <!-- <p class="mb-0">Não tem conta? <a href="{{url('register')}}" class="font-weight-medium text-primary"> Inscreva-se agora </a> </p> -->
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
                 <div class="mt-5 text-center">
-                    <p>© 2020 Minible. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                    <!-- <p>© 2020 Minible. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p> -->
                 </div>
             </div>
         </div>

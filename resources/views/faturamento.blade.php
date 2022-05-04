@@ -52,7 +52,7 @@
     <br/>
 
     <form id="frmExcelFaturamento" action="{{url('export-excel-faturamento')}}" method="post">
-        {{ csrf_field() }}
+        @csrf
         <div class="row">
             <div class="col-md-3">
                 <div>

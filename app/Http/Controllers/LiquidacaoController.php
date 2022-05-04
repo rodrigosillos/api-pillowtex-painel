@@ -42,10 +42,10 @@ class LiquidacaoController extends Controller
             $whereRepresentante = "representante_pedido like '%".$representanteLogado."%' and";
             // $whereRepresentante = "representante_pedido like '%".$representanteLogado."%' or representante_cliente like '%".$representanteLogado."%' and";
         
-        $mesAnterior = '04';
-        $ultimoDiaMes = '30';
-        // $mesAnterior = date("m", strtotime("first day of previous month"));
-        // $ultimoDiaMes = date("d", strtotime("last day of previous month"));
+        // $mesAnterior = '04';
+        // $ultimoDiaMes = '30';
+        $mesAnterior = date("m", strtotime("first day of previous month"));
+        $ultimoDiaMes = date("d", strtotime("last day of previous month"));
         $ano = date("Y");
 
         // dd($whereRepresentante);

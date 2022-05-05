@@ -2,7 +2,6 @@
 
 include('connection-db.php');
 
-// $sql = "select id, n_documento from titulos_receber where origem is null";
 $sql = "select id, n_documento, origem from titulos_receber where representante_pedido is null";
 // $sql = "select id, n_documento, origem from titulos_receber where n_documento = '111535/E'";
 $stmt = $pdo->prepare($sql);
@@ -16,9 +15,6 @@ foreach ($titulosReceber as $titulo) {
     $tituloID = $titulo["id"];
     $numeroDocumento = $titulo["n_documento"];
 
-    // if(!empty($origem))
-    //     print($contador++ . ' - ' . $origem . "\xA");
-
     $sql = "select origem from lancamentos_base_antiga where numero_documento = :numero_documento";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':numero_documento', $numeroDocumento, PDO::PARAM_STR);
@@ -27,20 +23,8 @@ foreach ($titulosReceber as $titulo) {
 
     if(isset($tituloBaseAntiga['origem'])) {
 
-    //     $data = [
-    //         'origem' => $tituloBaseAntiga['origem'],
-    //         'id' => $tituloID,
-    //     ];
-    
-    //     print_r($data);
-    
-    //     $sql = "update titulos_receber set origem = :origem where id = :id";
-    //     $stmt = $pdo->prepare($sql);
-    //     $stmt->execute($data);
-    // }
-
-        $sql = "select representante, representante_cod, representante_nome, cliente_nome from movimentacao where cod_operacao = :origem";
-        // $sql = "select agent_id, agent_code, agent_name, client_name from invoices where operation_code = :origem";
+        // $sql = "select representante, representante_cod, representante_nome, cliente_nome from movimentacao where cod_operacao = :origem";
+        $sql = "select agent_id, agent_code, agent_name, client_name from invoices where operation_code = :origem";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':origem', $tituloBaseAntiga['origem'], PDO::PARAM_STR);
         $stmt->execute();
@@ -48,17 +32,15 @@ foreach ($titulosReceber as $titulo) {
     
         if ($stmt->rowCount() > 0) {
 
-            $representanteID = $movimentacao['representante'];
-            $representanteCodigo = $movimentacao['representante_cod'];
-            $representanteNome = $movimentacao['representante_nome'];
-            $clienteNome = $movimentacao['cliente_nome'];
+            // $representanteID = $movimentacao['representante'];
+            // $representanteCodigo = $movimentacao['representante_cod'];
+            // $representanteNome = $movimentacao['representante_nome'];
+            // $clienteNome = $movimentacao['cliente_nome'];
 
-            // $representanteID = $movimentacao['agent_id'];
-            // $representanteCodigo = $movimentacao['agent_code'];
-            // $representanteNome = $movimentacao['agent_name'];
-            // $clienteNome = $movimentacao['client_name'];
-
-            // print($contador++ . ' --- cliente: ' . $clienteNome . "\xA");
+            $representanteID = $movimentacao['agent_id'];
+            $representanteCodigo = $movimentacao['agent_code'];
+            $representanteNome = $movimentacao['agent_name'];
+            $clienteNome = $movimentacao['client_name'];
 
             $representante = $representanteCodigo . ' - ' . $representanteNome;
 
@@ -68,11 +50,6 @@ foreach ($titulosReceber as $titulo) {
                 'representante_pedido' => $representante,
                 'n_documento' => $numeroDocumento,
             ];
-
-            // $data = [
-            //     'origem' => $origem,
-            //     'n_documento' => $numeroDocumento,
-            // ];
 
             print_r($data);
 

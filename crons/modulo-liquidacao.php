@@ -52,7 +52,7 @@ if($jsonConsultaLancamentos['odata.count'] > 0) {
             $dataVencimento = date_create($lancamentoValue['data_vencimento']);
             $dataVencimento = date_format($dataVencimento, "Y-m-d H:i:s");
 
-            print($lancamentoValue['n_documento'] . "\xA");
+            print('----------- cadastrando novo titulo: ' . $lancamentoValue['n_documento'] . "\xA");
 
             $data = [
                 'lancamento' => $lancamentoValue['lancamento'],
@@ -178,7 +178,7 @@ if($jsonConsultaLancamentos['odata.count'] > 0) {
                 'cod' => $lancamentoValue['cod'] == null ? 0 : $lancamentoValue['cod'],
             ];
 
-            print_r($data);
+            print_r('--- atualizando titulo: ' . $lancamentoValue['n_documento'] . "\xA");
 
             $sql = "update titulos_receber SET efetuado = :efetuado,
                                                 data_pagamento = :data_pagamento,

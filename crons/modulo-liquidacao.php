@@ -4,26 +4,30 @@ include('call-api-novo.php');
 include('connection-db.php');
 
 $parametros = [
-    'efetuado' => 'true',
+    'efetuado' => 'false',
     'substituido' => 'false',
     '$format' => 'json',
     '$dateformat' => 'iso',
     'tipo' => 'R',
     'protestado' => 'false',
     'gerador' => 'C',
-    'dataip' => '2022-04-01',
-    'datafp' => '2022-04-30',
+    'datai' => '2022-01-01',
+    'dataf' => '2023-06-30',
 ];
 
 $consultaLancamentos = CallAPI('GET', 'titulos_receber/consulta_receber_recebidos', 'novo', $parametros);
 $jsonConsultaLancamentos = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $consultaLancamentos), true);
 
-if($jsonConsultaLancamentos['odata.count'] > 0) {
+if(isset($jsonConsultaLancamentos['value'])) {
 
     foreach ($jsonConsultaLancamentos['value'] as $lancamentoValue) {
 
-        $dataPagamento = date_create($lancamentoValue['data_pagamento']);
-        $dataPagamento = date_format($dataPagamento, "Y-m-d H:i:s");
+        $dataPagamento = null;
+
+        if($lancamentoValue['data_pagamento'] != null) {
+            $dataPagamento = date_create($lancamentoValue['data_pagamento']);
+            $dataPagamento = date_format($dataPagamento, "Y-m-d H:i:s");
+        }
 
         $sql = "select origem from titulos_receber where lancamento = :lancamento and n_documento = :n_documento and cod = :cod";
         $stmt = $pdo->prepare($sql);
@@ -52,7 +56,7 @@ if($jsonConsultaLancamentos['odata.count'] > 0) {
             $dataVencimento = date_create($lancamentoValue['data_vencimento']);
             $dataVencimento = date_format($dataVencimento, "Y-m-d H:i:s");
 
-            print('----------- cadastrando novo titulo: ' . $lancamentoValue['n_documento'] . "\xA");
+            print('----------- cadastrando novo titulo: ' . $lancamentoValue['n_documento'] . ' data pagamento: ' . $dataPagamento . "\xA");
 
             $data = [
                 'lancamento' => $lancamentoValue['lancamento'],
@@ -178,7 +182,7 @@ if($jsonConsultaLancamentos['odata.count'] > 0) {
                 'cod' => $lancamentoValue['cod'] == null ? 0 : $lancamentoValue['cod'],
             ];
 
-            print_r('--- atualizando titulo: ' . $lancamentoValue['n_documento'] . "\xA");
+            print_r('--- atualizando titulo: ' . $lancamentoValue['n_documento'] . ' data pagamento: ' . $dataPagamento . "\xA");
 
             $sql = "update titulos_receber SET efetuado = :efetuado,
                                                 data_pagamento = :data_pagamento,

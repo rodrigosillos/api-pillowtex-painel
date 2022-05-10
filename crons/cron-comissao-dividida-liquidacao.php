@@ -3,7 +3,8 @@
 include('call-api-novo.php');
 include('connection-db.php');
 
-$sql = "select id, n_documento, origem from titulos_receber where data_pagamento between '2022-04-01' and '2022-04-30' and valor_comissao = 0";
+// $sql = "select id, n_documento, origem from titulos_receber where data_pagamento between '2022-04-01' and '2022-04-30' and valor_comissao = 0";
+$sql = "select id, n_documento, origem from titulos_receber where origem = 8803";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $titulosReceber = $stmt->fetchAll();
@@ -38,7 +39,7 @@ foreach ($titulosReceber as $tituloReceber) {
             
             if($valorComissao > 0) {
                 
-                print('n parcelas: ' . $numeroParcelas . ' - valor comissão: ' . $valorComissao . ' - comissão título: ' . ($valorComissao/$numeroParcelas) .  "\xA");
+                print('n parcelas: ' . $numeroParcelas . ' - valor comissão: ' . $valorComissao . ' - comissão título: ' . ( ( $valorComissao / 2 ) / $numeroParcelas ) .  "\xA");
 
                 $data = [
                     'valor_comissao' => ( ( $valorComissao / 2 ) / $numeroParcelas ),

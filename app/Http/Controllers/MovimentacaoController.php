@@ -73,10 +73,10 @@ class MovimentacaoController extends Controller
             $userProfileId = $users->user_profile_id;
         }
 
-        $query = " data_emissao between '" . $dateStart . "' and '" . $dateEnd . "' and oculto = 0 and tipo_operacao = 'S'";
+        $query = " tipo_pedido not in (select tipo_pedido from tipos_pedido where oculto = 1) and data_emissao between '" . $dateStart . "' and '" . $dateEnd . "' and oculto = 0 and tipo_operacao = 'S'";
 
         if($searchAgent != "todos") {
-            $query  = " data_emissao between '" . $dateStart . "' and '" . $dateEnd . "' and representante_cod = " . $searchAgent . " and oculto = 0 and tipo_operacao = 'S'";
+            $query  = " tipo_pedido not in (select tipo_pedido from tipos_pedido where oculto = 1) and data_emissao between '" . $dateStart . "' and '" . $dateEnd . "' and representante_cod = " . $searchAgent . " and oculto = 0 and tipo_operacao = 'S'";
             $query .= " or data_emissao between '" . $dateStart . "' and '" . $dateEnd . "' and representante_cliente_cod = " . $searchAgent . " and oculto = 0 and tipo_operacao = 'S'";
         }
 

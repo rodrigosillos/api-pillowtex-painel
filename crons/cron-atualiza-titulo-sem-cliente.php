@@ -15,8 +15,8 @@ foreach ($titulosReceber as $titulo) {
     $numeroDocumento = $titulo["n_documento"];
     $origem = $titulo["origem"];
 
-    $sql = "select representante, representante_cod, representante_nome, cliente_nome from movimentacao where cod_operacao = :origem";
-    // $sql = "select agent_id, agent_code, agent_name, client_name from invoices where operation_code = :origem";
+    // $sql = "select representante, representante_cod, representante_nome, cliente_nome from movimentacao where cod_operacao = :origem";
+    $sql = "select agent_id, agent_code, agent_name, client_name from invoices where operation_code = :origem";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':origem', $origem, PDO::PARAM_STR);
     $stmt->execute();
@@ -24,15 +24,15 @@ foreach ($titulosReceber as $titulo) {
 
     if ($stmt->rowCount() > 0) {
 
-        $representanteID = $movimentacao['representante'];
-        $representanteCodigo = $movimentacao['representante_cod'];
-        $representanteNome = $movimentacao['representante_nome'];
-        $clienteNome = $movimentacao['cliente_nome'];
+        // $representanteID = $movimentacao['representante'];
+        // $representanteCodigo = $movimentacao['representante_cod'];
+        // $representanteNome = $movimentacao['representante_nome'];
+        // $clienteNome = $movimentacao['cliente_nome'];
 
-        // $representanteID = $movimentacao['agent_id'];
-        // $representanteCodigo = $movimentacao['agent_code'];
-        // $representanteNome = $movimentacao['agent_name'];
-        // $clienteNome = $movimentacao['client_name'];
+        $representanteID = $movimentacao['agent_id'];
+        $representanteCodigo = $movimentacao['agent_code'];
+        $representanteNome = $movimentacao['agent_name'];
+        $clienteNome = $movimentacao['client_name'];
 
         $representante = $representanteCodigo . ' - ' . $representanteNome;
 

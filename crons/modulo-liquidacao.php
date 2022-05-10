@@ -4,15 +4,15 @@ include('call-api-novo.php');
 include('connection-db.php');
 
 $parametros = [
-    'efetuado' => 'false',
+    'efetuado' => 'true',
     'substituido' => 'false',
     '$format' => 'json',
     '$dateformat' => 'iso',
     'tipo' => 'R',
     'protestado' => 'false',
     'gerador' => 'C',
-    'datai' => '2022-01-01',
-    'dataf' => '2023-06-30',
+    'dataip' => '2022-04-01',
+    'datafp' => '2022-04-30',
 ];
 
 $consultaLancamentos = CallAPI('GET', 'titulos_receber/consulta_receber_recebidos', 'novo', $parametros);
@@ -168,7 +168,7 @@ if(isset($jsonConsultaLancamentos['value'])) {
                                                                                     :representante_cliente,
                                                                                     :representante_movimento,
                                                                                     :cliente_nome)");
-            $stmt->execute($data);
+            // $stmt->execute($data);
 
         } else {
 
@@ -190,7 +190,7 @@ if(isset($jsonConsultaLancamentos['value'])) {
                                                 tipo_pagto = :tipo_pagto
                                                 where lancamento = :lancamento and n_documento = :n_documento and cod = :cod limit 1";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute($data);
+            // $stmt->execute($data);
 
         }
 

@@ -4,7 +4,7 @@ include('call-api.php');
 include('connection-db.php');
 
 // $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, tipo_pedido, data_emissao, comissao_r, representante, representante_cliente from movimentacao where data_emissao between '2022-04-01' and '2022-04-30'";
-$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, tipo_pedido, data_emissao, comissao_r, representante, representante_cliente from movimentacao where romaneio in ('102259','105395','111461','102264','105375','113364','100080','99507','99929','105504','112688','99165','102782','105391','112424','99082','99063','99985','98590','98584','98916','99069','104784','104229','102255','104699','99753','104753','105400','112681','99050','111667','101127','98651','101024','112992','112661','112036','101386','113389','111840','105406','99520','98580','112674','111610','99057','99120','105828','105092','112869','100087','105832'))";
+$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, tipo_pedido, data_emissao, comissao_r, representante, representante_cliente from movimentacao where romaneio in ('102259','105395','111461','102264','105375','113364','100080','99507','99929','105504','112688','99165','102782','105391','112424','99082','99063','99985','98590','98584','98916','99069','104784','104229','102255','104699','99753','104753','105400','112681','99050','111667','101127','98651','101024','112992','112661','112036','101386','113389','111840','105406','99520','98580','112674','111610','99057','99120','105828','105092','112869','100087','105832')";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();

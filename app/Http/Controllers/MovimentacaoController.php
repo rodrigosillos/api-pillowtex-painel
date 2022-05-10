@@ -94,6 +94,7 @@ class MovimentacaoController extends Controller
                 select * 
                 from movimentacao
                 where data_emissao between '".$dateStart."' and '".$dateEnd."'
+                and tipo_pedido not in (select descricao from tipos_pedido where oculto = 1)
                 and representante = ".$agentId."
                 and oculto = 0
                 and tipo_operacao = 'S'"

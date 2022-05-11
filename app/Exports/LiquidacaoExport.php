@@ -48,7 +48,7 @@ class LiquidacaoExport implements FromCollection, WithHeadings, WithMapping
             $liquidacao->origem,
             date_format($dataVencimento, "d/m/Y"),
             date_format($dataPagamento, "d/m/Y"),
-            number_format($liquidacao->valor_pago, 2, ',', '.'),
+            number_format($liquidacao->valor_inicial, 2, ',', '.'),
             number_format($liquidacao->valor_comissao, 2, ',', '.'),
         ];
     }

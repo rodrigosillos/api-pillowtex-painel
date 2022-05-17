@@ -43,19 +43,19 @@
 
                 <li class="menu-title">@lang('translation.Modules')</li>
 
-                <li>
+                <!-- <li>
                     <a href="javascript: void(0);" class="waves-effect">
                         <i class="uil-user-square"></i>
                         <span>@lang('translation.Customers')</span>
                     </a>
-                </li>
+                </li> -->
 
-                <li>
+                <!-- <li>
                     <a href="javascript: void(0);" class="waves-effect">
                         <i class="uil-invoice"></i>
                         <span>@lang('translation.Orders')</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -80,12 +80,12 @@
                     </ul>
                 </li>
 
-                <li>
+                <!-- <li>
                     <a href="javascript: void(0);" class=" waves-effect">
                         <i class="uil-bag-alt"></i>
                         <span>@lang('translation.Sales')</span>
                     </a>
-                </li>
+                </li> -->
 
             </ul>
         </div>

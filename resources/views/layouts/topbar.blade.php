@@ -59,7 +59,7 @@
             </div>
 
             <div class="dropdown d-inline-block language-switch">
-                <button type="button" class="btn header-item waves-effect"
+                <!-- <button type="button" class="btn header-item waves-effect"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     @php $locale = session()->get('locale'); @endphp
                     @switch($locale)
@@ -78,18 +78,17 @@
                         @default
                         <img src="{{ URL::asset('assets/images/flags/brazil.jpg')}}" alt="Header Language" height="16">
                     @endswitch
-                </button>
+                </button> -->
                 <div class="dropdown-menu dropdown-menu-right">
                     
-                    <!-- item-->
+                    <!-- item
                     <a href="{{ url('index/br') }}" class="dropdown-item notify-item">
                         <img src="{{ URL::asset('assets/images/flags/brazil.jpg')}}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Brasil</span>
-                    </a>
-
-                    <!-- item-->
+                    </a>-->
+                    <!-- item
                     <a href="{{ url('index/en') }}" class="dropdown-item notify-item">
                         <img src="{{ URL::asset('assets/images/flags/us.jpg')}}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">English</span>
-                    </a>
+                    </a>-->
                     
                     <!-- item
                     <a href="{{ url('index/es') }}" class="dropdown-item notify-item">
@@ -114,7 +113,7 @@
                 </div>
             </div>
 
-            <div class="dropdown d-none d-lg-inline-block ml-1">
+            <!-- <div class="dropdown d-none d-lg-inline-block ml-1">
                 <button type="button" class="btn header-item noti-icon waves-effect"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="uil-apps"></i>
@@ -164,7 +163,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <div class="dropdown d-none d-lg-inline-block ml-1">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
@@ -189,67 +188,7 @@
                             </div>
                         </div>
                     </div>
-                    <div data-simplebar style="max-height: 230px;">
-                        <a href="" class="text-reset notification-item">
-                            <div class="media">
-                                <div class="avatar-xs mr-3">
-                                    <span class="avatar-title bg-primary rounded-circle font-size-16">
-                                        <i class="uil-cart"></i>
-                                    </span>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="mt-0 mb-1">@lang('translation.order_placed')</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-1">@lang('translation.languages_grammar')</p>
-                                        <p class="mb-0"><i class="mdi mdi-clock-outline"></i> @lang('translation.3_min_ago')</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="" class="text-reset notification-item">
-                            <div class="media">
-                                <img src="{{ URL::asset('assets/images/users/avatar-3.jpg')}}"
-                                    class="mr-3 rounded-circle avatar-xs" alt="user-pic">
-                                <div class="media-body">
-                                    <h6 class="mt-0 mb-1">James Lemire</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-1">@lang('translation.simplified_English')</p>
-                                        <p class="mb-0"><i class="mdi mdi-clock-outline"></i> @lang('translation.1_hours_ago')</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="" class="text-reset notification-item">
-                            <div class="media">
-                                <div class="avatar-xs mr-3">
-                                    <span class="avatar-title bg-success rounded-circle font-size-16">
-                                        <i class="uil-truck"></i>
-                                    </span>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="mt-0 mb-1">@lang('translation.item_shipped')</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-1">@lang('translation.languages_grammar')</p>
-                                        <p class="mb-0"><i class="mdi mdi-clock-outline"></i> @lang('translation.3_min_ago')</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
 
-                        <a href="" class="text-reset notification-item">
-                            <div class="media">
-                                <img src="{{ URL::asset('assets/images/users/avatar-4.jpg')}}"
-                                    class="mr-3 rounded-circle avatar-xs" alt="user-pic">
-                                <div class="media-body">
-                                    <h6 class="mt-0 mb-1">Salena Layfield</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-1">@lang('translation.simplified_English')</p>
-                                        <p class="mb-0"><i class="mdi mdi-clock-outline"></i> @lang('translation.1_hours_ago')</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
                     <div class="p-2 border-top">
                         <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
                             <i class="uil-arrow-circle-right mr-1"></i> @lang('translation.View_More')..

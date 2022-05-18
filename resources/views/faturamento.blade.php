@@ -19,7 +19,7 @@
         <div class="row">
             @if ( Auth::user()->user_profile_id <> 3 )
             <div class="col-md-6">
-                <label class="col-md-2 col-form-label">Representantes</label>
+                <label class="col-md-4 col-form-label">SELECIONE O REPRESENTANTE:</label>
                 <div class="col-md-10">
                     <select name="search_agent" class="form-control">
                         <option value="todos">SELECIONE ...</option>

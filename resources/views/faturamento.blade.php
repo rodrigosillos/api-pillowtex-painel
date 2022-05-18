@@ -68,15 +68,15 @@
                         <a href="#" onclick="RedirectURL('liquidacao');return false;">
                     @endif
                     <button type="button" class="btn btn-primary waves-effect waves-light">
-                        Liquidação <i class="uil uil-arrow-right ml-2"></i> 
+                        Visualizar Liquidação <i class="uil uil-arrow-right ml-2"></i> 
                     </button>
                     </a>
-                    <a href="#" onclick="RedirectURL('substituicao');return false;">
+                    <!-- <a href="#" onclick="RedirectURL('substituicao');return false;">
                     <button disabled type="button" class="btn btn-primary waves-effect waves-light">
                         Substituição <i class="uil uil-arrow-right ml-2"></i> 
                     </button>
-                    </a>
-                    </button>
+                    </a> -->
+                    <!-- </button>
                     </a>
                     @if ( Auth::user()->user_profile_id == 3 )
                         <a href="{{url('devolucao')}}" target="_blank">
@@ -86,7 +86,7 @@
                     <button disabled type="button" class="btn btn-primary waves-effect waves-light">
                         Devolução <i class="uil uil-arrow-right ml-2"></i> 
                     </button>
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </div>

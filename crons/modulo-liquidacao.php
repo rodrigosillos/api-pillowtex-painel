@@ -4,19 +4,22 @@ include('call-api-novo.php');
 include('connection-db.php');
 
 $parametros = [
-    'efetuado' => 'true',
-    'substituido' => 'false',
+    // 'efetuado' => 'true',
+    // 'substituido' => 'false',
     '$format' => 'json',
     '$dateformat' => 'iso',
     'tipo' => 'R',
-    'protestado' => 'false',
-    'gerador' => 'C',
-    'dataip' => '2022-04-01',
-    'datafp' => '2022-04-30',
+    // 'protestado' => 'false',
+    // 'gerador' => 'C',
+    'datai' => '2022-01-01',
+    'dataf' => '2023-12-31',
 ];
 
 $consultaLancamentos = CallAPI('GET', 'titulos_receber/consulta_receber_recebidos', 'novo', $parametros);
 $jsonConsultaLancamentos = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $consultaLancamentos), true);
+
+// print($jsonConsultaLancamentos['odata.count']);
+// exit();
 
 if(isset($jsonConsultaLancamentos['value'])) {
 
@@ -168,7 +171,7 @@ if(isset($jsonConsultaLancamentos['value'])) {
                                                                                     :representante_cliente,
                                                                                     :representante_movimento,
                                                                                     :cliente_nome)");
-            // $stmt->execute($data);
+            $stmt->execute($data);
 
         } else {
 
@@ -190,7 +193,7 @@ if(isset($jsonConsultaLancamentos['value'])) {
                                                 tipo_pagto = :tipo_pagto
                                                 where lancamento = :lancamento and n_documento = :n_documento and cod = :cod limit 1";
             $stmt = $pdo->prepare($sql);
-            // $stmt->execute($data);
+            $stmt->execute($data);
 
         }
 

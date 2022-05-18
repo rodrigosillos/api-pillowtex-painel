@@ -68,7 +68,7 @@ class LiquidacaoController extends Controller
                 valor_comissao_representante_pedido,
                 valor_comissao_representante_cliente
             from titulos_receber
-            where ".$whereRepresentante." tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and baixa = 0 and valor_pago <> 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."'"
+            where ".$whereRepresentante." tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and valor_pago <> 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."'"
         ));
 
         // select valor_comissao, efetuado, origem from titulos_receber where tipo_pagto not in (5406, 20201) and representante_pedido = '34339 - A MARTINS NETO REPRESENTACAO- ME' and data_pagamento between '2022-03-01' and '2022-03-31';

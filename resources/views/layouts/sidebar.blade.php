@@ -34,12 +34,12 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title">@lang('translation.Menu')</li>
 
-                <li>
+                <!-- <li>
                     <a href="{{url('index')}}">
                         <i class="uil-home-alt"></i><span class="badge badge-pill badge-primary float-right">01</span>
                         <span>@lang('translation.Dashboard')</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li class="menu-title">@lang('translation.Modules')</li>
 
@@ -69,7 +69,7 @@
                         <li><a href="/substituicao">@lang('translation.Substituicao')</a></li>
                         -->
                         <li><a href="/representantes">@lang('translation.Agents')</a>
-                        <li><a href="#">@lang('translation.Settings')</a>
+                        <li><a href="#" class="has-arrow waves-effect">@lang('translation.Settings')</a>
                             <ul class="sub-menu" aria-expanded="true">
                                 <li><a href="/percentual-comissao">@lang('translation.Percentual_Comissao')</a></li>
                                 <li><a href="/tipos-pedido">@lang('translation.Tipos_Pedido')</a></li>

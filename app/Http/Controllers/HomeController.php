@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FaturamentoController;
+use App\Http\Controllers\AgentsController;
 
 class HomeController extends Controller
 {
@@ -34,7 +35,8 @@ class HomeController extends Controller
 
     public function root()
     {
-        return view('index', (new DashboardController)->index('array'));
+        // return view('index', (new DashboardController)->index('array'));
+        return redirect('/faturamento');
     }
 
     /*Language Translation*/

@@ -18,7 +18,11 @@ Auth::routes();
 
 // Route::get('{any}', 'HomeController@index');
 
-Route::get('/index', 'DashboardController@index');
+// Route::get('/index', 'MovimentacaoController@index');
+
+Route::get('/index', function () {
+    return redirect('/faturamento');
+});
 
 Route::get('/representantes', 'AgentsController@get');
 Route::get('/configurar-comissoes', 'SettingsController@index');

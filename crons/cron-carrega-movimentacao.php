@@ -10,8 +10,8 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
     $tipoOperacao = 'S';
     
     $paramsListaMovimentacao = [
-        'datai' => '2021-12-08',
-        'dataf' => '2021-12-08',
+        'datai' => '2022-04-29',
+        'dataf' => '2022-04-30',
         // 'representante' => '6',
         '$format' => 'json',
         'tipo_operacao' => $tipoOperacao,
@@ -42,12 +42,12 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
 
                 $codOperacao = $jsonConsultaMovimentacao['value'][0]['cod_operacao'];
 
-                // $sql = "select id from movimentacao WHERE cod_operacao = :cod_operacao";
-                // $stmt = $pdo->prepare($sql);
-                // $stmt->bindParam(':cod_operacao', $codOperacao, PDO::PARAM_STR);
-                // $stmt->execute();
+                $sql = "select id from movimentacao WHERE cod_operacao = :cod_operacao";
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':cod_operacao', $codOperacao, PDO::PARAM_STR);
+                $stmt->execute();
             
-                // if($stmt->rowCount() == 0) {
+                if($stmt->rowCount() == 0) {
 
                     $filial = $jsonConsultaMovimentacao['value'][0]['filial'];
                     $cliente = $jsonConsultaMovimentacao['value'][0]['cliente'];
@@ -301,7 +301,7 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
             
                     }
 
-                // }
+                }
     
             }
             

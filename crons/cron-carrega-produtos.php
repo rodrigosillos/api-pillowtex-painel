@@ -84,6 +84,9 @@ foreach ($movimentacoes as $movimentacao) {
                 $descricaoDivisao = '';
                 
                 if(isset($jsonConsultaDivisao['value'])) {
+
+                    // print_r($jsonConsultaDivisao['value']);
+
                     $codDivisao = $jsonConsultaDivisao['value'][0]['cod_divisao'];
                     $descricaoDivisao = $jsonConsultaDivisao['value'][0]['descricao'];
                 }

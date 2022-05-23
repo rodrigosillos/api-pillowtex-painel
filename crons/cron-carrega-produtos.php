@@ -3,8 +3,8 @@
 include('call-api.php');
 include('connection-db.php');
 
-// $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela from movimentacao where data_emissao between '2022-04-01' and '2022-04-30'";
-$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela from movimentacao where cod_operacao = 8803";
+$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela from movimentacao where data_emissao between '2022-04-01' and '2022-04-30'";
+
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $movimentacoes = $stmt->fetchAll();

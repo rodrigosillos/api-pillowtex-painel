@@ -3,10 +3,7 @@
 include('call-api.php');
 include('connection-db.php');
 
-// $sql = "select operation_code, operation_type, client_address, price_list from invoices where agent_id = 263";
 $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela from movimentacao where data_emissao between '2022-02-01' and '2022-02-28'";
-// $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela from movimentacao where cod_operacao = 41500";
-// $sql = "select operation_code, operation_type, client_address, price_list from invoices where operation_code in ('62130')";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();

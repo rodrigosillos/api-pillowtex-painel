@@ -3,7 +3,7 @@
 include('call-api.php');
 include('connection-db.php');
 
-$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela from movimentacao where data_emissao between '2022-04-01' and '2022-04-30'";
+$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela from movimentacao where data_emissao between '2022-05-01' and '2022-05-20'";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -118,17 +118,7 @@ foreach ($movimentacoes as $movimentacao) {
                 $configPercentualComissao = $stmt->fetch(\PDO::FETCH_ASSOC);
 
                 if ($stmt->rowCount() > 0)
-                    $percentualCalculo = $configPercentualComissao['percentual_comissao'];
-
-                // $sql = "select percentage from commission_settings WHERE product_division = :product_division AND price_list = :price_list";
-                // $stmt = $pdo->prepare($sql);
-                // $stmt->bindParam(':product_division', $codDivisao, PDO::PARAM_STR);
-                // $stmt->bindParam(':price_list', $tabela, PDO::PARAM_STR);
-                // $stmt->execute();
-                // $configComissao = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-                // if ($stmt->rowCount() > 0)
-                //     $percentualCalculo = $configComissao['percentage'];                    
+                    $percentualCalculo = $configPercentualComissao['percentual_comissao'];                  
 
                 if($tabela == 187 && $clienteEstado != 'SP' && $jsonProduto['desconto'] < 5)
                     $percentualCalculo = 3;
@@ -151,9 +141,9 @@ foreach ($movimentacoes as $movimentacao) {
                     'produto' => $jsonProduto['produto'],
                     'cod_produto' => $codProduto,
                     'descricao1' => $descricao1,
-                    'divisao' => $divisao,
-                    'cod_divisao' => $codDivisao,
-                    'descricao_divisao' => $descricaoDivisao,
+                    'divisao' => $divisao == null ? 0 : $divisao,
+                    'cod_divisao' => $codDivisao == null ? '' : $codDivisao,
+                    'descricao_divisao' => $descricaoDivisao == null ? '' : $descricaoDivisao,
                     'cor' => $jsonProduto['cor'],
                     'estampa' => $jsonProduto['estampa'],
                     'tamanho' => $jsonProduto['tamanho'],
@@ -163,7 +153,7 @@ foreach ($movimentacoes as $movimentacao) {
                     'pedido' => $jsonProduto['pedido'] == null ? 0 : $jsonProduto['pedido'],
                     'unidade' => $jsonProduto['unidade'] == null ? '' : $jsonProduto['unidade'],
                     'nota' => $jsonProduto['nota'] == null ? 0 : $jsonProduto['nota'],
-                    'preco_aplicado' => $jsonProduto['preco_aplicado'],
+                    'preco_aplicado' => $jsonProduto['preco_aplicado'] == null ? 0 : $jsonProduto['preco_aplicado'],
                     'desconto' => $jsonProduto['desconto'],
                     'preco_bruto' => $jsonProduto['preco_bruto'],
                     'valor_comissao' => $valorComissaoProduto,

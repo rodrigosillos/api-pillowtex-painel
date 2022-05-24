@@ -3,10 +3,8 @@
 include('call-api.php');
 include('connection-db.php');
 
-// $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, tipo_pedido, data_emissao, comissao_r, representante, representante_cliente from movimentacao where data_emissao between '2022-04-01' and '2022-04-30'";
-// $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, tipo_pedido, data_emissao, comissao_r, representante, representante_cliente from movimentacao where romaneio in ('102259','105395','111461','102264','105375','113364','100080','99507','99929','105504','112688','99165','102782','105391','112424','99082','99063','99985','98590','98584','98916','99069','104784','104229','102255','104699','99753','104753','105400','112681','99050','111667','101127','98651','101024','112992','112661','112036','101386','113389','111840','105406','99520','98580','112674','111610','99057','99120','105828','105092','112869','100087','105832')";
-// $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, tipo_pedido, data_emissao, comissao_r, representante, representante_cliente from movimentacao where romaneio in ('102259','105395','111461','102264','105375','113364','99929','105504','99165','102782','105391','112424','99082','99985','98590','98916','99069','104784','104229','104699','104753','105400','99050','111667','98651','101024','112992','112661','101386','113389','111840','105406','99520','111610','99057','105828','105092','112869','100087','105832')";
-$sql = "select m.cod_operacao, m.tipo_operacao, m.cliente_estado, m.tabela, m.tipo_pedido, m.data_emissao, m.comissao_r, m.representante, m.representante_cliente from movimentacao m where m.notas is null and m.representante_cod = '0054' and m.data_emissao between '2022-04-01' and '2022-04-31'";
+// $sql = "select m.cod_operacao, m.tipo_operacao, m.cliente_estado, m.tabela, m.tipo_pedido, m.data_emissao, m.comissao_r, m.representante, m.representante_cliente from movimentacao m where m.notas is null and m.representante_cod = '0054' and m.data_emissao between '2022-05-01' and '2022-05-20";
+$sql = "select m.cod_operacao, m.tipo_operacao, m.cliente_estado, m.tabela, m.tipo_pedido, m.data_emissao, m.comissao_r, m.representante, m.representante_cliente from movimentacao m where m.data_emissao between '2022-05-01' and '2022-05-20'";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -35,12 +33,6 @@ foreach ($invoices as $invoice) {
     $stmt->bindParam(':cod_operacao', $operationCode, PDO::PARAM_STR);
     $stmt->execute();
     $products = $stmt->fetchAll();
-
-    // $sql = "select division_code, quantity, price, price_applied, price_gross, discount, product_name, product_code from invoices_product where operation_code = :operation_code";
-    // $stmt = $pdo->prepare($sql);
-    // $stmt->bindParam(':operation_code', $operationCode, PDO::PARAM_STR);
-    // $stmt->execute();
-    // $products = $stmt->fetchAll();
     
     foreach ($products as $product) {
         
@@ -66,14 +58,7 @@ foreach ($invoices as $invoice) {
         $stmt->bindParam(':tabela', $tableCode, PDO::PARAM_STR);
         $stmt->execute();
         $resultSettings = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-        // $sql = "select percentage from commission_settings where product_division = :product_division and price_list = :price_list";
-        // $stmt = $pdo->prepare($sql);
-        // $stmt->bindParam(':product_division', $divisionCode, PDO::PARAM_STR);
-        // $stmt->bindParam(':price_list', $tableCode, PDO::PARAM_STR);
-        // $stmt->execute();
-        // $resultSettings = $stmt->fetch(\PDO::FETCH_ASSOC);
-    
+ 
         $commissionPercentage = 0;
 
         if ($stmt->rowCount() > 0)

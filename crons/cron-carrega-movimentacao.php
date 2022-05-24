@@ -10,9 +10,9 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
     $tipoOperacao = 'S';
     
     $paramsListaMovimentacao = [
-        'datai' => '2022-05-01',
-        'dataf' => '2022-05-20',
-        // 'representante' => '6',
+        'datai' => '2022-05-12',
+        'dataf' => '2022-05-17',
+        // 'representante' => '0',
         '$format' => 'json',
         'tipo_operacao' => $tipoOperacao,
     ];
@@ -23,7 +23,7 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
     if(!isset($jsonListaMovimentacao['value']))
         exit($bodyListaMovimentacao);
 
-    if(isset($jsonListaMovimentacao['value'])) {
+    if(isset($jsonListaMovimentacao['value'])) {    
 
         foreach ($jsonListaMovimentacao['value'] as $listaMovimentacao) {
     
@@ -85,26 +85,30 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
                         $condicoesPgto = $jsonConsultaMovimentacao['value'][0]['condicoes_pgto'];
             
                         // pedido venda
-            
-                        $paramsConsultaPedidoVenda = [
-                            'pedidov' => $pedidoV,
-                            '$format' => 'json',
-                            '$dateformat' => 'iso',
-                        ];
-                
-                        $bodyConsultaPedidoVenda = CallAPI('GET', 'pedido_venda/consulta_simples', $paramsConsultaPedidoVenda);
-                        $jsonConsultaPedidoVenda = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $bodyConsultaPedidoVenda), true);
-                
+
                         $codPedidoV = '';
                         $notas = '';
                         $tipoPedido = '';
-            
-                        if($jsonConsultaPedidoVenda['odata.count'] > 0) {
-            
-                            $codPedidoV = $jsonConsultaPedidoVenda['value'][0]['cod_pedidov'];
-                            $notas = $jsonConsultaPedidoVenda['value'][0]['notas'];
-                            $tipoPedido = $jsonConsultaPedidoVenda['value'][0]['tipo_pedido'];
-                        
+
+                        if(!is_null($pedidoV)) {
+
+                            $paramsConsultaPedidoVenda = [
+                                'pedidov' => $pedidoV,
+                                '$format' => 'json',
+                                '$dateformat' => 'iso',
+                            ];
+                    
+                            $bodyConsultaPedidoVenda = CallAPI('GET', 'pedido_venda/consulta_simples', $paramsConsultaPedidoVenda);
+                            $jsonConsultaPedidoVenda = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $bodyConsultaPedidoVenda), true);
+                
+                            if($jsonConsultaPedidoVenda['odata.count'] > 0) {
+                
+                                $codPedidoV = $jsonConsultaPedidoVenda['value'][0]['cod_pedidov'];
+                                $notas = $jsonConsultaPedidoVenda['value'][0]['notas'];
+                                $tipoPedido = $jsonConsultaPedidoVenda['value'][0]['tipo_pedido'];
+                            
+                            }                            
+
                         }
             
                         // pedido venda fim

@@ -3,7 +3,7 @@
 include('call-api.php');
 include('connection-db.php');
 
-$sql = "select m.cod_operacao from movimentacao m where m.notas is null and m.representante_cod = '0055' and m.data_emissao between '2022-04-01' and '2022-04-31'";
+$sql = "select m.cod_operacao from movimentacao m where m.notas is null and m.tipo_pedido is null and m.representante_cod = '0055' and m.data_emissao between '2022-04-01' and '2022-04-31'";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();

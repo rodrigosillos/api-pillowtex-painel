@@ -3,11 +3,13 @@
 include('call-api.php');
 include('connection-db.php');
 
+// and m.representante_cod in ('0054', '0055')
+
 $sql = "
 select m.romaneio, m.cod_operacao, m.tipo_pedido, m.notas
 from movimentacao m 
-where m.notas = '' and m.representante_cod in ('0054', '0055') and m.data_emissao between '2022-05-01' and '2022-05-20'
-or m.notas is null and m.representante_cod in ('0054', '0055') and m.data_emissao between '2022-05-01' and '2022-05-20'
+where m.notas = '' and m.data_emissao between '2022-05-21' and '2022-05-26'
+or m.notas is null and m.data_emissao between '2022-05-21' and '2022-05-26'
 ";
 
 // $sql = "select m.cod_operacao from movimentacao m where m.notas is null and m.tipo_pedido is null and m.representante_cod = '0054' and m.data_emissao between '2022-05-01' and '2022-05-20'";
@@ -26,7 +28,7 @@ foreach ($movimentacoes as $movimentacaoSemNF) {
     if ($stmt->rowCount() > 0) {
 
         $numeroNota = explode('/', $tituloR['n_documento']);
-        // print($numeroNota[0] . "\xA");
+        print($numeroNota[0] . "\xA");
 
         $sql = "select comissao_r, tabela, tipo_pedido, valor_comissao, valor_faturamento from movimentacao where notas like '%" . $numeroNota[0] . "%'";
         $stmt = $pdo->prepare($sql);

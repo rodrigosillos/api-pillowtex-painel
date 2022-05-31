@@ -213,7 +213,7 @@
                     <table class="table mb-0">
                     <thead>
                         <tr>
-                            <th>Faturamento</th>
+                            <th>Faturamento (Valor sem Imposto)</th>
                             <th>Base de Comissão</th>
                             <th>Valor Comissão</th>
                         </tr>

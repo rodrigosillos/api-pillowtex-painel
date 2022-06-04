@@ -18,7 +18,7 @@ class AgentsController extends Controller
         
         if($output == 'array')
             // $whereAgent = 'where agent_id in (select agent_id from invoices group by agent_id)';
-            $whereAgent = 'where agent_id2 in (select m.representante from movimentacao m inner join users u on m.representante = u.agent_id2 where u.regiao = 150490655 group by m.representante)';
+            $whereAgent = 'where agent_id2 in (select m.representante from movimentacao m inner join users u on m.representante = u.agent_id2 where u.regiao in (101, 150490655) group by m.representante)';
         
         $agents = DB::select(DB::raw("
             select * 

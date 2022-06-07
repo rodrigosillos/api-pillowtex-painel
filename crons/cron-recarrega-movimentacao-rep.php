@@ -38,13 +38,15 @@ foreach ($movimentacoes as $movimentacao) {
     
         if($stmt->rowCount() == 0) {
 
-            print('CADASTRANDO NOVA MOVIMENTACAO - cod operacao: ' . $codOperacao . "\xA");
+            
 
             $filial = $jsonConsultaMovimentacao['value'][0]['filial'];
             $cliente = $jsonConsultaMovimentacao['value'][0]['cliente'];
             $cancelada = $jsonConsultaMovimentacao['value'][0]['cancelada'];
     
-            if($filial == 12 && $cliente <> null && $cancelada == false || $filial == 16 && $cliente <> null && $cancelada == false) {            
+            if($filial == 12 && $cliente <> null && $cancelada == false || $filial == 16 && $cliente <> null && $cancelada == false) {   
+                
+                print('CADASTRANDO NOVA MOVIMENTACAO - cod operacao: ' . $codOperacao . "\xA");
                 
                 $tipoOperacao = $jsonConsultaMovimentacao['value'][0]['tipo_operacao'];
                 $romaneio = $jsonConsultaMovimentacao['value'][0]['romaneio'];
@@ -302,13 +304,6 @@ foreach ($movimentacoes as $movimentacao) {
 
     }
 
-}
-
-// print_r($movimentacoes);
-exit();
-
-foreach ($jsonListaMovimentacao['value'] as $listaMovimentacao) {
-    
 }
 
 $pdo = null;

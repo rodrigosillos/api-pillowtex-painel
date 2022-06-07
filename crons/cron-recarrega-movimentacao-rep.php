@@ -38,11 +38,11 @@ foreach ($movimentacoes as $movimentacao) {
     
         if($stmt->rowCount() == 0) {
 
-            
-
             $filial = $jsonConsultaMovimentacao['value'][0]['filial'];
             $cliente = $jsonConsultaMovimentacao['value'][0]['cliente'];
             $cancelada = $jsonConsultaMovimentacao['value'][0]['cancelada'];
+
+            print($filial . "\xA");
     
             if($filial == 12 && $cliente <> null && $cancelada == false || $filial == 16 && $cliente <> null && $cancelada == false) {   
                 

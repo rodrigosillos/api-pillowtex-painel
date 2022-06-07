@@ -38,7 +38,7 @@ foreach ($movimentacoes as $movimentacao) {
     
         if($stmt->rowCount() == 0) {
 
-            print('CADASTRANDO NOVA MOVIMENTACAO - cod operacao: ' . $codOperacao . ' - data emissão: ' . $dataEmissao . "\xA");
+            print('CADASTRANDO NOVA MOVIMENTACAO - cod operacao: ' . $codOperacao . "\xA");
 
             $filial = $jsonConsultaMovimentacao['value'][0]['filial'];
             $cliente = $jsonConsultaMovimentacao['value'][0]['cliente'];

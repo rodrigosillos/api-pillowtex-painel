@@ -42,7 +42,7 @@ foreach ($movimentacoes as $movimentacao) {
             $cliente = $jsonConsultaMovimentacao['value'][0]['cliente'];
             $cancelada = $jsonConsultaMovimentacao['value'][0]['cancelada'];
 
-            print($filial . "\xA");
+            print($filial  . ' - ' . $cliente . ' - ' . $cancelada . "\xA");
     
             if($filial == 12 && $cliente <> null && $cancelada == false || $filial == 16 && $cliente <> null && $cancelada == false) {   
                 

@@ -15,7 +15,7 @@
 @endcomponent
 
     <form id="frmFaturamento" action="{{url('consulta-faturamento')}}" method="post">
-        {{ csrf_field() }}
+        @csrf
         <div class="row">
             @if ( Auth::user()->user_profile_id <> 3 )
             <div class="col-md-6">
@@ -51,13 +51,13 @@
     <br/>
     <br/>
 
-    <form id="frmExcelFaturamento" action="{{url('export-excel-faturamento')}}" method="post">
+    <form id="frmFaturamento2" action="{{url('export-excel-faturamento')}}" method="post">
         @csrf
         <div class="row">
             <div class="col-md-3">
                 <div>
-                    <!--<button type="button" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-printer mr-1"></i> Imprimir</button>-->
                     <button type="submit" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-file-excel-outline mr-1"></i> Exportar</button>
+                    <button type="button" onclick="AlteraAction('{{url('desconsidera-movimento-faturamento')}}');" class="btn btn-outline-dark waves-effect waves-light mb-3"><i class="mdi mdi-printer mr-1"></i> Desconsiderar Movimento</button>
                 </div>
             </div>
             <div class="col-md-3">
@@ -104,6 +104,7 @@
                                         <label class="custom-control-label" for="invoicecheck"></label>
                                     </div>
                                 </th>
+                                <th>Desconsiderar</th>
                                 <th>Nota Fiscal</th>
                                 <th>Emissão</th>
                                 <th>Cliente</th>
@@ -136,6 +137,12 @@
                                     <div class="custom-control custom-checkbox text-center">
                                         <input type="checkbox" class="custom-control-input" id="invoicecheck{{ $key }}" name="invoice_check[]" value="{{ $invoice['operacao_codigo'] }}">
                                         <label class="custom-control-label" for="invoicecheck{{ $key }}"></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="custom-control custom-checkbox text-center">
+                                        <input type="checkbox" class="custom-control-input" id="desconsiderarmovimento{{ $key }}" name="desconsiderar_movimento[]" value="{{ $invoice['operacao_codigo'] }}">
+                                        <label class="custom-control-label" for="desconsiderarmovimento{{ $key }}"></label>
                                     </div>
                                 </td>
                                 <td>
@@ -235,6 +242,12 @@
 @section('script')
 
     <script>
+        function AlteraAction(acao)
+        {
+            document.getElementById("frmFaturamento2").action = acao;
+            document.getElementById("frmFaturamento2").submit();
+        }
+        
         function RedirectURL(module)
         {
             window.open(createDynamicURL(module), '_blank');

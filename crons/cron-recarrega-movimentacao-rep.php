@@ -40,11 +40,12 @@ foreach ($movimentacoes as $movimentacao) {
 
             $filial = $jsonConsultaMovimentacao['value'][0]['filial'];
             $cliente = $jsonConsultaMovimentacao['value'][0]['cliente'];
-            $cancelada = $jsonConsultaMovimentacao['value'][0]['cancelada'];
-
+            $cancelada = $jsonConsultaMovimentacao['value'][0]['cancelada'];          
+            
             print($filial  . ' - ' . $cliente . ' - ' . $cancelada . "\xA");
     
-            if($filial == 12 && $cliente <> null && $cancelada == false || $filial == 16 && $cliente <> null && $cancelada == false) {   
+            if($filial == 12 && $cliente <> null && $cancelada == 0 || $filial == 16 && $cliente <> null && $cancelada == 0) {   
+                
                 
                 print('CADASTRANDO NOVA MOVIMENTACAO - cod operacao: ' . $codOperacao . "\xA");
                 
@@ -202,7 +203,7 @@ foreach ($movimentacoes as $movimentacao) {
                     'total' => $total,
                     'qtde' => $qtde,
                     'tipo' => $tipo,
-                    'cancelada' => $cancelada  == false ? 0 : 1,
+                    'cancelada' => $cancelada == false ? 0 : 1,
                     'notas' => $notas,
                     'pedidov' => $pedidoV,
                     'cod_pedidov' => $codPedidoV,
@@ -298,6 +299,7 @@ foreach ($movimentacoes as $movimentacao) {
 
         } else {
 
+            print($filial  . ' - ' . $cliente . ' - ' . $cancelada . "\xA");
             print('- - - MOVIMENTACAO JA EXISTE NA BASE - cod operacao: ' . $codOperacao . "\xA");
 
         }

@@ -185,4 +185,21 @@ class MovimentacaoController extends Controller
         ]);
 
     }
+
+    public function desconsidera(Request $request)
+    {
+        $desconsideraMovimentos = $request->desconsiderar_movimento;
+
+        foreach($desconsideraMovimentos as $movimento) {
+            
+            DB::table('movimentacao')
+            ->where('cod_operacao', $movimento)
+            ->update(['oculto' => 1]);
+
+        }
+
+        return redirect('/faturamento');
+
+    }
 }
+ 

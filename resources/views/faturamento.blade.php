@@ -57,7 +57,7 @@
             <div class="col-md-3">
                 <div>
                     <button type="submit" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-file-excel-outline mr-1"></i> Exportar</button>
-                    <button type="button" onclick="AlteraAction('{{url('desconsidera-movimento-faturamento')}}');" class="btn btn-outline-dark waves-effect waves-light mb-3"><i class="mdi mdi-printer mr-1"></i> Desconsiderar Movimento</button>
+                    <button type="button" onclick="AlteraAction('{{url('desconsidera-movimento-faturamento')}}');" class="btn btn-outline-dark waves-effect waves-light mb-3"><i class="mdi mdi-currency-usd-circle mr-1"></i> Desconsiderar Movimento</button>
                 </div>
             </div>
             <div class="col-md-3">

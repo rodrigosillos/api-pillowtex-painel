@@ -244,8 +244,10 @@
     <script>
         function AlteraAction(acao)
         {
-            document.getElementById("frmFaturamento2").action = acao;
-            document.getElementById("frmFaturamento2").submit();
+            if (window.confirm("Você realmente quer desconsiderar os Movimentos selecionados?")) {
+                document.getElementById("frmFaturamento2").action = acao;
+                document.getElementById("frmFaturamento2").submit();
+            }
         }
         
         function RedirectURL(module)

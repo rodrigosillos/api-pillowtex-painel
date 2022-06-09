@@ -4,15 +4,16 @@ include('call-api-novo.php');
 include('connection-db.php');
 
 $parametros = [
-    // 'efetuado' => 'true',
+    'efetuado' => 'true',
     // 'substituido' => 'false',
+    'representante' => '235',
     '$format' => 'json',
     '$dateformat' => 'iso',
     'tipo' => 'R',
     // 'protestado' => 'false',
     // 'gerador' => 'C',
-    'datai' => '2022-01-01',
-    'dataf' => '2023-12-31',
+    'dataip' => '2022-05-01',
+    'datafp' => '2022-05-31',
 ];
 
 $consultaLancamentos = CallAPI('GET', 'titulos_receber/consulta_receber_recebidos', 'novo', $parametros);

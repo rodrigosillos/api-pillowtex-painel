@@ -191,6 +191,7 @@ class MovimentacaoController extends Controller
     public function desconsidera(Request $request)
     {
         $desconsideraMovimentos = $request->desconsiderar_movimento;
+        $repSelecionado = $request->rep_selecionado;
 
         foreach($desconsideraMovimentos as $movimento) {
 
@@ -213,8 +214,8 @@ class MovimentacaoController extends Controller
 
         // return redirect('/faturamento');
         return redirect()->route('consulta-faturamento', [
-            '_token' => 'NURAoJxscTDJ5iVmJ9HOo2lWImBvStDe0PKtytO6',
-            'search_agent' => '0086',
+            '_token' => csrf_token(),
+            'search_agent' => $repSelecionado,
             'dateStart' => '01/05/2022',
             'dateEnd' => '31/05/2022',
         ]);

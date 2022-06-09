@@ -53,6 +53,7 @@
 
     <form id="frmFaturamento2" action="{{url('export-excel-faturamento')}}" method="post">
         @csrf
+        <input type="hidden" name="rep_selecionado" value="{{ $data_form['search_agent'] }}">
         <div class="row">
             <div class="col-md-3">
                 <div>

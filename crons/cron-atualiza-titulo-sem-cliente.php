@@ -38,14 +38,15 @@ foreach ($titulosReceber as $titulo) {
 
         $data = [
             'cliente_nome' => $clienteNome,
-            'representante_movimento' => $representante,
-            'representante_pedido' => $representante,
-            'n_documento' => $numeroDocumento,
+            // 'representante_movimento' => $representante,
+            // 'representante_pedido' => $representante,
+            // 'n_documento' => $numeroDocumento,
         ];
 
         print_r($data);
 
-        $sql = "update titulos_receber set cliente_nome = :cliente_nome, representante_movimento = :representante_movimento, representante_pedido = :representante_pedido where n_documento = :n_documento";
+        // $sql = "update titulos_receber set cliente_nome = :cliente_nome, representante_movimento = :representante_movimento, representante_pedido = :representante_pedido where n_documento = :n_documento";
+        $sql = "update titulos_receber set cliente_nome = :cliente_nome where n_documento = :n_documento";
         // $sql = "update titulos_receber set origem = :origem where n_documento = :n_documento";
         $stmt = $pdo->prepare($sql);
         $stmt->execute($data);

@@ -57,7 +57,7 @@
             <div class="col-md-3">
                 <div>
                     <button type="submit" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-file-excel-outline mr-1"></i> Exportar</button>
-                    <button type="button" onclick="AlteraAction('{{url('desconsidera-movimento-faturamento')}}');" class="btn btn-outline-dark waves-effect waves-light mb-3"><i class="mdi mdi-currency-usd-circle mr-1"></i> Desconsiderar Movimento</button>
+                    <button type="button" onclick="AlteraAction('{{url('desconsidera-movimento-faturamento')}}');" class="btn btn-outline-dark waves-effect waves-light mb-3"><i class="mdi mdi-currency-usd-circle mr-1"></i> (Des)Considerar Movimento</button>
                 </div>
             </div>
             <div class="col-md-3">
@@ -132,7 +132,7 @@
                         </thead>
                         <tbody>
                             @foreach($invoices['data'] as $key => $invoice)
-                            <tr>
+                            <tr @if ($invoice['desconsiderar'] == 1) style="background-color: #808080;" @endif>
                                 <td>
                                     <div class="custom-control custom-checkbox text-center">
                                         <input type="checkbox" class="custom-control-input" id="invoicecheck{{ $key }}" name="invoice_check[]" value="{{ $invoice['operacao_codigo'] }}">
@@ -244,7 +244,7 @@
     <script>
         function AlteraAction(acao)
         {
-            if (window.confirm("Você realmente quer desconsiderar os Movimentos selecionados?")) {
+            if (window.confirm("Você realmente quer (des)considerar os Movimentos selecionados?")) {
                 document.getElementById("frmFaturamento2").action = acao;
                 document.getElementById("frmFaturamento2").submit();
             }

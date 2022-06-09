@@ -42,7 +42,7 @@ Route::post('/tipos-pgto-salvar', 'TiposPgtoController@salvar');
 
 //faturamento
 Route::get('/faturamento', 'MovimentacaoController@index');
-Route::post('/consulta-faturamento', 'MovimentacaoController@get');
+Route::match(['get', 'post'], '/consulta-faturamento', 'MovimentacaoController@get')->name('consulta-faturamento');
 
 //liquidacao
 Route::get('/liquidacao/{agent?}', 'LiquidacaoController@getLiquidacao');

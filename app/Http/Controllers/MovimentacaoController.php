@@ -149,6 +149,7 @@ class MovimentacaoController extends Controller
             $commissionResult['data'][$invoiceKey]['pedido_tipo'] = $invoice->tipo_pedido;
             $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'warning';
             $commissionResult['data'][$invoiceKey]['comissao_total'] = $valorComissaoRep;
+            $commissionResult['data'][$invoiceKey]['desconsiderar'] = $invoice->desconsiderar;
             $commissionResult['data'][$invoiceKey]['valor_comissao_representante'] = $invoice->valor_comissao_representante;
             $commissionResult['data'][$invoiceKey]['valor_comissao_representante_cliente'] = $invoice->valor_comissao_representante_cliente;
             $commissionResult['data'][$invoiceKey]['valor_faturamento_representante'] = $invoice->valor_faturamento_representante;
@@ -159,7 +160,8 @@ class MovimentacaoController extends Controller
 
             $commissionResult['data'][$invoiceKey]['faturamento_50'] = $valorFaturamentoRep;
 
-            if($invoice->tipo_pedido != 'E') {
+            if($invoice->desconsiderar == 0) {
+            // if($invoice->tipo_pedido != 'E') {
                 $commissionResult['totalizador']['valor_comissao'] += $commissionResult['data'][$invoiceKey]['comissao_total'];
                 $commissionResult['totalizador']['valor_venda'] += $commissionResult['data'][$invoiceKey]['total'];
                 $commissionResult['totalizador']['valor_faturamento'] += $commissionResult['data'][$invoiceKey]['faturamento_50'];
@@ -191,14 +193,31 @@ class MovimentacaoController extends Controller
         $desconsideraMovimentos = $request->desconsiderar_movimento;
 
         foreach($desconsideraMovimentos as $movimento) {
+
+            $result = DB::table('movimentacao')
+            ->select('desconsiderar')
+            ->where('cod_operacao', $movimento)
+            ->first();
+
+            $acaoDesconsiderar = $result->desconsiderar; 
+
+            $desconsiderar = 1;
+            if ($acaoDesconsiderar == 1)
+                $desconsiderar = 0;
             
             DB::table('movimentacao')
             ->where('cod_operacao', $movimento)
-            ->update(['oculto' => 1]);
+            ->update(['desconsiderar' => $desconsiderar]);
 
         }
 
-        return redirect('/faturamento');
+        // return redirect('/faturamento');
+        return redirect()->route('consulta-faturamento', [
+            '_token' => 'NURAoJxscTDJ5iVmJ9HOo2lWImBvStDe0PKtytO6',
+            'search_agent' => '0086',
+            'dateStart' => '01/05/2022',
+            'dateEnd' => '31/05/2022',
+        ]);
 
     }
 }

@@ -6,7 +6,7 @@ include('connection-db.php');
 $parametros = [
     'efetuado' => 'true',
     'substituido' => 'false',
-    'representante' => '34',
+    'representante' => '29',
     '$format' => 'json',
     '$dateformat' => 'iso',
     'tipo' => 'R',

@@ -40,7 +40,7 @@ foreach ($titulosReceber as $titulo) {
             'cliente_nome' => $clienteNome,
             // 'representante_movimento' => $representante,
             // 'representante_pedido' => $representante,
-            // 'n_documento' => $numeroDocumento,
+            'n_documento' => $numeroDocumento,
         ];
 
         print_r($data);

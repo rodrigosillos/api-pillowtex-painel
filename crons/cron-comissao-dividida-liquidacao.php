@@ -3,8 +3,8 @@
 include('call-api-novo.php');
 include('connection-db.php');
 
-// $sql = "select id, n_documento, origem from titulos_receber where data_pagamento between '2022-04-01' and '2022-04-30' and valor_comissao = 0";
-$sql = "select id, n_documento, origem from titulos_receber where origem = 8803";
+$sql = "select id, n_documento, origem from titulos_receber where data_pagamento between '2022-05-01' and '2022-05-31' and valor_comissao = 0";
+// $sql = "select id, n_documento, origem from titulos_receber where origem = 8803";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $titulosReceber = $stmt->fetchAll();

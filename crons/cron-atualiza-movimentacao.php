@@ -33,9 +33,9 @@ foreach ($movimentacoes as $movimentacao) {
 
         // $pedido = $jsonConsultaMovimentacao['value'][0]['produtos'][0]['pedido'];
 
-        $desconto = $jsonConsultaMovimentacao['value'][0]['caixas']['cortesias']['desconto'];
-        $tipoDesc = $jsonConsultaMovimentacao['value'][0]['caixas']['cortesias']['tipo_desc'];
-        $correcao = $jsonConsultaMovimentacao['value'][0]['caixas']['cortesias']['correcao'];
+        $desconto = $jsonConsultaMovimentacao['value'][0]['cortesias'][0]['desconto'];
+        $tipoDesc = $jsonConsultaMovimentacao['value'][0]['cortesias'][0]['tipo_desc'];
+        $correcao = $jsonConsultaMovimentacao['value'][0]['cortesias'][0]['correcao'];
 
         // if ($pedido != null) {
 

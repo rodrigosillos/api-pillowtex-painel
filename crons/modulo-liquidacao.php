@@ -3,24 +3,32 @@
 include('call-api-novo.php');
 include('connection-db.php');
 
+// $parametros = [
+//     'efetuado' => 'true',
+//     'substituido' => 'false',
+//     'representante' => '24',
+//     '$format' => 'json',
+//     '$dateformat' => 'iso',
+//     'tipo' => 'R',
+//     // 'protestado' => 'false',
+//     // 'gerador' => 'C',
+//     'dataip' => '2022-05-01',
+//     'datafp' => '2022-05-31',
+// ];
+
 $parametros = [
-    'efetuado' => 'true',
-    'substituido' => 'false',
-    'representante' => '30',
-    '$format' => 'json',
+    'repassado' => 'true',
     '$dateformat' => 'iso',
     'tipo' => 'R',
-    // 'protestado' => 'false',
-    // 'gerador' => 'C',
     'dataip' => '2022-05-01',
     'datafp' => '2022-05-31',
+    'efetuado' => 'true',
+    'substituido' => 'false',
+    '$format' => 'json',
 ];
 
 $consultaLancamentos = CallAPI('GET', 'titulos_receber/consulta_receber_recebidos', 'novo', $parametros);
 $jsonConsultaLancamentos = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $consultaLancamentos), true);
-
-// print($jsonConsultaLancamentos['odata.count']);
-// exit();
 
 if(isset($jsonConsultaLancamentos['value'])) {
 

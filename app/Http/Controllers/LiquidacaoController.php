@@ -31,7 +31,8 @@ class LiquidacaoController extends Controller
         // Visualização Admin
         if($representanteCodSelecionado != 'todos') {
 
-            $queryRep = DB::select(DB::raw("select name from users where agent_code = '". $representanteCodSelecionado ."'"));
+            $queryRep = DB::select(DB::raw("select agent_id2, name from users where agent_code = '". $representanteCodSelecionado ."'"));
+            $representanteId = $queryRep[0]->agent_id2;
             $representanteSelecionado = $representanteCodSelecionado . ' - ' . $queryRep[0]->name;
             $whereRepresentante = "representante_pedido = '".$representanteSelecionado."' and";
 
@@ -50,26 +51,50 @@ class LiquidacaoController extends Controller
 
         // dd($whereRepresentante);
 
-        $debtors = DB::select(DB::raw(" 
-            select 
-                id,
-                cliente_nome, 
-                lancamento,
-                origem, 
-                n_documento,
-                data_vencimento, 
-                data_pagamento, 
-                efetuado, 
-                substituido, 
-                valor_inicial,
-                acres_decres,
-                valor_pago, 
-                valor_comissao,
-                valor_comissao_representante_pedido,
-                valor_comissao_representante_cliente
-            from titulos_receber
-            where ".$whereRepresentante." tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."'"
-        ));
+        $sqlRepresentante = "select       
+            id,
+            cliente_nome, 
+            lancamento,
+            origem, 
+            n_documento,
+            data_vencimento, 
+            data_pagamento, 
+            efetuado, 
+            substituido, 
+            valor_inicial,
+            acres_decres,
+            valor_pago, 
+            valor_comissao,
+            valor_comissao_representante_pedido,
+            valor_comissao_representante_cliente
+        from titulos_receber where 
+        representante = ".$representanteId." and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."' or
+        representante_movimento = '".$representanteSelecionado."' and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."' or
+        representante_cliente = '".$representanteSelecionado."' and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."' or 
+        representante_pedido = '".$representanteSelecionado."' and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."';";
+
+        $debtors = DB::select(DB::raw($sqlRepresentante));
+
+        // $debtors = DB::select(DB::raw(" 
+        //     select 
+        //         id,
+        //         cliente_nome, 
+        //         lancamento,
+        //         origem, 
+        //         n_documento,
+        //         data_vencimento, 
+        //         data_pagamento, 
+        //         efetuado, 
+        //         substituido, 
+        //         valor_inicial,
+        //         acres_decres,
+        //         valor_pago, 
+        //         valor_comissao,
+        //         valor_comissao_representante_pedido,
+        //         valor_comissao_representante_cliente
+        //     from titulos_receber
+        //     where ".$whereRepresentante." tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."'"
+        // ));
 
         // select valor_comissao, efetuado, origem from titulos_receber where tipo_pagto not in (5406, 20201) and representante_pedido = '34339 - A MARTINS NETO REPRESENTACAO- ME' and data_pagamento between '2022-03-01' and '2022-03-31';
 

@@ -83,6 +83,9 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
                         $cancelada = $jsonConsultaMovimentacao['value'][0]['cancelada'];
                         $pedidoV = $jsonConsultaMovimentacao['value'][0]['produtos'][0]['pedido'];
                         $condicoesPgto = $jsonConsultaMovimentacao['value'][0]['condicoes_pgto'];
+                        $desconto = $jsonConsultaMovimentacao['value'][0]['cortesias']['desconto'];
+                        $tipoDesc = $jsonConsultaMovimentacao['value'][0]['cortesias']['tipo_desc'];
+                        $correcao = $jsonConsultaMovimentacao['value'][0]['cortesias']['correcao'];
             
                         // pedido venda
 
@@ -216,6 +219,9 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
                             'tipo_pedido' => $tipoPedido,
                             'condicoes_pgto' => $condicoesPgto,
                             'oculto' => 0,
+                            'correcao' => $correcao,
+                            'desconto' => $desconto,
+                            'tipo_desc' => $tipoDesc,
                         ];
             
                         print('cod operacao: ' . $codOperacao . ' - data emissão: ' . $dataEmissao . "\xA");
@@ -259,7 +265,10 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
                                                             cod_pedidov,
                                                             tipo_pedido,
                                                             condicoes_pgto,
-                                                            oculto) VALUES (:cod_operacao,
+                                                            oculto,
+                                                            correcao,
+                                                            desconto,
+                                                            tipo_desc) VALUES (:cod_operacao,
                                                                             :tipo_operacao,
                                                                             :romaneio, 
                                                                             :ticket,
@@ -298,7 +307,10 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
                                                                             :cod_pedidov,
                                                                             :tipo_pedido,
                                                                             :condicoes_pgto,
-                                                                            :oculto)";
+                                                                            :oculto,
+                                                                            :correcao,
+                                                                            :desconto,
+                                                                            :tipo_desc)";
                 
                         $stmt = $pdo->prepare($sql);
                         $stmt->execute($data);

@@ -3,8 +3,8 @@
 include('call-api.php');
 include('connection-db.php');
 
-// $sql = "select cod_operacao, tipo_operacao from movimentacao where cod_operacao = 42074";
-$sql = "select cod_operacao, tipo_operacao from movimentacao where tipo_operacao = 'S' and notas is null";
+$sql = "select cod_operacao, tipo_operacao from movimentacao where cod_operacao = 88367";
+// $sql = "select cod_operacao, tipo_operacao from movimentacao where tipo_operacao = 'S' and notas is null";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $movimentacoes = $stmt->fetchAll();
@@ -27,49 +27,61 @@ foreach ($movimentacoes as $movimentacao) {
 
     if($jsonConsultaMovimentacao['odata.count'] > 0) {
 
-        $codPedidoV = null;
-        $notas = null;
-        $tipoPedido = '';
+        // $codPedidoV = null;
+        // $notas = null;
+        // $tipoPedido = '';
 
-        $pedido = $jsonConsultaMovimentacao['value'][0]['produtos'][0]['pedido'];
+        // $pedido = $jsonConsultaMovimentacao['value'][0]['produtos'][0]['pedido'];
 
-        if ($pedido != null) {
+        $desconto = $jsonConsultaMovimentacao['value'][0]['cortesias']['desconto'];
+        $tipoDesc = $jsonConsultaMovimentacao['value'][0]['cortesias']['tipo_desc'];
+        $correcao = $jsonConsultaMovimentacao['value'][0]['cortesias']['correcao'];
 
-            $paramsConsultaPedidoVenda = [
-                'pedidov' => $pedido,
-                '$format' => 'json',
-                '$dateformat' => 'iso',
-            ];
+        // if ($pedido != null) {
+
+        //     $paramsConsultaPedidoVenda = [
+        //         'pedidov' => $pedido,
+        //         '$format' => 'json',
+        //         '$dateformat' => 'iso',
+        //     ];
     
-            $bodyConsultaPedidoVenda = CallAPI('GET', 'pedido_venda/consulta_simples', $paramsConsultaPedidoVenda);
-            $jsonConsultaPedidoVenda = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $bodyConsultaPedidoVenda), true);
+        //     $bodyConsultaPedidoVenda = CallAPI('GET', 'pedido_venda/consulta_simples', $paramsConsultaPedidoVenda);
+        //     $jsonConsultaPedidoVenda = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $bodyConsultaPedidoVenda), true);
     
-            if($jsonConsultaPedidoVenda['odata.count'] > 0) {
+        //     if($jsonConsultaPedidoVenda['odata.count'] > 0) {
     
-                $codPedidoV = $jsonConsultaPedidoVenda['value'][0]['cod_pedidov'];
-                $notas = $jsonConsultaPedidoVenda['value'][0]['notas'];
-                $tipoPedido = $jsonConsultaPedidoVenda['value'][0]['tipo_pedido'];
+        //         $codPedidoV = $jsonConsultaPedidoVenda['value'][0]['cod_pedidov'];
+        //         $notas = $jsonConsultaPedidoVenda['value'][0]['notas'];
+        //         $tipoPedido = $jsonConsultaPedidoVenda['value'][0]['tipo_pedido'];
             
-            }
+        //     }
 
-        }
+        // }
     
+        // $data = [
+        //     'cod_operacao' => $codOperacao,
+        //     'pedidov' => $pedido,
+        //     'cod_pedidov' => $codPedidoV,
+        //     'notas' => $notas,
+        //     'tipo_pedido' => $tipoPedido,
+        // ];
+
         $data = [
             'cod_operacao' => $codOperacao,
-            'pedidov' => $pedido,
-            'cod_pedidov' => $codPedidoV,
-            'notas' => $notas,
-            'tipo_pedido' => $tipoPedido,
+            'correcao' => $correcao,
+            'desconto' => $desconto,
+            'tipo_desc' => $tipoDesc,
         ];
 
         print_r($data);
         
-        $sql = "update movimentacao SET pedidov = :pedidov,
-                                        cod_pedidov = :cod_pedidov,
-                                        notas = :notas,
-                                        tipo_pedido = :tipo_pedido where cod_operacao = :cod_operacao";
+        $sql = "update movimentacao SET correcao = :correcao,
+                                        desconto = :desconto,
+                                        tipo_desc = :tipo_desc
+                                    where cod_operacao = :cod_operacao";
+
         $stmt = $pdo->prepare($sql);
-        $stmt->execute($data);
+        // $stmt->execute($data);
 
     }
 

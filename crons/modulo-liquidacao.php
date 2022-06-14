@@ -17,11 +17,11 @@ include('connection-db.php');
 // ];
 
 $parametros = [
-    'repassado' => 'true',
+    'repassado' => 'false',
     '$dateformat' => 'iso',
     'tipo' => 'R',
-    'dataip' => '2022-05-01',
-    'datafp' => '2022-05-31',
+    'dataip' => '2022-05-26',
+    'datafp' => '2022-05-26',
     'efetuado' => 'true',
     'substituido' => 'false',
     '$format' => 'json',

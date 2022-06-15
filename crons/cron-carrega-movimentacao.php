@@ -83,9 +83,18 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
                         $cancelada = $jsonConsultaMovimentacao['value'][0]['cancelada'];
                         $pedidoV = $jsonConsultaMovimentacao['value'][0]['produtos'][0]['pedido'];
                         $condicoesPgto = $jsonConsultaMovimentacao['value'][0]['condicoes_pgto'];
-                        $desconto = $jsonConsultaMovimentacao['value'][0]['cortesias']['desconto'];
-                        $tipoDesc = $jsonConsultaMovimentacao['value'][0]['cortesias']['tipo_desc'];
-                        $correcao = $jsonConsultaMovimentacao['value'][0]['cortesias']['correcao'];
+
+                        $desconto = 0;
+                        $tipoDesc = 0;
+                        $correcao = null;
+
+                        if(isset($jsonConsultaMovimentacao['value'][0]['cortesias'][0])) {
+
+                            $desconto = $jsonConsultaMovimentacao['value'][0]['cortesias'][0]['desconto'];
+                            $tipoDesc = $jsonConsultaMovimentacao['value'][0]['cortesias'][0]['tipo_desc'];
+                            $correcao = $jsonConsultaMovimentacao['value'][0]['cortesias'][0]['correcao'];
+
+                        }
             
                         // pedido venda
 
@@ -219,7 +228,7 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
                             'tipo_pedido' => $tipoPedido,
                             'condicoes_pgto' => $condicoesPgto,
                             'oculto' => 0,
-                            'correcao' => $correcao,
+                            'correcao' => $correcao == null ? 0 : 1,
                             'desconto' => $desconto,
                             'tipo_desc' => $tipoDesc,
                         ];

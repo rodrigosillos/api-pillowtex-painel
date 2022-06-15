@@ -3,7 +3,7 @@
 include('call-api.php');
 include('connection-db.php');
 
-$sql = "select cod_operacao, tipo_operacao from movimentacao where cod_operacao = 88367";
+$sql = "select cod_operacao, tipo_operacao from movimentacao where cod_operacao = 83810";
 // $sql = "select cod_operacao, tipo_operacao from movimentacao where tipo_operacao = 'S' and notas is null";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -27,15 +27,35 @@ foreach ($movimentacoes as $movimentacao) {
 
     if($jsonConsultaMovimentacao['odata.count'] > 0) {
 
+        if(isset($jsonConsultaMovimentacao['value'][0]['cortesias'][0])) {
+
+            $desconto = $jsonConsultaMovimentacao['value'][0]['cortesias'][0]['desconto'];
+            $tipoDesc = $jsonConsultaMovimentacao['value'][0]['cortesias'][0]['tipo_desc'];
+            $correcao = $jsonConsultaMovimentacao['value'][0]['cortesias'][0]['correcao'];
+
+            $data = [
+                'cod_operacao' => $codOperacao,
+                'correcao' => $correcao == null ? 0 : 1,
+                'desconto' => $desconto,
+                'tipo_desc' => $tipoDesc,
+            ];
+    
+            print_r($data);
+            
+            $sql = "update movimentacao SET correcao = :correcao,
+                                            desconto = :desconto,
+                                            tipo_desc = :tipo_desc
+                                        where cod_operacao = :cod_operacao";
+    
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($data);
+        }
+
         // $codPedidoV = null;
         // $notas = null;
         // $tipoPedido = '';
 
         // $pedido = $jsonConsultaMovimentacao['value'][0]['produtos'][0]['pedido'];
-
-        $desconto = $jsonConsultaMovimentacao['value'][0]['cortesias'][0]['desconto'];
-        $tipoDesc = $jsonConsultaMovimentacao['value'][0]['cortesias'][0]['tipo_desc'];
-        $correcao = $jsonConsultaMovimentacao['value'][0]['cortesias'][0]['correcao'];
 
         // if ($pedido != null) {
 
@@ -65,23 +85,6 @@ foreach ($movimentacoes as $movimentacao) {
         //     'notas' => $notas,
         //     'tipo_pedido' => $tipoPedido,
         // ];
-
-        $data = [
-            'cod_operacao' => $codOperacao,
-            'correcao' => $correcao == null ? 0 : 1,
-            'desconto' => $desconto,
-            'tipo_desc' => $tipoDesc,
-        ];
-
-        print_r($data);
-        
-        $sql = "update movimentacao SET correcao = :correcao,
-                                        desconto = :desconto,
-                                        tipo_desc = :tipo_desc
-                                    where cod_operacao = :cod_operacao";
-
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute($data);
 
     }
 

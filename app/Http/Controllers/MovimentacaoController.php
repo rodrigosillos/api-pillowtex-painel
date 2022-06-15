@@ -163,7 +163,7 @@ class MovimentacaoController extends Controller
             if($invoice->desconsiderar == 0) {
             // if($invoice->tipo_pedido != 'E') {
                 $commissionResult['totalizador']['valor_comissao'] += $commissionResult['data'][$invoiceKey]['comissao_total'];
-                $commissionResult['totalizador']['valor_venda'] += $commissionResult['data'][$invoiceKey]['total'];
+                $commissionResult['totalizador']['valor_venda'] += ( $commissionResult['data'][$invoiceKey]['total'] + $invoice->desconto );
                 $commissionResult['totalizador']['valor_faturamento'] += $commissionResult['data'][$invoiceKey]['faturamento_50'];
             }
 

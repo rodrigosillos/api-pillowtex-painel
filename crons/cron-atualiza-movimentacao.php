@@ -68,7 +68,7 @@ foreach ($movimentacoes as $movimentacao) {
 
         $data = [
             'cod_operacao' => $codOperacao,
-            'correcao' => $correcao,
+            'correcao' => $correcao == null ? 0 : 1,
             'desconto' => $desconto,
             'tipo_desc' => $tipoDesc,
         ];

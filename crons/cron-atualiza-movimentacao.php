@@ -3,8 +3,8 @@
 include('call-api.php');
 include('connection-db.php');
 
-$sql = "select cod_operacao, tipo_operacao from movimentacao where cod_operacao = 83810";
-// $sql = "select cod_operacao, tipo_operacao from movimentacao where tipo_operacao = 'S' and notas is null";
+$sql = "select cod_operacao, tipo_operacao from movimentacao where data_emissao between '2022-05-01' and '2022-05-31' and tipo_pedido not in (select descricao from tipos_pedido where oculto = 1) and representante = 7 and oculto = 0 and tipo_operacao = 'S'";
+// $sql = "select cod_operacao, tipo_operacao from movimentacao where cod_operacao = 83810";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $movimentacoes = $stmt->fetchAll();

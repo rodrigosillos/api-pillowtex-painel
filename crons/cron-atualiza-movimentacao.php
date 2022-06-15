@@ -3,7 +3,7 @@
 include('call-api.php');
 include('connection-db.php');
 
-$sql = "select cod_operacao, tipo_operacao from movimentacao where data_emissao between '2022-05-01' and '2022-05-31' and tipo_pedido not in (select descricao from tipos_pedido where oculto = 1) and representante = 7 and oculto = 0 and tipo_operacao = 'S'";
+$sql = "select cod_operacao, tipo_operacao from movimentacao where data_emissao between '2022-05-01' and '2022-05-31' and tipo_pedido not in (select descricao from tipos_pedido where oculto = 1) and representante in (7, 230, 33, 25, 29, 8, 12, 237, 253, 260) and oculto = 0 and tipo_operacao = 'S'";
 // $sql = "select cod_operacao, tipo_operacao from movimentacao where cod_operacao = 83810";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();

@@ -81,7 +81,7 @@ foreach ($movimentacoes as $movimentacao) {
                                     where cod_operacao = :cod_operacao";
 
         $stmt = $pdo->prepare($sql);
-        // $stmt->execute($data);
+        $stmt->execute($data);
 
     }
 

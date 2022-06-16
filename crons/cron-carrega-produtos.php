@@ -3,7 +3,8 @@
 include('call-api.php');
 include('connection-db.php');
 
-$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela from movimentacao where data_emissao between '2022-05-01' and '2022-05-31'";
+// $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, comissao_r, evento from movimentacao where data_emissao between '2022-05-01' and '2022-05-31'";
+$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, comissao_r, evento, tipo_pedido from movimentacao where cod_operacao = 87006";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -15,6 +16,9 @@ foreach ($movimentacoes as $movimentacao) {
     $tipoOperacao = $movimentacao["tipo_operacao"];
     $clienteEstado = $movimentacao["cliente_estado"];
     $tabela = $movimentacao["tabela"];
+    $comissaoR = $movimentacao["comissao_r"];
+    $evento = $movimentacao["evento"];
+    $tipoPedido = $movimentacao["tipo_pedido"];
 
     $sql = "select id from produtos WHERE cod_operacao = :cod_operacao";
     $stmt = $pdo->prepare($sql);
@@ -125,6 +129,9 @@ foreach ($movimentacoes as $movimentacao) {
 
                 if($tabela == 214 && $jsonProduto['desconto'] > 5)
                     $percentualCalculo = ($percentualCalculo / 2);
+
+                if ($tipoPedido == 'ZC PEDIDO ESPECIAL' || $evento = 213)
+                    $percentualCalculo = $comissaoR;
                     
                 $produtoPreco = $jsonProduto['preco_aplicado'] == 0 ? $jsonProduto['preco'] : $jsonProduto['preco_aplicado'];
                 $valorComissaoProduto = floor(($produtoPreco * $jsonProduto['quantidade']) * $percentualCalculo) / 100;

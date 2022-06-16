@@ -79,7 +79,6 @@ class MovimentacaoController extends Controller
             $query  = " tipo_pedido not in (select descricao from tipos_pedido where oculto = 1) and data_emissao between '" . $dateStart . "' and '" . $dateEnd . "' and representante_cod = '" . $searchAgent . "' and oculto = 0 and tipo_operacao = 'S'";
             $query .= " or tipo_pedido not in (select descricao from tipos_pedido where oculto = 1) and data_emissao between '" . $dateStart . "' and '" . $dateEnd . "' and representante_cliente_cod = '" . $searchAgent . "' and oculto = 0 and tipo_operacao = 'S'";
         }
-
         // dd($query);
 
         if($userProfileId == 1) {

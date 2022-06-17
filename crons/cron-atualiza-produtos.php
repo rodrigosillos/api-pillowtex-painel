@@ -3,7 +3,8 @@
 // include('call-api.php');
 include('connection-db.php');
 
-$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, comissao_r, evento, tipo_pedido from movimentacao where representante_cod = '0055' and data_emissao between '2022-05-01' and '2022-05-31'";
+// $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, comissao_r, evento, tipo_pedido from movimentacao where representante_cod = '0055' and data_emissao between '2022-05-01' and '2022-05-31'";
+$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, comissao_r, evento, tipo_pedido from movimentacao where cod_operacao = 83564";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -21,22 +22,21 @@ foreach ($movimentacoes as $movimentacao) {
 
     
 
-    $sql = "select desconto, preco_aplicado, preco, quantidade, cod_divisao from produtos where cod_operacao = ".$codOperacao; 
+    $sql = "select id, desconto, preco_aplicado, preco, quantidade, cod_divisao from produtos where cod_operacao = ".$codOperacao; 
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $produtos = $stmt->fetchAll();
     
-    foreach ($produtos as $produto) {
+    foreach ($produtos as $produto) {        
 
-        
-
+        $produtoID = $produto["id"];
         $codDivisao = $produto["cod_divisao"];
         $desconto = $produto["desconto"];
         $quantidade = $produto["quantidade"];
         $preco_aplicado = $produto["preco_aplicado"];
         $preco = $produto["preco"];
 
-        print($codDivisao);
+        // print($codDivisao);
 
         // calculo comissao
 
@@ -80,7 +80,7 @@ foreach ($movimentacoes as $movimentacao) {
         // fim calculo comissao
 
         $data = [
-            'cod_operacao' => $codOperacao,
+            'id' => $produtoID,
             'valor_comissao' => $valorComissaoProduto,
             'percentual_comissao' => $percentualCalculo,
         ];
@@ -89,10 +89,10 @@ foreach ($movimentacoes as $movimentacao) {
     
         $sql = "update produtos set valor_comissao = :valor_comissao,
                                     percentual_comissao = :percentual_comissao,
-                                where cod_operacao = :cod_operacao";
+                                where id = :id";
     
         $stmt = $pdo->prepare($sql);
-        // $stmt->execute($data);
+        $stmt->execute($data);
 
     }
         

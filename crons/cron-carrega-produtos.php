@@ -3,7 +3,7 @@
 include('call-api.php');
 include('connection-db.php');
 
-$sql = "select cod_operacao from movimentacao where representante_cod = '0055' and data_emissao between '2022-05-01' and '2022-05-31'";
+$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, comissao_r, evento, tipo_pedido from movimentacao where representante_cod = '0055' and data_emissao between '2022-05-01' and '2022-05-31'";
 // $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, comissao_r, evento, tipo_pedido from movimentacao where data_emissao between '2022-05-01' and '2022-05-31'";
 // $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, comissao_r, evento, tipo_pedido from movimentacao where cod_operacao = 87006";
 

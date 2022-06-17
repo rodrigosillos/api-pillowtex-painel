@@ -88,7 +88,7 @@ foreach ($movimentacoes as $movimentacao) {
         print_r($data);
     
         $sql = "update produtos set valor_comissao = :valor_comissao,
-                                    percentual_comissao = :percentual_comissao,
+                                    percentual_comissao = :percentual_comissao
                                 where id = :id";
     
         $stmt = $pdo->prepare($sql);

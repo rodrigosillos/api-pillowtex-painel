@@ -66,7 +66,8 @@ class LiquidacaoController extends Controller
             valor_pago, 
             valor_comissao,
             valor_comissao_representante_pedido,
-            valor_comissao_representante_cliente
+            valor_comissao_representante_cliente,
+            desconsiderar
         from titulos_receber where 
         representante = ".$representanteId." and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."' or
         representante_movimento = '".$representanteSelecionado."' and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."' or
@@ -74,29 +75,6 @@ class LiquidacaoController extends Controller
         representante_pedido = '".$representanteSelecionado."' and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."';";
 
         $debtors = DB::select(DB::raw($sqlRepresentante));
-
-        // $debtors = DB::select(DB::raw(" 
-        //     select 
-        //         id,
-        //         cliente_nome, 
-        //         lancamento,
-        //         origem, 
-        //         n_documento,
-        //         data_vencimento, 
-        //         data_pagamento, 
-        //         efetuado, 
-        //         substituido, 
-        //         valor_inicial,
-        //         acres_decres,
-        //         valor_pago, 
-        //         valor_comissao,
-        //         valor_comissao_representante_pedido,
-        //         valor_comissao_representante_cliente
-        //     from titulos_receber
-        //     where ".$whereRepresentante." tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."'"
-        // ));
-
-        // select valor_comissao, efetuado, origem from titulos_receber where tipo_pagto not in (5406, 20201) and representante_pedido = '34339 - A MARTINS NETO REPRESENTACAO- ME' and data_pagamento between '2022-03-01' and '2022-03-31';
 
         foreach($debtors as $debtorKey => $debtor) {
 
@@ -121,8 +99,10 @@ class LiquidacaoController extends Controller
             $comissaoRepPedido = $debtor->valor_comissao_representante_pedido;
             $comissaoRepCliente = $debtor->valor_comissao_representante_cliente;
 
-            $totalCommission += $commission;
-            $totalLiquidacao += $amount;
+            if($debtor->desconsiderar == 0) {
+                $totalCommission += $commission;
+                $totalLiquidacao += $amount;
+            }
 
             $resultDebtors['data'][$debtorKey]['id'] = $tituloID;
             $resultDebtors['data'][$debtorKey]['cliente'] = Str::limit($client_name, 25, $end='...');
@@ -143,6 +123,7 @@ class LiquidacaoController extends Controller
             $resultDebtors['data'][$debtorKey]['comissao'] = $commission;
             $resultDebtors['data'][$debtorKey]['comissao_representante_pedido'] = $comissaoRepPedido;
             $resultDebtors['data'][$debtorKey]['comissao_representante_cliente'] = $comissaoRepCliente;
+            $resultDebtors['data'][$debtorKey]['desconsiderar'] = $debtor->desconsiderar;
 
         }
 
@@ -152,6 +133,7 @@ class LiquidacaoController extends Controller
             'total_commission' => $totalCommission,
             'total_liquidacao' => $totalLiquidacao,
             'representante_liquidacao' => $representanteSelecionado,
+            'representante_cod' => $representanteCodSelecionado,
             'mes_nome' => strftime('%B'),
         ]);
     }
@@ -229,5 +211,33 @@ class LiquidacaoController extends Controller
         [
             'debtors' => $resultDebtors,
         ]);
+    }
+
+    public function desconsidera(Request $request)
+    {
+        $desconsideraTitulos = $request->desconsiderar_titulo;
+        $repSelecionado = $request->rep_selecionado;
+
+        foreach($desconsideraTitulos as $titulo) {
+
+            $result = DB::table('titulos_receber')
+            ->select('desconsiderar')
+            ->where('id', $titulo)
+            ->first();
+
+            $acaoDesconsiderar = $result->desconsiderar; 
+
+            $desconsiderar = 1;
+            if ($acaoDesconsiderar == 1)
+                $desconsiderar = 0;
+            
+            DB::table('titulos_receber')
+            ->where('id', $titulo)
+            ->update(['desconsiderar' => $desconsiderar]);
+
+        }
+
+        return redirect('/liquidacao/' . $repSelecionado);
+
     }
 }

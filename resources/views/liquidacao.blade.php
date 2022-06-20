@@ -15,13 +15,15 @@
 @endcomponent
  
 
-    <form action="{{url('export-excel-liquidacao')}}" method="post">
-        {{ csrf_field() }}
+    <form id="frmLiquidacao" action="{{url('export-excel-liquidacao')}}" method="post">
+        @csrf
+        <input type="hidden" name="rep_selecionado" value="{{ $representante_cod }}">
         <div class="row">
             <div class="col-md-4">
                 <div>
                     <!--<button type="button" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-printer mr-1"></i> Imprimir</button>-->
                     <button type="submit" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-file-excel-outline mr-1"></i> Exportar</button>
+                    <button type="button" onclick="AlteraAction('{{url('desconsidera-titulo-liquidacao')}}');" class="btn btn-outline-dark waves-effect waves-light mb-3"><i class="mdi mdi-currency-usd-circle mr-1"></i> (Des)Considerar Título</button>
                 </div>
             </div>
         </div>
@@ -39,9 +41,10 @@
                                         <label class="custom-control-label" for="invoicecheck"></label>
                                     </div>
                                 </th>
+                                <th>Desconsiderar</th>
                                 <th>Cliente</th>
                                 <th>N Documento</th>
-                                <th>Movimento</th>
+                                <th>titulo</th>
                                 <th>Data de Vencimento</th>
                                 <th>Data de Pagamento</th>
                                 <th>Valor Inicial</th>
@@ -55,11 +58,17 @@
                         </thead>
                         <tbody>
                             @foreach($debtors['data'] as $key => $debtor)
-                            <tr>
+                            <tr  @if ($debtor['desconsiderar'] == 1) style="background-color: #808080;" @endif>
                                 <td>
                                     <div class="custom-control custom-checkbox text-center">
                                         <input type="checkbox" class="custom-control-input" id="invoicecheck{{ $key }}" name="invoice_check[]" value="{{ $debtor['id'] }}">
                                         <label class="custom-control-label" for="invoicecheck{{ $key }}"></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="custom-control custom-checkbox text-center">
+                                        <input type="checkbox" class="custom-control-input" id="desconsiderartitulo{{ $key }}" name="desconsiderar_titulo[]" value="{{ $debtor['id'] }}">
+                                        <label class="custom-control-label" for="desconsiderartitulo{{ $key }}"></label>
                                     </div>
                                 </td>
                                 
@@ -125,6 +134,14 @@
 @section('script')
 
     <script>
+        function AlteraAction(acao)
+        {
+            if (window.confirm("Você realmente quer (des)considerar os Títulos selecionados?")) {
+                document.getElementById("frmLiquidacao").action = acao;
+                document.getElementById("frmLiquidacao").submit();
+            }
+        }
+
         function SelectAll(){  
             var ele=document.getElementsByName('invoice_check[]');  
             for(var i=0; i<ele.length; i++){  

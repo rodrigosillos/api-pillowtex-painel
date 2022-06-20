@@ -32,6 +32,7 @@ Route::get('/tipos-pgto', 'TiposPgtoController@index');
 Route::get('/consulta-produtos/{cod_operacao}', 'ProdutosController@get');
 
 Route::post('/desconsidera-movimento-faturamento', 'MovimentacaoController@desconsidera');
+Route::post('/desconsidera-titulo-liquidacao', 'LiquidacaoController@desconsidera');
 Route::post('/export-excel-faturamento', 'ExcelMovimentacaoController@exportExcel')->name('export-excel');
 Route::post('/export-excel-liquidacao', 'ExcelLiquidacaoController@exportExcel')->name('export-excel');
 Route::post('/export-excel-produtos', 'ExcelProdutosController@exportExcel')->name('export-excel');

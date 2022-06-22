@@ -11,7 +11,7 @@
 @section('content')
 @component('common-components.breadcrumb')
     @slot('pagetitle') COMISSÕES @endslot
-    @slot('title') LIQUIDAÇÃO - ABRIL/2022 - REPRESENTANTE: {{ $representante_liquidacao }} @endslot
+    @slot('title') REPRESENTANTE: {{ $representante_liquidacao }} @endslot
 @endcomponent
  
 

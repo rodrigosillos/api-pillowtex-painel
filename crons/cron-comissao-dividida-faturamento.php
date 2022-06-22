@@ -70,8 +70,8 @@ foreach ($invoices as $invoice) {
 
         if ($invoiceType == 'ZC PEDIDO ESPECIAL' || $evento = 213) {
             $commissionPercentage = $comissaoR;
-            print($divisionCode . ' - ' .  $tableCode . "\xA");
-        }            
+            print($invoiceType . ' - ' .  $evento . "\xA");
+        }
         
         $priceProduct = $priceApplied == 0 ? $price : $priceApplied;
 

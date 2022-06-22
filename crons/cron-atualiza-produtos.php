@@ -66,7 +66,7 @@ foreach ($movimentacoes as $movimentacao) {
         if($tabela == 214 && $desconto > 5)
             $percentualCalculo = ($percentualCalculo / 2);
 
-        if ($tipoPedido == 'ZC PEDIDO ESPECIAL' || $evento = 213)
+        if ($tipoPedido == 'ZC PEDIDO ESPECIAL' || $evento == 213)
             $percentualCalculo = $comissaoR;
             
         $produtoPreco = $preco_aplicado == 0 ? $preco : $preco_aplicado;

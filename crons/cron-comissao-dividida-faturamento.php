@@ -4,7 +4,7 @@ include('call-api.php');
 include('connection-db.php');
 
 // $sql = "select m.cod_operacao, m.tipo_operacao, m.cliente_estado, m.tabela, m.tipo_pedido, m.data_emissao, m.comissao_r, m.representante, m.representante_cliente from movimentacao m where m.notas is null and m.representante_cod = '0054' and m.data_emissao between '2022-05-01' and '2022-05-20";
-$sql = "select m.cod_operacao, m.tipo_operacao, m.cliente_estado, m.tabela, m.tipo_pedido, m.data_emissao, m.comissao_r, m.representante, m.representante_cliente, m.evento from movimentacao m where m.valor_comissao = 0 and m.data_emissao between '2022-06-01' and '2022-06-10'";
+$sql = "select m.cod_operacao, m.tipo_operacao, m.cliente_estado, m.tabela, m.tipo_pedido, m.data_emissao, m.comissao_r, m.representante, m.representante_cliente, m.evento from movimentacao m where m.data_emissao between '2022-06-01' and '2022-06-10'";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -68,7 +68,7 @@ foreach ($invoices as $invoice) {
         if($tableCode == 187 && $clientAddress != 'SP' && $discount < 5)
             $commissionPercentage = 3;
 
-        if ($invoiceType == 'ZC PEDIDO ESPECIAL' || $evento = 213) {
+        if ($invoiceType == 'ZC PEDIDO ESPECIAL' || $evento == 213) {
             $commissionPercentage = $comissaoR;
             print($invoiceType . ' - ' .  $evento . "\xA");
         }

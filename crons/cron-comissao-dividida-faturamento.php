@@ -68,8 +68,10 @@ foreach ($invoices as $invoice) {
         if($tableCode == 187 && $clientAddress != 'SP' && $discount < 5)
             $commissionPercentage = 3;
 
-        if ($invoiceType == 'ZC PEDIDO ESPECIAL' || $evento = 213)
+        if ($invoiceType == 'ZC PEDIDO ESPECIAL' || $evento = 213) {
             $commissionPercentage = $comissaoR;
+            print($divisionCode . ' - ' .  $tableCode . "\xA");
+        }            
         
         $priceProduct = $priceApplied == 0 ? $price : $priceApplied;
 
@@ -81,7 +83,7 @@ foreach ($invoices as $invoice) {
         $commissionAmountTotal += $commissionAmount;
     }
 
-    print($divisionCode . ' - ' .  $tableCode . "\xA");
+    
 
     $percentualFaturamento = 50;
     $valorFaturamento = 0;

@@ -81,7 +81,7 @@ foreach ($invoices as $invoice) {
         $commissionAmountTotal += $commissionAmount;
     }
 
-    print($commissionPercentage . "\xA");
+    print($$divisionCode . ' - ' .  $tableCode . "\xA");
 
     $percentualFaturamento = 50;
     $valorFaturamento = 0;

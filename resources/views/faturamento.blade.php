@@ -33,10 +33,10 @@
             <div class="col-md-6">
                 <div class="@if ( Auth::user()->user_profile_id == 3 ) float-left @else float-right @endif">
                     <!--<div class="form-inline mb-3">-->
-                        <label class="col-md-4 col-form-label">Data de Emissão</label>
+                        <label class="col-md-6 col-form-label">DATA DE EMISSÃO</label>
                         <div class="input-daterange input-group" data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-autoclose="true">
-                            <input type="text" class="form-control text-left" placeholder="De" name="dateStart" value="{{ $data_form['date_start'] }}" />
-                            <input type="text" class="form-control text-left" placeholder="Até" name="dateEnd" value="{{ $data_form['date_end'] }}" />
+                            <input type="text" class="form-control text-left" placeholder="De" name="dateStart" id="dateStart" value="{{ $data_form['date_start'] }}" />
+                            <input type="text" class="form-control text-left" placeholder="Até" name="dateEnd" id="dateEnd" value="{{ $data_form['date_end'] }}" />
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-primary"><i class="mdi mdi-filter-variant"></i></button>
                             </div>
@@ -54,6 +54,8 @@
     <form id="frmFaturamento2" action="{{url('export-excel-faturamento')}}" method="post">
         @csrf
         <input type="hidden" name="rep_selecionado" value="{{ $data_form['search_agent'] }}">
+        <input type="hidden" name="data_inicio" id="data_inicio">
+        <input type="hidden" name="data_fim" id="data_fim">
         <div class="row">
             <div class="col-md-3">
                 <div>
@@ -68,9 +70,9 @@
                     @else
                         <a href="#" onclick="RedirectURL('liquidacao');return false;">
                     @endif
-                    <button type="button" class="btn btn-primary waves-effect waves-light">
+                    <!-- <button type="button" class="btn btn-primary waves-effect waves-light">
                         Visualizar Liquidação <i class="uil uil-arrow-right ml-2"></i> 
-                    </button>
+                    </button> -->
                     </a>
                     <!-- <a href="#" onclick="RedirectURL('substituicao');return false;">
                     <button disabled type="button" class="btn btn-primary waves-effect waves-light">
@@ -246,6 +248,10 @@
         function AlteraAction(acao)
         {
             if (window.confirm("Você realmente quer (des)considerar os Movimentos selecionados?")) {
+
+                document.getElementById('data_inicio').value = document.getElementById('dateStart').value;
+                document.getElementById('data_fim').value = document.getElementById('dateEnd').value;
+
                 document.getElementById("frmFaturamento2").action = acao;
                 document.getElementById("frmFaturamento2").submit();
             }

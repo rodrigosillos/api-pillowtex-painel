@@ -46,7 +46,9 @@ Route::get('/faturamento', 'MovimentacaoController@index');
 Route::match(['get', 'post'], '/consulta-faturamento', 'MovimentacaoController@get')->name('consulta-faturamento');
 
 //liquidacao
-Route::get('/liquidacao/{agent?}', 'LiquidacaoController@getLiquidacao');
+Route::get('/liquidacao', 'LiquidacaoController@index');
+Route::match(['get', 'post'], '/consulta-liquidacao', 'LiquidacaoController@get')->name('consulta-liquidacao');
+// Route::get('/liquidacao/{agent?}', 'LiquidacaoController@getLiquidacao');
 
 //substituicao
 Route::get('/substituicao/{agent?}', 'LiquidacaoController@getSubstituicao');

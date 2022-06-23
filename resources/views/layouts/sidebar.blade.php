@@ -64,8 +64,9 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li><a href="/faturamento">@lang('translation.Calculate_Commission')</a></li>
-                        <!--
                         <li><a href="/liquidacao">@lang('translation.Liquidacao')</a></li>
+                        <!--
+                        
                         <li><a href="/substituicao">@lang('translation.Substituicao')</a></li>
                         -->
                         <li><a href="/representantes">@lang('translation.Agents')</a>

@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 use App\Http\Controllers\AgentsController;
 
-use GuzzleHttp\Client;
+// use GuzzleHttp\Client;
 use Carbon\Carbon;
 
 use App;

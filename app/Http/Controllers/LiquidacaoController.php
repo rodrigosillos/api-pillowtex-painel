@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
+use Carbon\Carbon;
+
 class LiquidacaoController extends Controller
 {
     public function __construct()
@@ -14,19 +16,54 @@ class LiquidacaoController extends Controller
         $this->middleware('auth');
     }
 
-    public function getLiquidacao(Request $request)
+    public function index(Request $request)
+    {           
+        $previousMonth = date("m", strtotime("first day of previous month"));
+        $previousDayMonth = date("d", strtotime("last day of previous month"));
+        // $currentYear = date("Y", strtotime("-1 year"));
+        $currentYear = date("Y");
+        
+        $collection = collect([
+            'debtors' => [
+                'data' => []
+            ],
+            'agents' => (new AgentsController)->get('array'),
+            'total_commission' => 0,
+            'total_liquidacao' => 0,
+            'data_form' => [
+                'date_start' => '01/' . $previousMonth . '/' . $currentYear,
+                'date_end' => $previousDayMonth . '/' . $previousMonth . '/' . $currentYear,
+                'search_agent' => -1,
+            ]
+        ]);
+        
+        return view('liquidacao-filtro', $collection);
+    }
+
+    public function get(Request $request)
     { 
         $resultDebtors = [
             'data' => [],
+            'agents' => (new AgentsController)->get('array'),
         ];
 
-        $representanteCodSelecionado = $request->agent;
+        // $representanteCodSelecionado = $request->agent;
         $representanteLogado = Auth::user()->agent_id;
         $userProfileId = Auth::user()->user_profile_id;
 
         $whereRepresentante = '';
         $totalCommission = 0;
         $totalLiquidacao = 0;
+
+        $dateStart = Carbon::createFromFormat('d/m/Y', $request->dateStart)->format('Y-m-d');
+        $dateEnd = Carbon::createFromFormat('d/m/Y', $request->dateEnd)->format('Y-m-d');
+
+        $dateStartForm = $request->dateStart;
+        $dateEndForm = $request->dateEnd;
+        $representanteCodSelecionado = $request->search_agent;
+
+        $lastMonth = date("m", strtotime("first day of previous month"));
+        $lastDayMonth = date("d", strtotime("last day of previous month"));
 
         // Visualização Admin
         if($representanteCodSelecionado != 'todos') {
@@ -43,8 +80,8 @@ class LiquidacaoController extends Controller
             $whereRepresentante = "representante_pedido like '%".$representanteLogado."%' and";
             // $whereRepresentante = "representante_pedido like '%".$representanteLogado."%' or representante_cliente like '%".$representanteLogado."%' and";
         
-        $mesAnterior = '06';
-        $ultimoDiaMes = '30';
+        // $mesAnterior = '06';
+        // $ultimoDiaMes = '30';
         // $mesAnterior = date("m", strtotime("first day of previous month"));
         // $ultimoDiaMes = date("d", strtotime("last day of previous month"));
         $ano = date("Y");
@@ -69,10 +106,10 @@ class LiquidacaoController extends Controller
             valor_comissao_representante_cliente,
             desconsiderar
         from titulos_receber where 
-        representante = ".$representanteId." and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."' or
-        representante_movimento = '".$representanteSelecionado."' and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."' or
-        representante_cliente = '".$representanteSelecionado."' and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."' or 
-        representante_pedido = '".$representanteSelecionado."' and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '".$ano."-".$mesAnterior."-01' and '".$ano."-".$mesAnterior."-".$ultimoDiaMes."';";
+        representante = ".$representanteId." and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '". $dateStart ."' and '". $dateEnd ."' or
+        representante_movimento = '".$representanteSelecionado."' and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '". $dateStart ."' and '". $dateEnd ."' or
+        representante_cliente = '".$representanteSelecionado."' and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '". $dateStart ."' and '". $dateEnd ."' or 
+        representante_pedido = '".$representanteSelecionado."' and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '". $dateStart ."' and '". $dateEnd ."';";
 
         $debtors = DB::select(DB::raw($sqlRepresentante));
 
@@ -127,14 +164,20 @@ class LiquidacaoController extends Controller
 
         }
 
-        return view('liquidacao', 
+        return view('liquidacao-filtro', 
         [
             'debtors' => $resultDebtors,
+            'agents' => (new AgentsController)->get('array'),
             'total_commission' => $totalCommission,
             'total_liquidacao' => $totalLiquidacao,
             'representante_liquidacao' => $representanteSelecionado,
             'representante_cod' => $representanteCodSelecionado,
             'mes_nome' => strftime('%B'),
+            'data_form' => [
+                'date_start' => $dateStartForm,
+                'date_end' => $dateEndForm,
+                'search_agent' => $representanteCodSelecionado,
+            ]
         ]);
     }
 
@@ -217,6 +260,8 @@ class LiquidacaoController extends Controller
     {
         $desconsideraTitulos = $request->desconsiderar_titulo;
         $repSelecionado = $request->rep_selecionado;
+        $dataInicio = $request->data_inicio;
+        $dataFim = $request->data_fim;
 
         foreach($desconsideraTitulos as $titulo) {
 
@@ -237,7 +282,12 @@ class LiquidacaoController extends Controller
 
         }
 
-        return redirect('/liquidacao/' . $repSelecionado);
+        return redirect()->route('consulta-liquidacao', [
+            '_token' => csrf_token(),
+            'search_agent' => $repSelecionado,
+            'dateStart' => $dataInicio,
+            'dateEnd' => $dataFim,
+        ]);
 
     }
 }

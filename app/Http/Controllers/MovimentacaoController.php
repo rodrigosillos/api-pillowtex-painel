@@ -191,6 +191,8 @@ class MovimentacaoController extends Controller
     {
         $desconsideraMovimentos = $request->desconsiderar_movimento;
         $repSelecionado = $request->rep_selecionado;
+        $dataInicio = $request->data_inicio;
+        $dataFim = $request->data_fim;
 
         foreach($desconsideraMovimentos as $movimento) {
 
@@ -215,8 +217,8 @@ class MovimentacaoController extends Controller
         return redirect()->route('consulta-faturamento', [
             '_token' => csrf_token(),
             'search_agent' => $repSelecionado,
-            'dateStart' => '01/05/2022',
-            'dateEnd' => '31/05/2022',
+            'dateStart' => $dataInicio,
+            'dateEnd' => $dataFim,
         ]);
 
     }

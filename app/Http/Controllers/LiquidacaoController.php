@@ -104,7 +104,10 @@ class LiquidacaoController extends Controller
             valor_comissao,
             valor_comissao_representante_pedido,
             valor_comissao_representante_cliente,
-            desconsiderar
+            desconsiderar,
+            representante_pedido,
+            representante_cliente,
+            representante_movimento
         from titulos_receber where 
         representante = ".$representanteId." and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '". $dateStart ."' and '". $dateEnd ."' or
         representante_movimento = '".$representanteSelecionado."' and tipo_pagto not in (select tipo_pgto from tipos_pgto where oculto = 1) and substituido = 0 and protesto = 0 and gerador = 'C' and baixa = 0 and data_pagamento between '". $dateStart ."' and '". $dateEnd ."' or
@@ -161,7 +164,9 @@ class LiquidacaoController extends Controller
             $resultDebtors['data'][$debtorKey]['comissao_representante_pedido'] = $comissaoRepPedido;
             $resultDebtors['data'][$debtorKey]['comissao_representante_cliente'] = $comissaoRepCliente;
             $resultDebtors['data'][$debtorKey]['desconsiderar'] = $debtor->desconsiderar;
-
+            $resultDebtors['data'][$debtorKey]['representante_pedido'] = $debtor->representante_pedido;
+            $resultDebtors['data'][$debtorKey]['representante_cliente'] = $debtor->representante_cliente;
+            $resultDebtors['data'][$debtorKey]['representante_movimento'] = $debtor->representante_movimento;
         }
 
         return view('liquidacao-filtro', 

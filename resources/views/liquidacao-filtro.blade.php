@@ -91,13 +91,15 @@
                                 <th>Desconsiderar</th>
                                 <th>Cliente</th>
                                 <th>N Documento</th>
-                                <th>titulo</th>
-                                <th>Data de Vencimento</th>
+                                <th>Representante Pedido</th>
+                                <th>Representante Cliente</th>
+                                <th>Representante Movimento</th>
+                                <!-- <th>Data de Vencimento</th> -->
                                 <th>Data de Pagamento</th>
-                                <th>Valor Inicial</th>
-                                <th>Acres/Decres</th>
-                                <th>Valor Pago</th>
                                 <th>Comissão Liquidação</th>
+                                <th>Valor Pago</th>
+                                <th>Valor Inicial</th>
+                                <!-- <th>Acres/Decres</th> -->                                
                                 <!-- <th>Comissão Rep Pedido</th>
                                 <th>Comissão Rep Cliente</th> -->
                             </tr>
@@ -123,26 +125,32 @@
                                     {{ $debtor['documento'] }}
                                 </td>
                                 <td>
-                                    {{ $debtor['codigo_operacao'] }}
+                                    {{ $debtor['representante_pedido'] }}
                                 </td>
                                 <td>
-                                    {{ $debtor['data_vencimento'] }}
+                                    {{ $debtor['representante_cliente'] }}
                                 </td>
+                                <td>
+                                    {{ $debtor['representante_movimento'] }}
+                                </td>
+                                <!-- <td>
+                                    {{ $debtor['data_vencimento'] }}
+                                </td> -->
                                 <td>
                                     {{ $debtor['data_pagamento'] }}
                                 </td>
                                 <td>
-                                    R$ {{ number_format($debtor['valor_inicial'], 2, ',', '.') }}
-                                </td>
-                                <td>
-                                    R$ {{ number_format($debtor['acres_decres'], 2, ',', '.') }}
-                                </td> 
-                                <td>
-                                    R$ {{ number_format($debtor['valor_pago'], 2, ',', '.') }}
-                                </td>                                
-                                <td>
                                     R$ {{ number_format($debtor['comissao'], 2, ',', '.') }}
                                 </td>
+                                <td>
+                                    R$ {{ number_format($debtor['valor_pago'], 2, ',', '.') }}
+                                </td>
+                                <td>
+                                    R$ {{ number_format($debtor['valor_inicial'], 2, ',', '.') }}
+                                </td>
+                                <!-- <td>
+                                    R$ {{ number_format($debtor['acres_decres'], 2, ',', '.') }}
+                                </td>  -->
                                 <!-- <td>
                                     R$ {{ number_format($debtor['comissao'], 2, ',', '.') }}
                                 </td>

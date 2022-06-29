@@ -24,7 +24,7 @@ class AgentsController extends Controller
             select * 
             from users
             ".$whereAgent."
-            order by name"
+            order by agent_code"
         ));
 
         $agentsResult = [];

@@ -13,7 +13,7 @@ $parametros = [
     // 'protestado' => 'false',
     // 'gerador' => 'C',
     'datai' => '2022-01-01',
-    'datap' => '2023-05-31',
+    'dataf' => '2023-05-31',
 ];
 
 // $parametros = [
@@ -29,6 +29,8 @@ $parametros = [
 
 $consultaLancamentos = CallAPI('GET', 'titulos_receber/consulta_receber_recebidos', 'novo', $parametros);
 $jsonConsultaLancamentos = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $consultaLancamentos), true);
+
+print_r($jsonConsultaLancamentos);
 
 if(isset($jsonConsultaLancamentos['value'])) {
 

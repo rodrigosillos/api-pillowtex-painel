@@ -6,14 +6,14 @@ include('connection-db.php');
 $parametros = [
     // 'efetuado' => 'true',
     // 'substituido' => 'false',
-    // 'representante' => '24',
+    'representante' => '36',
     '$format' => 'json',
     '$dateformat' => 'iso',
     'tipo' => 'R',
     // 'protestado' => 'false',
     // 'gerador' => 'C',
     'datai' => '2022-01-01',
-    'datap' => '2023-12-31',
+    'datap' => '2023-05-31',
 ];
 
 // $parametros = [

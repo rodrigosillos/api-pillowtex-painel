@@ -3,7 +3,7 @@
 include('call-api.php');
 include('connection-db.php');
 
-$tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / Substituição / Liquidição)
+$tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / Substituição / Liqudiçião)
 
 // foreach($tiposOperacao as $tipoOperacao) {
 

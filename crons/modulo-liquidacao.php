@@ -3,29 +3,30 @@
 include('call-api-novo.php');
 include('connection-db.php');
 
-$parametros = [
-    // 'efetuado' => 'true',
-    // 'substituido' => 'false',
-    // 'representante' => '7',
-    '$format' => 'json',
-    '$dateformat' => 'iso',
-    'tipo' => 'R',
-    // 'protestado' => 'false',
-    // 'gerador' => 'C',
-    'datai' => '2022-01-01',
-    'dataf' => '2023-05-31',
-];
-
 // $parametros = [
-//     'repassado' => 'false',
+//     // 'efetuado' => 'true',
+//     // 'substituido' => 'false',
+//     // 'representante' => '7',
+//     '$format' => 'json',
 //     '$dateformat' => 'iso',
 //     'tipo' => 'R',
-//     'dataip' => '2022-06-01',
-//     'datafp' => '2022-06-30',
-//     'efetuado' => 'true',
-//     'substituido' => 'false',
-//     '$format' => 'json',
+//     // 'protestado' => 'false',
+//     // 'gerador' => 'C',
+//     'datai' => '2022-01-01',
+//     'dataf' => '2023-05-31',
 // ];
+
+$parametros = [
+    'repassado' => 'false',
+    '$dateformat' => 'iso',
+    'representante' => '29',
+    'tipo' => 'R',
+    'dataip' => '2022-06-01',
+    'datafp' => '2022-06-30',
+    'efetuado' => 'true',
+    'substituido' => 'false',
+    '$format' => 'json',
+];
 
 $consultaLancamentos = CallAPI('GET', 'titulos_receber/consulta_receber_recebidos', 'novo', $parametros);
 $jsonConsultaLancamentos = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $consultaLancamentos), true);

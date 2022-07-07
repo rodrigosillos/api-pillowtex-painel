@@ -21,7 +21,7 @@ class LiquidacaoExport implements FromCollection, WithHeadings, WithMapping
     */
     public function collection()
     {
-        return Liquidacao::whereIn('id', $this->invoice_check)->get();
+        return Liquidacao::where('desconsiderar', 0)->whereIn('id', $this->invoice_check)->get();
     }
 
     public function headings(): array
@@ -29,27 +29,30 @@ class LiquidacaoExport implements FromCollection, WithHeadings, WithMapping
         return [
             'Cliente',
             'N Documento',
-            'Operação',
-            'Data Vencimento',
+            'Representante Pedido',
+            'Representante Cliente',
+            'Representante Movimento',
             'Data Pagamento',
-            'Valor Título',
             'Comissão Liquidação',
+            'Valor Pago',
+            'Valor Inicial',            
         ];
     }
 
     public function map($liquidacao): array
     {
-        $dataVencimento = date_create($liquidacao->data_vencimento);
         $dataPagamento = date_create($liquidacao->data_pagamento);
         
         return [
             $liquidacao->cliente_nome,
             $liquidacao->n_documento,
-            $liquidacao->origem,
-            date_format($dataVencimento, "d/m/Y"),
+            $liquidacao->representante_pedido,
+            $liquidacao->representante_cliente,
+            $liquidacao->representante_movimento,
             date_format($dataPagamento, "d/m/Y"),
-            number_format($liquidacao->valor_inicial, 2, ',', '.'),
             number_format($liquidacao->valor_comissao, 2, ',', '.'),
+            number_format($liquidacao->valor_pago, 2, ',', '.'),
+            number_format($liquidacao->valor_inicial, 2, ',', '.'),            
         ];
     }
 }

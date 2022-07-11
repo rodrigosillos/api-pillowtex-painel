@@ -19,13 +19,17 @@ include('connection-db.php');
 $parametros = [
     'repassado' => 'false',
     '$dateformat' => 'iso',
-    'representante' => '29',
+    'representante' => '6',
     'tipo' => 'R',
     'dataip' => '2022-06-01',
     'datafp' => '2022-06-30',
     'efetuado' => 'true',
     'substituido' => 'false',
     '$format' => 'json',
+    'protestado' => '',
+    'cartorio' => '',
+    'previsao' => '',
+    'devolvido' => '',
 ];
 
 $consultaLancamentos = CallAPI('GET', 'titulos_receber/consulta_receber_recebidos', 'novo', $parametros);
@@ -201,6 +205,7 @@ if(isset($jsonConsultaLancamentos['value'])) {
 
             $sql = "update titulos_receber SET efetuado = :efetuado,
                                                 data_pagamento = :data_pagamento,
+                                                valor_inicial = :valor_inicial,
                                                 valor_pago = :valor_pago,
                                                 tipo_pagto = :tipo_pagto
                                                 where lancamento = :lancamento and n_documento = :n_documento and cod = :cod limit 1";

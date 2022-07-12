@@ -4,7 +4,7 @@ include('call-api.php');
 include('connection-db.php');
 
 // $sql = "select m.cod_operacao, m.tipo_operacao, m.cliente_estado, m.tabela, m.tipo_pedido, m.data_emissao, m.comissao_r, m.representante, m.representante_cliente from movimentacao m where m.notas is null and m.representante_cod = '0054' and m.data_emissao between '2022-05-01' and '2022-05-20";
-$sql = "select m.cod_operacao, m.tipo_operacao, m.cliente_estado, m.tabela, m.tipo_pedido, m.data_emissao, m.comissao_r, m.representante, m.representante_cliente, m.evento from movimentacao m where m.data_emissao between '2022-06-21' and '2022-06-30'";
+$sql = "select m.cod_operacao, m.tipo_operacao, m.cliente_estado, m.tabela, m.tipo_pedido, m.data_emissao, m.comissao_r, m.representante, m.representante_cliente, m.evento from movimentacao m where m.data_emissao between '2022-07-01' and '2022-07-31'";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();

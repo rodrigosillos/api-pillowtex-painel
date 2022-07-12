@@ -19,17 +19,17 @@ include('connection-db.php');
 $parametros = [
     'repassado' => 'false',
     '$dateformat' => 'iso',
-    'representante' => '6',
+    // 'representante' => '6',
     'tipo' => 'R',
-    'dataip' => '2022-06-01',
-    'datafp' => '2022-06-30',
+    'dataip' => '2022-07-01',
+    'datafp' => '2022-07-30',
     'efetuado' => 'true',
     'substituido' => 'false',
     '$format' => 'json',
-    'protestado' => '',
-    'cartorio' => '',
-    'previsao' => '',
-    'devolvido' => '',
+    'protestado' => 'false',
+    'cartorio' => 'false',
+    'previsao' => 'false',
+    'devolvido' => 'false',
 ];
 
 $consultaLancamentos = CallAPI('GET', 'titulos_receber/consulta_receber_recebidos', 'novo', $parametros);

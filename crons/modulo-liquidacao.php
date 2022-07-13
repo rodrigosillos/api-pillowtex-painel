@@ -195,6 +195,7 @@ if(isset($jsonConsultaLancamentos['value'])) {
                 'efetuado' => $lancamentoValue['efetuado'] == false ? 0 : 1,
                 'data_pagamento' => $dataPagamento,
                 'valor_pago' => $lancamentoValue['valor_pago'] == null ? 0 : $lancamentoValue['valor_pago'],
+                'valor_inicial' => $lancamentoValue['valor_inicial'] == null ? 0 : $lancamentoValue['valor_inicial'],
                 'tipo_pagto' => $lancamentoValue['tipo_pagto'],
                 'lancamento' => $lancamentoValue['lancamento'],
                 'n_documento' => $lancamentoValue['n_documento'],

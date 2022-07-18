@@ -88,8 +88,7 @@ foreach ($movimentacoes as $movimentacao) {
                 $codDivisao = '';
                 $descricaoDivisao = '';
 
-                print_r($jsonConsultaDivisao['value']);
-                exit;
+                print_r($paramsConsultaDivisao);
                 
                 if(isset($jsonConsultaDivisao['value'])) {
 

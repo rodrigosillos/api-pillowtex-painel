@@ -77,31 +77,31 @@ foreach ($movimentacoes as $movimentacao) {
 
                 // divisao
 
-                $paramsConsultaDivisao = [
-                    'divisao' => $divisao,
-                    '$format' => 'json',
-                ];
-        
-                $bodyConsultaDivisao = CallAPI('GET', 'divisoes/consulta', $paramsConsultaDivisao);
-                $jsonConsultaDivisao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $bodyConsultaDivisao), true);
-        
                 $codDivisao = '';
                 $descricaoDivisao = '';
 
-                print_r($paramsConsultaDivisao);
-                
-                if(isset($jsonConsultaDivisao['value'])) {
+                if(!empty($divisao)) {
 
-                    // print_r($jsonConsultaDivisao['value']);
+                    $paramsConsultaDivisao = [
+                        'divisao' => $divisao,
+                        '$format' => 'json',
+                    ];
+            
+                    $bodyConsultaDivisao = CallAPI('GET', 'divisoes/consulta', $paramsConsultaDivisao);
+                    $jsonConsultaDivisao = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $bodyConsultaDivisao), true);
+                    
+                    if(isset($jsonConsultaDivisao['value'])) {
+    
+                        // print_r($jsonConsultaDivisao['value']);
+    
+                        $codDivisao = $jsonConsultaDivisao['value'][0]['cod_divisao'];
+                        $descricaoDivisao = $jsonConsultaDivisao['value'][0]['descricao'];
+                    }
+    
+                    if(is_null($codDivisao))
+                        $codDivisao = '';
 
-                    $codDivisao = $jsonConsultaDivisao['value'][0]['cod_divisao'];
-                    $descricaoDivisao = $jsonConsultaDivisao['value'][0]['descricao'];
                 }
-
-                if(is_null($codDivisao))
-                    $codDivisao = '';
-
-                // print('divisao: ' . $divisao . ' - cod_divisao: ' . $codDivisao . "\xA");
 
                 // fim divisao
 
@@ -215,7 +215,7 @@ foreach ($movimentacoes as $movimentacao) {
                                                                         :percentual_comissao)";
 
                 $stmt = $pdo->prepare($sql);
-                // $stmt->execute($data);
+                $stmt->execute($data);
         
             }
 

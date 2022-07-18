@@ -165,7 +165,8 @@
                     <table class="table mb-0">
                         <thead>
                             <tr>
-                                <th>Liquidação</th>
+                                <th>Liquidação Valor Inicial</th>
+                                <th>Liquidação Valor Final</th>
                                 <th>Valor Comissão</th>
                             </tr>
                         </thead>

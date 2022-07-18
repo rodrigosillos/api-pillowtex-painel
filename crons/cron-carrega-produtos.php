@@ -87,6 +87,9 @@ foreach ($movimentacoes as $movimentacao) {
         
                 $codDivisao = '';
                 $descricaoDivisao = '';
+
+                print_r($jsonConsultaDivisao['value']);
+                exit;
                 
                 if(isset($jsonConsultaDivisao['value'])) {
 
@@ -213,7 +216,7 @@ foreach ($movimentacoes as $movimentacao) {
                                                                         :percentual_comissao)";
 
                 $stmt = $pdo->prepare($sql);
-                $stmt->execute($data);
+                // $stmt->execute($data);
         
             }
 

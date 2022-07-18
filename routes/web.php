@@ -50,12 +50,16 @@ Route::get('/liquidacao', 'LiquidacaoController@index');
 Route::match(['get', 'post'], '/consulta-liquidacao', 'LiquidacaoController@get')->name('consulta-liquidacao');
 // Route::get('/liquidacao/{agent?}', 'LiquidacaoController@getLiquidacao');
 
+//devolucao
+Route::get('/devolucao', 'DevolucaoController@index');
+Route::match(['get', 'post'], '/consulta-devolucao', 'DevolucaoController@get')->name('consulta-devolucao');
+
 //substituicao
 Route::get('/substituicao/{agent?}', 'LiquidacaoController@getSubstituicao');
 
 //devolucao
-Route::get('/devolucao/{search_agent?}', 'DevolucaoController@getDevolucao');
-Route::post('/consulta-devolucao', 'DevolucaoController@getDevolucao');
+// Route::get('/devolucao/{search_agent?}', 'DevolucaoController@getDevolucao');
+// Route::post('/consulta-devolucao', 'DevolucaoController@getDevolucao');
 
 //Language Translation
 Route::get('index/{locale}', 'HomeController@lang');

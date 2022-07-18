@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+use App\Http\Controllers\AgentsController;
+
+use GuzzleHttp\Client;
 use Carbon\Carbon;
+
+use App;
+use PDF;
 
 class DevolucaoController extends Controller
 {
@@ -16,34 +22,44 @@ class DevolucaoController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function getDevolucao(Request $request)
-    {
-        // dd($request);
-        $lastMonth = date("m", strtotime("first day of previous month"));
-        $lastDayMonth = date("d", strtotime("last day of previous month"));
-        $currentYear = date("Y"); 
+    public function index(Request $request)
+    {           
+        $previousMonth = date("m", strtotime("first day of previous month"));
+        $previousDayMonth = date("d", strtotime("last day of previous month"));
+        // $currentYear = date("Y", strtotime("-1 year"));
+        $currentYear = date("Y");
         
-        $dateStart = "01/".$lastMonth."/".$currentYear;
-        $dateEnd = $lastDayMonth."/".$lastMonth."/".$currentYear;
+        $collection = collect([
+            'invoices' => [
+                'data' => [],
+                'agents' => (new AgentsController)->get('array'),
+                'totalizador' => [
+                    'valor_venda' => 0,
+                    'valor_comissao' => 0,
+                    'valor_faturamento' => 0,
+                ],
+            ],
+            'data_form' => [
+                'date_start' => '01/' . $previousMonth . '/' . $currentYear,
+                'date_end' => $previousDayMonth . '/' . $previousMonth . '/' . $currentYear,
+                'search_agent' => -1,
+            ]
+        ]);
+        
+        return view('devolucao', $collection);
+    }
 
-        if(isset($request->dateStart)) {
-            $dateStart = $request->dateStart;
-            $dateEnd = $request->dateEnd;
-        }
+    public function get(Request $request)
+    {
+        $dateStart = Carbon::createFromFormat('d/m/Y', $request->dateStart)->format('Y-m-d');
+        $dateEnd = Carbon::createFromFormat('d/m/Y', $request->dateEnd)->format('Y-m-d');
 
+        $dateStartForm = $request->dateStart;
+        $dateEndForm = $request->dateEnd;
         $searchAgent = $request->search_agent;
 
-        $dateStartQuery = Carbon::createFromFormat('d/m/Y', $dateStart)->format('Y-m-d');
-        $dateEndQuery = Carbon::createFromFormat('d/m/Y', $dateEnd)->format('Y-m-d');
-
-        $dateStartForm = $dateStart;
-        $dateEndForm = $dateEnd;
+        $lastMonth = date("m", strtotime("first day of previous month"));
+        $lastDayMonth = date("d", strtotime("last day of previous month"));
 
         $whereSearchAgent = '';
 
@@ -57,32 +73,32 @@ class DevolucaoController extends Controller
             $userProfileId = $users->user_profile_id;
         }
 
-        if($searchAgent != -1)
-            $whereSearchAgent = "and i.agent_code = " . $searchAgent;
+        $query = " tipo_pedido not in (select descricao from tipos_pedido where oculto = 1) and data_emissao between '" . $dateStart . "' and '" . $dateEnd . "' and oculto = 0 and tipo_operacao = 'E'";
+
+        if($searchAgent != "todos") {
+            $query  = " tipo_pedido not in (select descricao from tipos_pedido where oculto = 1) and data_emissao between '" . $dateStart . "' and '" . $dateEnd . "' and representante_cod = '" . $searchAgent . "' and oculto = 0 and tipo_operacao = 'E'";
+            $query .= " or tipo_pedido not in (select descricao from tipos_pedido where oculto = 1) and data_emissao between '" . $dateStart . "' and '" . $dateEnd . "' and representante_cliente_cod = '" . $searchAgent . "' and oculto = 0 and tipo_operacao = 'E'";
+        }
+        // dd($query);
 
         if($userProfileId == 1) {
 
-            // u.regiao = 150490655 and
-
             $invoices = DB::select(DB::raw("
-                select i.* 
-                from invoices i
-                inner join users u on i.agent_id = u.agent_id
-                where i.issue_date between '".$dateStartQuery."' and '".$dateEndQuery."'
-                " . $whereSearchAgent . "
-                and i.hidden = 0 
-                and i.operation_type = 'E'"
+                select * 
+                from movimentacao
+                where" . $query
             ));
 
         } else {
 
             $invoices = DB::select(DB::raw("
                 select * 
-                from invoices
-                where issue_date between '".$dateStartQuery."' and '".$dateEndQuery."'
-                and agent_id = ".$agentId."
-                and hidden = 0
-                and i.operation_type = 'E'"
+                from movimentacao
+                where data_emissao between '".$dateStart."' and '".$dateEnd."'
+                and tipo_pedido not in (select descricao from tipos_pedido where oculto = 1)
+                and representante = ".$agentId."
+                and oculto = 0
+                and tipo_operacao = 'E'"
             ));
         }
 
@@ -94,55 +110,72 @@ class DevolucaoController extends Controller
 
         foreach($invoices as $invoiceKey => $invoice) {
 
-            $issueDate = date_create($invoice->issue_date);
+            $issueDate = date_create($invoice->data_emissao);
 
-            $commissionResult['data'][$invoiceKey]['operacao_codigo'] = $invoice->operation_code;
-            $commissionResult['data'][$invoiceKey]['romaneio'] = $invoice->document;
+            $valorComissaoRep = $invoice->valor_comissao;
+            $valorFaturamentoRep = $invoice->valor_faturamento;
+
+            if($invoice->tipo_pedido == 'ZC FEIRA' || $invoice->tipo_pedido == 'ZC FUTURO') {
+
+                if ($invoice->representante <> $invoice->representante_cliente) {
+
+                    $valorComissaoRep = $invoice->valor_comissao_representante;
+                    $valorFaturamentoRep = $invoice->valor_faturamento_representante;
+        
+                    if($invoice->representante_cliente_cod == $searchAgent) {
+                        $valorComissaoRep = $invoice->valor_comissao_representante_cliente;
+                        $valorFaturamentoRep = $invoice->valor_faturamento_representante_cliente;
+                    }  
+
+                }
+
+            }              
+
+            $commissionResult['data'][$invoiceKey]['operacao_codigo'] = $invoice->cod_operacao;
+            $commissionResult['data'][$invoiceKey]['romaneio'] = $invoice->romaneio;
             $commissionResult['data'][$invoiceKey]['ticket'] = $invoice->ticket;
             $commissionResult['data'][$invoiceKey]['data_emissao'] = date_format($issueDate, "d/m/Y");
-            $commissionResult['data'][$invoiceKey]['cliente_codigo'] = $invoice->client_code;
-            $commissionResult['data'][$invoiceKey]['cliente_nome'] = Str::limit($invoice->client_name, 25, $end='...');
-            $commissionResult['data'][$invoiceKey]['cliente_estado'] = $invoice->client_address;
-            $commissionResult['data'][$invoiceKey]['representante_nome'] = Str::limit($invoice->agent_name, 25, $end='...');
-            $commissionResult['data'][$invoiceKey]['tabela_preco'] = $invoice->price_list == 216 ? 187 : 214;
-            $commissionResult['data'][$invoiceKey]['total'] = $invoice->amount_withouttax;
-            $commissionResult['data'][$invoiceKey]['tipo_operacao'] ='Dedução';
-            $commissionResult['data'][$invoiceKey]['nota_fiscal'] = $invoice->invoice;
-            $commissionResult['data'][$invoiceKey]['pedido_codigo'] = $invoice->order_code;
-            $commissionResult['data'][$invoiceKey]['pedido_tipo'] = $invoice->invoice_type;
+            $commissionResult['data'][$invoiceKey]['cliente_codigo'] = $invoice->cliente_codigo;
+            $commissionResult['data'][$invoiceKey]['cliente_nome'] = Str::limit($invoice->cliente_nome, 25, $end='...');
+            $commissionResult['data'][$invoiceKey]['cliente_estado'] = $invoice->cliente_estado;
+            $commissionResult['data'][$invoiceKey]['representante_nome'] = Str::limit($invoice->representante_nome, 25, $end='...');
+            $commissionResult['data'][$invoiceKey]['representante_cliente_nome'] = Str::limit($invoice->representante_cliente_nome, 25, $end='...');
+            $commissionResult['data'][$invoiceKey]['tabela_preco'] = $invoice->tabela == 104 ? 187 : 214;
+            $commissionResult['data'][$invoiceKey]['total'] = $invoice->total;
+            $commissionResult['data'][$invoiceKey]['tipo_operacao'] = $invoice->tipo_operacao == 'E' ? 'Devolução' : 'S';
+            $commissionResult['data'][$invoiceKey]['nota_fiscal'] = $invoice->notas;
+            $commissionResult['data'][$invoiceKey]['pedido_codigo'] = $invoice->cod_pedidov;
+            $commissionResult['data'][$invoiceKey]['pedido_tipo'] = $invoice->tipo_pedido;
             $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'warning';
-            $commissionResult['data'][$invoiceKey]['comissao_total'] = $invoice->commission_amount;
-            $commissionResult['data'][$invoiceKey]['liquidacao_50'] = $invoice->commission_debtors;
+            $commissionResult['data'][$invoiceKey]['comissao_total'] = $valorComissaoRep;
+            $commissionResult['data'][$invoiceKey]['desconsiderar'] = $invoice->desconsiderar;
+            $commissionResult['data'][$invoiceKey]['valor_comissao_representante'] = $invoice->valor_comissao_representante;
+            $commissionResult['data'][$invoiceKey]['valor_comissao_representante_cliente'] = $invoice->valor_comissao_representante_cliente;
+            $commissionResult['data'][$invoiceKey]['valor_faturamento_representante'] = $invoice->valor_faturamento_representante;
+            $commissionResult['data'][$invoiceKey]['valor_faturamento_representante_cliente'] = $invoice->valor_faturamento_representante_cliente;
             
-            if($invoice->operation_type == 'S')
+            if($invoice->tipo_operacao == 'S')
                 $commissionResult['data'][$invoiceKey]['tipo_operacao_cor'] = 'success';
 
-            $commissionResult['data'][$invoiceKey]['fautramento_50'] = 0;
+            $commissionResult['data'][$invoiceKey]['faturamento_50'] = $valorFaturamentoRep;
 
-            $percentualFaturamento = 50;
-
-            if ($invoice->invoice_type == 'ANTECIPADO' || $invoice->invoice_type == 'ANTECIPADO ZC')
-                $percentualFaturamento = 80;
-
-            if (date_format($issueDate, "m") == $lastMonth)
-                $commissionResult['data'][$invoiceKey]['faturamento_50'] = ($percentualFaturamento / 100) * $commissionResult['data'][$invoiceKey]['comissao_total'];
-
-            if($invoice->operation_type != 'E') {
+            if($invoice->desconsiderar == 0) {
+            // if($invoice->tipo_pedido != 'E') {
                 $commissionResult['totalizador']['valor_comissao'] += $commissionResult['data'][$invoiceKey]['comissao_total'];
-                $commissionResult['totalizador']['valor_venda'] += $commissionResult['data'][$invoiceKey]['total'];
+                $commissionResult['totalizador']['valor_venda'] += ( $commissionResult['data'][$invoiceKey]['total'] + $invoice->desconto );
                 $commissionResult['totalizador']['valor_faturamento'] += $commissionResult['data'][$invoiceKey]['faturamento_50'];
             }
 
             $commissionPercentageAverage = 0;
 
-            if ($invoice->amount != 0)
-                $commissionPercentageAverage = sprintf("%.2f%%", $commissionResult['data'][$invoiceKey]['comissao_total'] / $invoice->amount);
+            if ($invoice->valor_final != 0)
+                $commissionPercentageAverage = sprintf("%.2f%%", $commissionResult['data'][$invoiceKey]['comissao_total'] / $invoice->valor_final);
     
             $commissionResult['data'][$invoiceKey]['media_base_comissao'] = $commissionPercentageAverage;
 
         }
 
-        return view('lista-devolucao', 
+        return view('devolucao', 
         [
             'invoices' => $commissionResult,
             'data_form' => [
@@ -151,5 +184,43 @@ class DevolucaoController extends Controller
                 'search_agent' => $searchAgent,
             ]
         ]);
+
+    }
+
+    public function desconsidera(Request $request)
+    {
+        $desconsideraMovimentos = $request->desconsiderar_movimento;
+        $repSelecionado = $request->rep_selecionado;
+        $dataInicio = $request->data_inicio;
+        $dataFim = $request->data_fim;
+
+        foreach($desconsideraMovimentos as $movimento) {
+
+            $result = DB::table('movimentacao')
+            ->select('desconsiderar')
+            ->where('cod_operacao', $movimento)
+            ->first();
+
+            $acaoDesconsiderar = $result->desconsiderar; 
+
+            $desconsiderar = 1;
+            if ($acaoDesconsiderar == 1)
+                $desconsiderar = 0;
+            
+            DB::table('movimentacao')
+            ->where('cod_operacao', $movimento)
+            ->update(['desconsiderar' => $desconsiderar]);
+
+        }
+
+        // return redirect('/faturamento');
+        return redirect()->route('consulta-faturamento', [
+            '_token' => csrf_token(),
+            'search_agent' => $repSelecionado,
+            'dateStart' => $dataInicio,
+            'dateEnd' => $dataFim,
+        ]);
+
     }
 }
+ 

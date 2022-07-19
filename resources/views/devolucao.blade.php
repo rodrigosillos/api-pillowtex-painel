@@ -167,10 +167,10 @@
                                     {{ $invoice['pedido_codigo'] }}
                                 </td>   
                                 <td>
-                                    @if ($invoice['tipo_operacao_cor'] == 'warning') - @endif R${{ number_format($invoice['total'], 2, ',', '.') }}
+                                    R${{ number_format($invoice['total'], 2, ',', '.') }}
                                 </td>
                                 <td>
-                                @if ($invoice['tipo_operacao_cor'] == 'warning') - @endif R${{ number_format($invoice['comissao_total'], 2, ',', '.') }}
+                                    R${{ number_format($invoice['comissao_total'], 2, ',', '.') }}
                                 </td>
                                 <!-- <td>
                                 @if ($invoice['tipo_operacao_cor'] == 'warning') - @endif R${{ number_format($invoice['valor_comissao_representante'], 2, ',', '.') }}

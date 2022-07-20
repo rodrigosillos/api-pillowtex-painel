@@ -55,7 +55,11 @@ Route::get('/devolucao', 'DevolucaoController@index');
 Route::match(['get', 'post'], '/consulta-devolucao', 'DevolucaoController@get')->name('consulta-devolucao');
 
 //substituicao
-Route::get('/substituicao/{agent?}', 'LiquidacaoController@getSubstituicao');
+Route::get('/substituicao', 'SubstituicaoController@index');
+Route::match(['get', 'post'], '/consulta-substituicao', 'SubstituicaoController@get')->name('consulta-substituicao');
+
+// //substituicao
+// Route::get('/substituicao/{agent?}', 'LiquidacaoController@getSubstituicao');
 
 //devolucao
 // Route::get('/devolucao/{search_agent?}', 'DevolucaoController@getDevolucao');

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-@lang('translation.Debtors_Detail')
+Substituição
 @endsection
 @section('css')
     <!-- DataTables -->
@@ -11,10 +11,10 @@
 @section('content')
 @component('common-components.breadcrumb')
     @slot('pagetitle') COMISSÕES @endslot
-    @slot('title') LIQUIDAÇÃO @endslot
+    @slot('title') SUBSTITUIÇÃO @endslot
 @endcomponent
 
-    <form id="frmLiquidacao" action="{{url('consulta-liquidacao')}}" method="post">
+    <form id="frmSubstituicao" action="{{url('consulta-substituicao')}}" method="post">
         @csrf
         <div class="row">
             @if ( Auth::user()->user_profile_id <> 3 )
@@ -51,7 +51,7 @@
     <br/>
     <br/>
 
-    <form id="frmLiquidacao2" action="{{url('export-excel-liquidacao')}}" method="post">
+    <form id="frmSubstituicao2" action="{{url('export-excel-substituicao')}}" method="post">
         @csrf
         <input type="hidden" name="rep_selecionado" value="{{ $data_form['search_agent'] }}">
         <input type="hidden" name="data_inicio" id="data_inicio">
@@ -165,7 +165,7 @@
                     <table class="table mb-0">
                         <thead>
                             <tr>
-                                <th>Liquidação</th>
+                                <th>Substituição</th>
                                 <th>Valor Comissão</th>
                             </tr>
                         </thead>

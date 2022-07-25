@@ -4,7 +4,7 @@ include('call-api.php');
 include('connection-db.php');
 
 // $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, comissao_r, evento, tipo_pedido from movimentacao where representante_cod = '0055' and data_emissao between '2022-05-01' and '2022-05-31'";
-$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, comissao_r, evento, tipo_pedido from movimentacao where tipo_operacao = 'E' and data_emissao between '2022-06-01' and '2022-07-15'";
+$sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, comissao_r, evento, tipo_pedido from movimentacao where tipo_operacao = 'S' and data_emissao between '2022-07-09' and '2022-07-20'";
 // $sql = "select cod_operacao, tipo_operacao, cliente_estado, tabela, comissao_r, evento, tipo_pedido from movimentacao where cod_operacao = 87006";
 
 $stmt = $pdo->prepare($sql);

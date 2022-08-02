@@ -8,8 +8,8 @@ include('connection-db.php');
 $sql = "
 select m.romaneio, m.cod_operacao, m.tipo_pedido, m.notas
 from movimentacao m 
-where m.notas = '' and m.data_emissao between '2022-06-21' and '2022-06-30'
-or m.notas is null and m.data_emissao between '2022-06-21' and '2022-06-30'
+where m.notas = '' and m.data_emissao between '2022-07-01' and '2022-07-31'
+or m.notas is null and m.data_emissao between '2022-07-01' and '2022-07-31'
 ";
 
 // $sql = "select m.cod_operacao from movimentacao m where m.notas is null and m.tipo_pedido is null and m.representante_cod = '0054' and m.data_emissao between '2022-05-01' and '2022-05-20'";

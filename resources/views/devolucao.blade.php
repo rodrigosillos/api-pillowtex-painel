@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-@lang('translation.Invoice_List')
+DEVOLUÇÃO
 @endsection
 @section('css')
     <!-- DataTables -->

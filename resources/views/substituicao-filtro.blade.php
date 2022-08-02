@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-Substituição
+SUBSTITUIÇÃO
 @endsection
 @section('css')
     <!-- DataTables -->

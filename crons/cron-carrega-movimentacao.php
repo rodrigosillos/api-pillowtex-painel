@@ -7,12 +7,12 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
 
 // foreach($tiposOperacao as $tipoOperacao) {
 
-    $tipoOperacao = 'E';
+    $tipoOperacao = 'S';
     
     $paramsListaMovimentacao = [
-        'datai' => '2022-07-21',
-        'dataf' => '2022-07-31',
-        // 'representante' => '0',
+        'datai' => '2022-07-28',
+        'dataf' => '2022-07-28',
+        'representante' => '5',
         '$format' => 'json',
         'tipo_operacao' => $tipoOperacao,
     ];

@@ -120,7 +120,7 @@
                                     </div>
                                 </td>
                                 
-                                <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#{{ $debtor['cliente'] }}</a> </td>
+                                <td><a href="javascript: void(0);" class="text-dark font-weight-bold">{{ $debtor['cliente'] }}</a> </td>
                                 <td>
                                     {{ $debtor['documento'] }}
                                 </td>

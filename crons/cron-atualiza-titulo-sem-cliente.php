@@ -2,7 +2,7 @@
 
 include('connection-db.php');
 
-$sql = "select id, n_documento, origem from titulos_receber where cliente_nome = '' and data_pagamento between '2023-04-01' and '2023-04-30'";
+$sql = "select id, n_documento, origem from titulos_receber where cliente_nome = '' and data_pagamento between '2023-05-01' and '2023-05-31'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $titulosReceber = $stmt->fetchAll();

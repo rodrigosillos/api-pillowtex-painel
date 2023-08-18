@@ -100,7 +100,7 @@ if(isset($jsonConsultaLancamentos['value'])) {
                 'cartorio' => $lancamentoValue['cartorio'] == false ? 0 : 1,
                 'protesto' => $lancamentoValue['protesto'] == false ? 0 : 1,
                 'tit_banco' => $lancamentoValue['tit_banco'],
-                'carteira' => $lancamentoValue['carteira'],
+                'carteira' =>  substr($lancamentoValue['carteira'], 0, 2),
                 'desc_tipo_pgto' => $lancamentoValue['desc_tipo_pgto'],
                 'desc_pconta' => $lancamentoValue['desc_pconta'],
                 'desc_gerador' => $lancamentoValue['desc_gerador'],

@@ -190,7 +190,7 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
                         $data = [
                             'cod_operacao' => $codOperacao,
                             'tipo_operacao' => $tipoOperacao,
-                            'romaneio' => $romaneio,
+                            'romaneio' => $romaneio == null ? 123456 : $romaneio,
                             'ticket' => $ticket,
                             'data_emissao' => $dataEmissao,
                             'cliente' => $cliente,

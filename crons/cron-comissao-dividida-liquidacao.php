@@ -3,7 +3,7 @@
 include('call-api-novo.php');
 include('connection-db.php');
 
-$sql = "select id, n_documento, origem from titulos_receber where data_pagamento between '2023-09-01' and '2023-09-30'";
+$sql = "select id, n_documento, origem from titulos_receber where data_pagamento between '2023-10-01' and '2023-10-31'";
 // $sql = "select id, n_documento, origem from titulos_receber where origem = 8803";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();

@@ -10,8 +10,8 @@ $tiposOperacao = ['S', 'E']; // Entrada (Dedução) / Saida (Faturamento 50% / S
     $tipoOperacao = 'S';
     
     $paramsListaMovimentacao = [
-        'datai' => '2023-11-14',
-        'dataf' => '2023-11-20',
+        'datai' => '2023-11-18',
+        'dataf' => '2023-11-30',
         // 'representante' => '5',
         '$format' => 'json',
         'tipo_operacao' => $tipoOperacao,
